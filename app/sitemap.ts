@@ -11,7 +11,11 @@ const STATIC: MetadataRoute.Sitemap = [
   { url: `${BASE}/skor/barn`,        priority: 0.9, changeFrequency: "weekly"  },
   { url: `${BASE}/nyheter`,          priority: 0.8, changeFrequency: "weekly"  },
   { url: `${BASE}/blogg`,            priority: 0.7, changeFrequency: "weekly"  },
-  { url: `${BASE}/varumarken/ecco`,  priority: 0.7, changeFrequency: "monthly" },
+  { url: `${BASE}/varumarken/ecco`,     priority: 0.7, changeFrequency: "monthly" },
+  { url: `${BASE}/varumarken/gabor`,    priority: 0.7, changeFrequency: "monthly" },
+  { url: `${BASE}/varumarken/dolomite`, priority: 0.7, changeFrequency: "monthly" },
+  { url: `${BASE}/varumarken/rieker`,   priority: 0.7, changeFrequency: "monthly" },
+  { url: `${BASE}/varumarken/skechers`, priority: 0.7, changeFrequency: "monthly" },
   { url: `${BASE}/skovard`,          priority: 0.6, changeFrequency: "monthly" },
 ];
 
