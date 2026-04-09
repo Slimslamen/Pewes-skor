@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HomeHero from "@/components/blocks/HomeHero";
 import BrandsBar from "@/components/blocks/BrandsBar";
+import FeaturedBanner from "@/components/blocks/FeaturedBanner";
 import AboutSection from "@/components/blocks/AboutSection";
 import CollectionPreview from "@/components/blocks/CollectionPreview";
 import FindUs from "@/components/blocks/FindUs";
@@ -17,6 +18,7 @@ export default async function HomePage() {
       <main className="pt-20">
         <HomeHero data={page?.hero} />
         <BrandsBar data={page?.brands} />
+        <FeaturedBanner />
         <AboutSection data={page?.about} />
         <CollectionPreview data={page?.collection} />
         <FindUs data={page?.findUs} />
