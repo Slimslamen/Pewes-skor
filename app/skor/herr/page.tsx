@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import Link from "next/link";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  title:       "Herrskor",
+  description:
+    "Herrskor från ECCO, Rieker, Dolomite och Skechers. Klassiska oxfords, funktionella vandringsskor och moderna sneakers — med personlig service i Anderstorp.",
+  path:        "/skor/herr",
+});
 
 const HERR_PRODUCTS = [
   {

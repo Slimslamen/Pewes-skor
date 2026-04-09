@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  title:       "Blogg",
+  description:
+    "Guider, trender och inspiration från oss på Pewes Skor i Anderstorp. Lär dig mer om skovård, aktuella trender och hur du väljer rätt skor.",
+  path:        "/blogg",
+});
 
 interface BlogPost {
   slug: string;

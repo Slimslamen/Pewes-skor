@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import Link from "next/link";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  title:       "Barnskor",
+  description:
+    "Barnskor anpassade för barnfötter i alla åldrar. ECCO, Skechers, Gabor och Rieker — med rätt stöd, komfort och hållbarhet hos Pewes Skor i Anderstorp.",
+  path:        "/skor/barn",
+});
 
 const BARN_PRODUCTS = [
   {

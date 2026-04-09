@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { damPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  title:       "Damskor",
+  description:
+    "Utforska vår damkollektion med skor från ECCO, Rieker, Gabor och fler. Tidlösa klassiker och modern design för den moderna kvinnan — hos Pewes Skor i Anderstorp.",
+  path:        "/skor/dam",
+});
 
 const damLinks = [
   { label: "Collection", href: "/skor", active: false },

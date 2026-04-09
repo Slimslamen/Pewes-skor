@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
@@ -8,6 +9,13 @@ import FeaturedBanner from "@/components/blocks/FeaturedBanner";
 import AboutSection from "@/components/blocks/AboutSection";
 import CollectionPreview from "@/components/blocks/CollectionPreview";
 import FindUs from "@/components/blocks/FindUs";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  path:        "/",
+  description:
+    "Skoaffär i Anderstorp sedan generationer. Noggrant utvalda skor från ECCO, Rieker, Gabor, Skechers och Dolomite. Välkommen till Storgatan 11.",
+});
 
 export default async function HomePage() {
   const { data: page } = await sanityFetch({ query: homePageQuery });
