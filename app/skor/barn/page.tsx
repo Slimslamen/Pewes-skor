@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import Link from "next/link";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -98,6 +99,11 @@ const BARN_PRODUCTS = [
 export default function BarnPage() {
   return (
     <>
+      <BreadcrumbJsonLd crumbs={[
+        { name: "Hem",       path: "/" },
+        { name: "Sortiment", path: "/skor" },
+        { name: "Barn",      path: "/skor/barn" },
+      ]} />
       <Header />
       <main className="pt-32 pb-24">
         {/* Category Header */}

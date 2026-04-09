@@ -4,6 +4,7 @@ import { damPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -13,19 +14,17 @@ export const metadata: Metadata = generatePageMetadata({
   path:        "/skor/dam",
 });
 
-const damLinks = [
-  { label: "Collection", href: "/skor", active: false },
-  { label: "Dam", href: "/skor/dam", active: true },
-  { label: "Herr", href: "/skor/herr" },
-  { label: "Journal", href: "/journal" },
-];
-
 export default async function DamPage() {
   const { data: page } = await sanityFetch({ query: damPageQuery });
 
   return (
     <>
-      <Header links={damLinks} />
+      <BreadcrumbJsonLd crumbs={[
+        { name: "Hem",       path: "/" },
+        { name: "Sortiment", path: "/skor" },
+        { name: "Dam",       path: "/skor/dam" },
+      ]} />
+      <Header />
       <main className="pt-32 pb-24">
         {/* Category Header */}
         <section className="max-w-screen-2xl mx-auto px-6 mb-16">
