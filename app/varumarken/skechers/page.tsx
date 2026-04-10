@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SkechersScroll from "@/components/blocks/SkechersScroll";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -45,7 +46,7 @@ export default function SkechersPage() {
       <main className="pt-20">
 
         {/* ── HERO: full width, bold name, thick primary accent bar ── */}
-        <section className="bg-surface min-h-screen flex flex-col justify-center px-6 py-24">
+        <section className="bg-stone-50 min-h-screen flex flex-col justify-center px-6 py-24">
           <div className="max-w-screen-xl mx-auto w-full">
 
             <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.4em] text-outline block mb-10">
@@ -79,6 +80,9 @@ export default function SkechersPage() {
             </div>
           </div>
         </section>
+        {/* ── HERITAGE + STATS + scroll-scrubbed rotating shoe ── */}
+        <SkechersScroll stats={STATS} />
+
 
         {/* ── MEMORY FOAM: dark section, two-column with spec grid ── */}
         <section className="bg-inverse-surface py-24">
@@ -115,43 +119,6 @@ export default function SkechersPage() {
             </div>
           </div>
         </section>
-
-        {/* ── HERITAGE + STATS: two-thirds text, one-third stat sidebar ── */}
-        <section className="bg-stone-50 py-32">
-          <div className="max-w-screen-xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-20">
-
-              {/* Brand story — spans 2 columns */}
-              <div className="lg:col-span-2 space-y-8">
-                <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block">
-                  Vårt Arv
-                </span>
-                <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight">
-                  Skechers bevisar att komfort och stil kan gå hand i hand — varje dag.
-                </h2>
-                <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
-                  Sedan starten i El Monte, Kalifornien 1992 har Skechers vuxit till ett av världens ledande skomärken. Med innovationer som Air-Cooled Memory Foam-innersulor, ergonomiska lästsystem och teknikvävar i överdelen erbjuder Skechers en bredd av modeller för träning, arbete och vardag — utan att kompromissa med känslan under foten.
-                </p>
-              </div>
-
-              {/* Stats sidebar */}
-              <div className="flex flex-col justify-center gap-10">
-                {STATS.map(({ stat, label }) => (
-                  <div key={label} className="border-l-2 border-primary pl-6">
-                    <span className="font-(family-name:--font-manrope) text-4xl font-bold text-stone-900 block">
-                      {stat}
-                    </span>
-                    <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-outline">
-                      {label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-            </div>
-          </div>
-        </section>
-
       </main>
       <Footer />
     </>

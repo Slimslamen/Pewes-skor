@@ -31,7 +31,7 @@ export default async function EccoPage() {
   return (
     <>
       <Header links={eccoLinks} />
-      <main className="pt-20">
+      <main className="pt-10">
         <EccoHero data={page?.hero} />
 
         {/* Anatomy section — scroll-driven, 500vh */}

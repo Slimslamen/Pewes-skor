@@ -43,7 +43,7 @@ export default function Footer({ year = 2025 }: FooterProps) {
               { label: "Öppettider", href: "/#hitta" },
               { label: "Kontakt", href: "/#hitta" },
             ].map((item) => (
-              <li key={item.href}>
+              <li key={item.label}>
                 <Link
                   href={item.href}
                   className="text-stone-500 hover:text-stone-900 transition-colors duration-200"

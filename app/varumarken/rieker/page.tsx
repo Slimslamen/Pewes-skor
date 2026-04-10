@@ -109,19 +109,35 @@ export default function RiekerPage() {
           </div>
         </section>
 
-        {/* ── HERITAGE: left-aligned, large light heading ── */}
-        <section className="bg-white py-32">
-          <div className="max-w-screen-xl mx-auto px-6">
-            <div className="max-w-3xl">
-              <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-10">
-                150 År av Komfort
-              </span>
-              <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight mb-12">
-                Rieker har under 150 år tillverkat skor som kroppen tackar dig för.
-              </h2>
-              <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
-                Sedan starten i Tuttlingen 1874 har Rieker levererat skor för det verkliga livet. ANTISTRESS-filosofin bygger på att skon ska vara lätt, flexibel och skonsam mot foten hela dagen — oavsett om du promenerar i city, arbetar på stan eller njuter av en dagsutflykt i naturen.
-              </p>
+        {/* ── HERITAGE: text left (container-aligned), video breaks to right edge on desktop ── */}
+        <section className="bg-white">
+          <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
+            {/* Left: heritage copy */}
+            <div className="px-6 py-24 lg:py-40 lg:pr-20 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
+              <div className="max-w-xl">
+                <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-10">
+                  150 År av Komfort
+                </span>
+                <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight mb-12">
+                  Rieker har under 150 år tillverkat skor som kroppen tackar dig för.
+                </h2>
+                <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
+                  Sedan starten i Tuttlingen 1874 har Rieker levererat skor för det verkliga livet. ANTISTRESS-filosofin bygger på att skon ska vara lätt, flexibel och skonsam mot foten hela dagen — oavsett om du promenerar i city, arbetar på stan eller njuter av en dagsutflykt i naturen.
+                </p>
+              </div>
+            </div>
+
+            {/* Right: looping video — full-bleed to viewport edge on desktop */}
+            <div className="relative aspect-[4/5] w-full overflow-hidden bg-stone-100 lg:aspect-auto lg:h-full lg:min-h-[700px]">
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src="/rieker/video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+              />
             </div>
           </div>
         </section>

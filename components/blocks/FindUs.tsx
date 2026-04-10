@@ -1,3 +1,5 @@
+import React from "react";
+
 interface HoursRow {
   days: string;
   hours: string;
@@ -62,10 +64,10 @@ export default function FindUs({ data }: Props) {
                   <h4 className="font-bold text-lg mb-2">Öppettider</h4>
                   <div className="grid grid-cols-2 gap-x-8 text-secondary">
                     {(d.hoursRows ?? []).map((row) => (
-                      <>
-                        <span key={`days-${row.days}`}>{row.days}</span>
-                        <span key={`hours-${row.days}`}>{row.hours}</span>
-                      </>
+                      <React.Fragment key={row.days}>
+                        <span>{row.days}</span>
+                        <span>{row.hours}</span>
+                      </React.Fragment>
                     ))}
                   </div>
                 </div>
