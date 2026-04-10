@@ -32,6 +32,9 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+COMPONENTS.md
+DESIGN_SYSTEM.md
+/.CLAUDE.md
 
 # vercel
 .vercel
