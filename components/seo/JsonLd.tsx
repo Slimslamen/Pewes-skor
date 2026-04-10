@@ -2,10 +2,18 @@ import { buildLocalBusinessSchema, buildBreadcrumbSchema, siteConfig } from "@/l
 
 /** Generic JSON-LD script tag — accepts any schema.org object */
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
+  // Escape <, >, and & so CMS content cannot break out of the script tag.
+  // JSON.stringify does not escape these by default; a literal </script> in a
+  // value would cause the browser's HTML parser to close the tag prematurely.
+  const safe = JSON.stringify(data)
+    .replace(/</g, "\\u003c")
+    .replace(/>/g, "\\u003e")
+    .replace(/&/g, "\\u0026");
+
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safe }}
     />
   );
 }
