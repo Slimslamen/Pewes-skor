@@ -48,15 +48,23 @@ export default function HomeHero({ data }: Props) {
             alt={d.image.alt ?? "Hero"}
             fill
             priority
-            className="object-cover grayscale-[0.2] brightness-90"
+            className="object-cover brightness-75"
             sizes="100vw"
           />
         )}
+        {/* Directional gradients for depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl">
-        <h1 className="font-(family-name:--font-manrope) text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[0.9] tracking-tighter mb-6">
+        {/* Eyebrow */}
+        <p className="text-white/60 text-xs uppercase tracking-[0.25em] font-(family-name:--font-inter) font-medium mb-6">
+          Sedan generationer · Anderstorp
+        </p>
+
+        <h1 className="font-(family-name:--font-manrope) text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-[0.9] tracking-tighter mb-8">
           {lines.map((line, i) => (
             <span key={i}>
               {line}
@@ -65,21 +73,31 @@ export default function HomeHero({ data }: Props) {
           ))}
         </h1>
 
+        {/* Thin decorative rule */}
+        <div className="w-16 h-px bg-primary mb-8" />
+
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           {/* Address badge */}
-          <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-lg">
+          <div className="bg-white/10 backdrop-blur-md border border-white/10 px-6 py-4 rounded-lg">
             <p className="text-white/90 font-medium tracking-tight">{d.address}</p>
-            <p className="text-white/70 text-sm">{d.hours}</p>
+            <p className="text-white/60 text-sm">{d.hours}</p>
           </div>
 
           {/* CTA */}
           <Link
             href={d.ctaHref}
-            className="inline-flex items-center px-10 py-5 bg-primary text-white font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-primary-container transition-all duration-300 transform hover:-translate-y-1"
+            className="inline-flex items-center gap-3 px-10 py-5 bg-primary text-white font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-xs rounded-sm hover:bg-primary/90 transition-all duration-300 transform hover:-translate-y-1 shadow-lg shadow-primary/30"
           >
             {d.ctaLabel}
+            <span className="text-base leading-none">→</span>
           </Link>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
+        <span className="text-white/40 text-[10px] uppercase tracking-widest font-(family-name:--font-inter)">Scrolla</span>
+        <span className="text-white/50 text-lg animate-bounce">↓</span>
       </div>
     </section>
   );

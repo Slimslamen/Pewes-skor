@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useEffect } from "react";
-import { useScroll, useTransform, useMotionValue, motion } from "motion/react";
+import { useRef } from "react";
+import { useScroll, useTransform, motion } from "motion/react";
 
 export interface AnatomyZone {
   label: string;
@@ -52,51 +52,10 @@ export default function ShoeAnatomy({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // ─── Scroll tracking ──────────────────────────────────────────────
-  // Track window scrollY — always reliable, never depends on element position
-  // being settled at hook-initialisation time.
-  const { scrollY } = useScroll();
-
-  // Fix 2: bounds as MotionValues so useTransform always reads live values —
-  // no stale-closure problem.
-  const boundsStart = useMotionValue(0);
-  const boundsEnd   = useMotionValue(1);
-
-  useEffect(() => {
-    function measure() {
-      const el = containerRef.current;
-      if (!el) return;
-      // Fix 1: getBoundingClientRect() + scrollY gives exact document position
-      // (offsetTop can be wrong inside flex/grid parents).
-      const rect   = el.getBoundingClientRect();
-      const top    = rect.top + window.scrollY;
-      const height = rect.height;                   // 500vh in px after layout
-      const vh     = window.innerHeight;
-      boundsStart.set(top);
-      boundsEnd.set(top + height - vh);
-    }
-
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, [boundsStart, boundsEnd]);
-
-  // Fix 2: three-MotionValue form — transformer always receives live values,
-  // no stale ref closure.
-  const scrollYProgress = useTransform(
-    [scrollY, boundsStart, boundsEnd],
-    ([y, start, end]: number[]) => {
-      if (end <= start) return 0;
-      const p = (y - start) / (end - start);
-      return Math.max(0, Math.min(1, p));
-    }
-  );
-
-  // Verification: log progress while developing — remove before shipping
-  useEffect(() => {
-    return scrollYProgress.on("change", (v) =>
-      console.log("[ShoeAnatomy] scrollYProgress:", v.toFixed(3))
-    );
-  }, [scrollYProgress]);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
   // ─── Layer y-transforms ───────────────────────────────────────────
   const outsoleY = useTransform(
