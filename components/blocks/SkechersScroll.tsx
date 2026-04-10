@@ -40,12 +40,14 @@ export default function SkechersScroll({ stats = DEFAULT_STATS }: Props) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end end"],
   });
 
   // Shoe travels across the viewport, ending pushed past the container's
   // right edge so the composition breathes off-frame on the right.
-  const shoeX = useTransform(scrollYProgress, [0, 1], ["-130vw", "18vw"]);
+  // Start x is a "peeking" position (not fully off-screen) so frame 1 is
+  // already visible in the lower-left the moment the section enters view.
+  const shoeX = useTransform(scrollYProgress, [0, 1], ["-95vw", "18vw"]);
 
   // Preload all frames so the scrub never stalls on cold loads.
   useEffect(() => {
