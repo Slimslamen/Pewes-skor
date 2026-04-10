@@ -12,7 +12,6 @@ interface NavLink {
 
 interface HeaderProps {
   links?: NavLink[];
-  cartCount?: number;
 }
 
 const BRANDS_DROPDOWN = [
@@ -32,11 +31,12 @@ const SORTIMENT_DROPDOWN = [
 const defaultLinks: NavLink[] = [
   { label: "Sortiment",  href: "/skor",      dropdown: SORTIMENT_DROPDOWN },
   { label: "Varumärken", href: "/varumarken", dropdown: BRANDS_DROPDOWN },
+  { label: "Nyheter",      href: "/nyheter" },
+  { label: "Skovård",    href: "/skovard" },
   { label: "Blogg",      href: "/blogg" },
-  { label: "Journal",    href: "/journal" },
 ];
 
-export default function Header({ links = defaultLinks, cartCount = 0 }: HeaderProps) {
+export default function Header({ links = defaultLinks }: HeaderProps) {
   const [menuOpen, setMenuOpen]         = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen]     = useState<string | null>(null);
@@ -61,7 +61,7 @@ export default function Header({ links = defaultLinks, cartCount = 0 }: HeaderPr
         <div className="flex items-center gap-8" ref={navRef}>
           <button
             aria-label="Öppna meny"
-            className="text-stone-800 scale-95 active:scale-100 transition-transform duration-200"
+            className="text-stone-800 scale-95 active:scale-100 transition-transform duration-200 sm:hidden"
             onClick={() => { setMenuOpen(!menuOpen); setMobileOpen(null); }}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -151,30 +151,10 @@ export default function Header({ links = defaultLinks, cartCount = 0 }: HeaderPr
         {/* ── Centre: wordmark ── */}
         <Link
           href="/"
-          className="font-(family-name:--font-manrope) text-xl font-bold uppercase tracking-[0.2em] text-stone-900 absolute left-1/2 -translate-x-1/2"
+          className="ml-[-40px] font-(family-name:--font-manrope) text-xl font-bold uppercase tracking-[0.2em] text-stone-900 absolute left-1/2 -translate-x-1/2"
         >
           Pewes Skor
         </Link>
-
-        {/* ── Right: cart ── */}
-        <div className="flex items-center gap-4">
-          <button
-            aria-label="Varukorg"
-            className="text-stone-800 scale-95 active:scale-100 transition-transform duration-200 relative"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 0 1-8 0" />
-            </svg>
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
-          </button>
-        </div>
       </div>
 
       {/* ── Mobile menu ── */}

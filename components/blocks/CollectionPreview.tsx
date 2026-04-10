@@ -9,7 +9,6 @@ interface Category {
 
 interface CollectionData {
   heading?: string;
-  subheading?: string;
   categories?: Category[];
 }
 
@@ -18,8 +17,7 @@ interface Props {
 }
 
 const FALLBACK: CollectionData = {
-  heading: "Våra Avdelningar",
-  subheading: "Noggrant utvalda kollektioner för livets alla tillfällen.",
+  heading: "Noggrant utvalda kollektioner för livets alla tillfällen.",
   categories: [
     {
       name: "Dam",
@@ -51,7 +49,6 @@ const FALLBACK: CollectionData = {
 export default function CollectionPreview({ data }: Props) {
   const d = {
     heading:    data?.heading    ?? FALLBACK.heading,
-    subheading: data?.subheading ?? FALLBACK.subheading,
     categories: data?.categories?.length ? data.categories : FALLBACK.categories!,
   };
 
@@ -64,7 +61,6 @@ export default function CollectionPreview({ data }: Props) {
             <h2 className="font-(family-name:--font-manrope) text-5xl font-bold tracking-tighter mb-4 text-on-surface">
               {d.heading}
             </h2>
-            <p className="text-secondary font-light text-xl">{d.subheading}</p>
           </div>
         </div>
 

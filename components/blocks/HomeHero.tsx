@@ -21,7 +21,7 @@ const FALLBACK = {
   ctaLabel: "Se vårt sortiment",
   ctaHref: "#collection",
   image: {
-    url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDmqIpNQH_vWKwngta9L0T3bUAlNXdexkNfHFcKifOcabOLF6z0aO4oDip-9qW2O2lNvi4msz4Cg7wKIrVzd9jrJ6MzvB5o_uVN3Ry239z_xukptbM1jOswvhHvLBd16TXnFqFjbHQ-Ptn2UnGSxrJSmXEX6lqEfIip24-7Z6QwqNVfmjr6nNNF2Y6x35U9ETz6etW_tGCEz5eUZVNGn-EDNoIXHD3LIMqjVKhHebm-NHBlh4iYlx7Y9s1QNir5alfqHlKXwZJ0RtLd",
+    url: "/Hero.png",
     alt: "Premium leather shoes on minimal concrete pedestal",
   },
 };

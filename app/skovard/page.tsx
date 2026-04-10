@@ -20,7 +20,6 @@ interface Step     { stepTitle: string; body: string }
 interface Material {
   materialKey: string;
   title:       string;
-  icon:        string;
   intro:       string;
   steps:       Step[];
   proTip:      string;
@@ -30,7 +29,6 @@ const FALLBACK_MATERIALS: Material[] = [
   {
     materialKey: "lader",
     title:       "Läder",
-    icon:        "🟫",
     intro:
       "Äkta läder är ett naturmaterial som kräver regelbunden vård för att behålla sin form, lyster och hållbarhet. Med rätt rutiner kan ett par läderskor hålla i decennier.",
     steps: [
@@ -66,7 +64,6 @@ const FALLBACK_MATERIALS: Material[] = [
   {
     materialKey: "nubuck",
     title:       "Nubuck & Mocka",
-    icon:        "🪨",
     intro:
       "Nubuck och mocka ger ett sofistikerat, matt utseende men är känsligare för fukt och smuts än blankt läder. Med rätt verktyg och rutin bevarar du ytan länge.",
     steps: [
@@ -97,7 +94,6 @@ const FALLBACK_MATERIALS: Material[] = [
   {
     materialKey: "textil",
     title:       "Textil",
-    icon:        "🧵",
     intro:
       "Textilskor — löparskor, sneakers och tygbaserade modeller — är ofta lätta och andningsbara men behöver rätt hantering för att behålla form och funktion.",
     steps: [
@@ -128,7 +124,6 @@ const FALLBACK_MATERIALS: Material[] = [
   {
     materialKey: "vandring",
     title:       "Vandring",
-    icon:        "🥾",
     intro:
       "Vandringsskor utsätts för tuffa förhållanden — grus, lera, fukt och temperaturväxlingar. Regelbunden service förlänger livslängden och bibehåller viktiga funktioner som vattentäthet och grepp.",
     steps: [
@@ -164,7 +159,6 @@ const FALLBACK_MATERIALS: Material[] = [
   {
     materialKey: "syntet",
     title:       "Syntet",
-    icon:        "✨",
     intro:
       "Syntetiska material — PU-läder, mikrofiber och vattenavvisande ytmaterial — är lättskött men inte underhållsfritt. Rätt behandling bevarar både utseende och funktion.",
     steps: [
@@ -260,7 +254,6 @@ export default async function SkoVardPage() {
                   href={`#${anchorId(m.materialKey)}`}
                   className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap bg-surface-container text-secondary hover:bg-primary hover:text-white transition-all duration-200"
                 >
-                  <span>{m.icon}</span>
                   <span>{NAV_LABELS[m.materialKey] ?? m.title}</span>
                 </a>
               ))}
@@ -279,7 +272,6 @@ export default async function SkoVardPage() {
               {/* Section header */}
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 mb-16 items-end">
                 <div>
-                  <div className="text-5xl mb-4">{material.icon}</div>
                   <h2 className="font-(family-name:--font-manrope) text-5xl font-bold tracking-tighter text-on-surface">
                     {material.title}
                   </h2>

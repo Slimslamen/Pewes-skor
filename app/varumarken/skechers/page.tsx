@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SkechersHero from "@/components/blocks/SkechersHero";
 import SkechersScroll from "@/components/blocks/SkechersScroll";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
@@ -45,41 +46,7 @@ export default function SkechersPage() {
       <Header links={brandLinks} />
       <main className="pt-20">
 
-        {/* ── HERO: full width, bold name, thick primary accent bar ── */}
-        <section className="bg-stone-50 min-h-screen flex flex-col justify-center px-6 py-24">
-          <div className="max-w-screen-xl mx-auto w-full">
-
-            <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.4em] text-outline block mb-10">
-              Since 1992 · El Monte, California
-            </span>
-
-            <h1 className="font-(family-name:--font-manrope) font-black tracking-tighter text-stone-900 leading-none mb-6"
-              style={{ fontSize: "clamp(3rem, 14vw, 11rem)" }}>
-              SKECHERS
-            </h1>
-
-            {/* Thick primary accent bar — the signature visual element */}
-            <div className="h-2 w-full bg-primary mb-10" />
-
-            <div className="flex flex-col md:flex-row md:items-end gap-10">
-              <p className="font-(family-name:--font-manrope) text-xl md:text-2xl font-light text-secondary max-w-lg leading-relaxed">
-                Memory Foam-komfort möter California-design. Skor för sport, vardag och allt däremellan.
-              </p>
-
-              {/* Tech tags */}
-              <div className="md:ml-auto flex flex-wrap gap-2 shrink-0">
-                {TECH_TAGS.map((tag) => (
-                  <span
-                    key={tag}
-                    className="font-(family-name:--font-inter) text-[10px] uppercase tracking-widest border border-outline/40 text-outline px-3 py-1.5"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <SkechersHero techTags={TECH_TAGS} />
         {/* ── HERITAGE + STATS + scroll-scrubbed rotating shoe ── */}
         <SkechersScroll stats={STATS} />
 

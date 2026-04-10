@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import RiekerHero from "@/components/blocks/RiekerHero";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -47,46 +48,7 @@ export default function RiekerPage() {
       <Header links={brandLinks} />
       <main className="pt-20">
 
-        {/* ── HERO: vertical split — brand name left, ANTISTRESS philosophy right ── */}
-        <section className="min-h-screen bg-surface flex items-center px-6 py-24">
-          <div className="max-w-screen-xl mx-auto w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
-
-              {/* Left half: brand name + founding detail */}
-              <div className="flex flex-col justify-between border-r border-outline-variant/30 pr-0 lg:pr-16 pb-12 lg:pb-0">
-                <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.35em] text-outline">
-                  Est. 1874 · Tuttlingen, Deutschland
-                </span>
-
-                <div>
-                  <h1 className="font-(family-name:--font-manrope) text-[16vw] lg:text-[9rem] font-extrabold tracking-tighter text-stone-900 leading-none">
-                    RIEKER
-                  </h1>
-                  <p className="font-(family-name:--font-manrope) text-lg text-secondary mt-6 font-light">
-                    Skor för det verkliga livet. Varje dag.
-                  </p>
-                </div>
-
-                <span className="text-3xl text-outline animate-bounce self-start">↓</span>
-              </div>
-
-              {/* Right half: ANTISTRESS as large typography + intro */}
-              <div className="flex flex-col justify-center pl-0 lg:pl-16 pt-12 lg:pt-0">
-                <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.35em] text-primary block mb-6">
-                  Riekers Filosofi
-                </span>
-                <p className="font-(family-name:--font-manrope) font-black tracking-tighter text-stone-900 leading-none mb-8"
-                  style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>
-                  ANTI<br />STRESS
-                </p>
-                <p className="font-(family-name:--font-inter) text-base text-secondary leading-relaxed max-w-sm">
-                  Lätt. Flexibel. Rymlig. Tre principer som vuxit fram under 150 år av skotillverkning och som utgör grunden i varje Rieker-modell.
-                </p>
-              </div>
-
-            </div>
-          </div>
-        </section>
+        <RiekerHero />
 
         {/* ── ANTISTRESS PILLARS: numbered cards with top rule ── */}
         <section className="bg-stone-50 py-24">
