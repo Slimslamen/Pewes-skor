@@ -76,3 +76,58 @@ export const damPageQuery = defineQuery(`
     }
   }
 `);
+
+/* ── Shoe care guide ── */
+export const shoeCarePageQuery = defineQuery(`
+  *[_type == "shoeCarePage"][0] {
+    pageTitle,
+    pageSubtitle,
+    materials[] {
+      materialKey,
+      title,
+      icon,
+      intro,
+      steps[] { stepTitle, body },
+      proTip
+    }
+  }
+`);
+
+/* ── Nyheter index (all posts, newest first) ── */
+export const nyheterIndexQuery = defineQuery(`
+  *[_type == "nyhetPost"] | order(publishedAt desc) {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    season,
+    excerpt,
+    coverImage { asset->{ url }, alt }
+  }
+`);
+
+/* ── Nyheter single post ── */
+export const nyhetPostQuery = defineQuery(`
+  *[_type == "nyhetPost" && slug.current == $slug][0] {
+    title,
+    "slug": slug.current,
+    publishedAt,
+    season,
+    excerpt,
+    coverImage { asset->{ url }, alt },
+    editorial { heading, body },
+    products[] {
+      brand,
+      name,
+      description,
+      price,
+      image { asset->{ url }, alt }
+    }
+  }
+`);
+
+/* ── Nyheter slugs (for generateStaticParams) ── */
+export const nyheterSlugsQuery = defineQuery(`
+  *[_type == "nyhetPost" && defined(slug.current)] {
+    "slug": slug.current
+  }
+`);

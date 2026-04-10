@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Inter } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
+import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
+import { siteConfig } from "@/lib/seo";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -16,9 +18,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Pewes Skor — Skor med känsla sedan generationer",
-  description:
-    "Sedan generationer har Pewes Skor varit platsen där hantverk möter personlig service. Storgatan 11, Anderstorp.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    template: `%s | ${siteConfig.shortName}`,
+    default:  `${siteConfig.shortName} — Skor med känsla sedan generationer`,
+  },
+  description: siteConfig.description,
+  keywords:    siteConfig.keywords,
+  authors:     [{ name: siteConfig.name, url: siteConfig.url }],
+  creator:     siteConfig.name,
+  publisher:   siteConfig.name,
+  alternates:  { canonical: siteConfig.url },
+  openGraph: {
+    siteName: siteConfig.name,
+    locale:   "sv_SE",
+    type:     "website",
+  },
+  robots: {
+    index:  true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
 };
 
 export default function RootLayout({
@@ -30,10 +50,10 @@ export default function RootLayout({
     <html lang="sv" className="scroll-smooth">
       <body
         className={`${manrope.variable} ${inter.variable} min-h-dvh flex flex-col antialiased`}
-        style={{
-          fontFamily: "var(--font-inter), sans-serif",
-        }}
+        style={{ fontFamily: "var(--font-inter), sans-serif" }}
       >
+        {/* Site-wide structured data — appears on every page */}
+        <LocalBusinessJsonLd />
         {children}
         <SanityLive />
       </body>

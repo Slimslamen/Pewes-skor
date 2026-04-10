@@ -23,9 +23,16 @@ const BRANDS_DROPDOWN = [
   { label: "Skechers", href: "/varumarken/skechers" },
 ];
 
+const SORTIMENT_DROPDOWN = [
+  { label: "Herr", href: "/skor/herr" },
+  { label: "Dam",  href: "/skor/dam" },
+  { label: "Barn", href: "/skor/barn" },
+];
+
 const defaultLinks: NavLink[] = [
-  { label: "Collection", href: "/skor" },
+  { label: "Sortiment",  href: "/skor",      dropdown: SORTIMENT_DROPDOWN },
   { label: "Varumärken", href: "/varumarken", dropdown: BRANDS_DROPDOWN },
+  { label: "Blogg",      href: "/blogg" },
   { label: "Journal",    href: "/journal" },
 ];
 

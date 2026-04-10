@@ -4,6 +4,7 @@ interface Product {
   brand?: string;
   name?: string;
   price?: string;
+  description?: string;
   image?: { url?: string; alt?: string };
 }
 
@@ -122,6 +123,11 @@ export default function ProductGrid({ products }: Props) {
               <h3 className="text-lg font-medium text-stone-900 font-(family-name:--font-manrope)">
                 {product.name}
               </h3>
+              {product.description && (
+                <p className="text-stone-400 text-xs font-light leading-snug line-clamp-2 font-(family-name:--font-inter)">
+                  {product.description}
+                </p>
+              )}
               <p className="text-stone-500 font-light text-sm tracking-tight">
                 {product.price}
               </p>

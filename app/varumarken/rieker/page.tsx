@@ -1,0 +1,133 @@
+import type { Metadata } from "next";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { generatePageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = generatePageMetadata({
+  title:       "Rieker",
+  description:
+    "Rieker skor hos Pewes Skor i Anderstorp. ANTISTRESS-teknologi, lättvikt och komfort för hela dagen sedan 1874 — utforska hela Rieker-kollektionen.",
+  path:        "/varumarken/rieker",
+});
+
+const brandLinks = [
+  { label: "Sortiment",  href: "/skor" },
+  { label: "Varumärken", href: "/varumarken", active: true },
+  { label: "Blogg",      href: "/blogg" },
+  { label: "Journal",    href: "/journal" },
+];
+
+const PILLARS = [
+  {
+    num: "01",
+    title: "Lättvikt",
+    body: "Materialen är noggrant valda för att minimera vikt utan att ge avkall på hållbarhet. Foten tröttas aldrig ut.",
+  },
+  {
+    num: "02",
+    title: "Flexibilitet",
+    body: "Sulan följer fotens naturliga rörelse. Inget motstånd, inget tryck — bara naturlig komfort i varje steg.",
+  },
+  {
+    num: "03",
+    title: "Extra utrymme",
+    body: "Tåboxen och breddpassformen ger foten luft att andas. Inga klämmande skor, inga skavsår.",
+  },
+];
+
+export default function RiekerPage() {
+  return (
+    <>
+      <BreadcrumbJsonLd crumbs={[
+        { name: "Hem",        path: "/" },
+        { name: "Varumärken", path: "/varumarken" },
+        { name: "Rieker",     path: "/varumarken/rieker" },
+      ]} />
+      <Header links={brandLinks} />
+      <main className="pt-20">
+
+        {/* ── HERO: vertical split — brand name left, ANTISTRESS philosophy right ── */}
+        <section className="min-h-screen bg-surface flex items-center px-6 py-24">
+          <div className="max-w-screen-xl mx-auto w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px]">
+
+              {/* Left half: brand name + founding detail */}
+              <div className="flex flex-col justify-between border-r border-outline-variant/30 pr-0 lg:pr-16 pb-12 lg:pb-0">
+                <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.35em] text-outline">
+                  Est. 1874 · Tuttlingen, Deutschland
+                </span>
+
+                <div>
+                  <h1 className="font-(family-name:--font-manrope) text-[16vw] lg:text-[9rem] font-extrabold tracking-tighter text-stone-900 leading-none">
+                    RIEKER
+                  </h1>
+                  <p className="font-(family-name:--font-manrope) text-lg text-secondary mt-6 font-light">
+                    Skor för det verkliga livet. Varje dag.
+                  </p>
+                </div>
+
+                <span className="text-3xl text-outline animate-bounce self-start">↓</span>
+              </div>
+
+              {/* Right half: ANTISTRESS as large typography + intro */}
+              <div className="flex flex-col justify-center pl-0 lg:pl-16 pt-12 lg:pt-0">
+                <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.35em] text-primary block mb-6">
+                  Riekers Filosofi
+                </span>
+                <p className="font-(family-name:--font-manrope) font-black tracking-tighter text-stone-900 leading-none mb-8"
+                  style={{ fontSize: "clamp(2.5rem, 8vw, 5rem)" }}>
+                  ANTI<br />STRESS
+                </p>
+                <p className="font-(family-name:--font-inter) text-base text-secondary leading-relaxed max-w-sm">
+                  Lätt. Flexibel. Rymlig. Tre principer som vuxit fram under 150 år av skotillverkning och som utgör grunden i varje Rieker-modell.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ── ANTISTRESS PILLARS: numbered cards with top rule ── */}
+        <section className="bg-stone-50 py-24">
+          <div className="max-w-screen-xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {PILLARS.map(({ num, title, body }) => (
+                <div key={num} className="border-t-2 border-primary pt-8">
+                  <span className="font-(family-name:--font-manrope) text-5xl font-thin text-outline block mb-6">
+                    {num}
+                  </span>
+                  <h3 className="font-(family-name:--font-manrope) text-2xl font-bold text-stone-900 mb-4">
+                    {title}
+                  </h3>
+                  <p className="font-(family-name:--font-inter) text-sm text-secondary leading-relaxed">
+                    {body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── HERITAGE: left-aligned, large light heading ── */}
+        <section className="bg-white py-32">
+          <div className="max-w-screen-xl mx-auto px-6">
+            <div className="max-w-3xl">
+              <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-10">
+                150 År av Komfort
+              </span>
+              <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight mb-12">
+                Rieker har under 150 år tillverkat skor som kroppen tackar dig för.
+              </h2>
+              <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
+                Sedan starten i Tuttlingen 1874 har Rieker levererat skor för det verkliga livet. ANTISTRESS-filosofin bygger på att skon ska vara lätt, flexibel och skonsam mot foten hela dagen — oavsett om du promenerar i city, arbetar på stan eller njuter av en dagsutflykt i naturen.
+              </p>
+            </div>
+          </div>
+        </section>
+
+      </main>
+      <Footer />
+    </>
+  );
+}
