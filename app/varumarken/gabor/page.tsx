@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GaborHero from "@/components/blocks/GaborHero";
+import GaborFeatures from "@/components/blocks/GaborFeatures";
+import Reveal from "@/components/blocks/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -12,13 +13,6 @@ export const metadata: Metadata = generatePageMetadata({
     "Gabor damskor hos Pewes Skor i Anderstorp. Tyskt hantverk, naturmaterial och exceptionell passform sedan 1949 — utforska hela Gabor-kollektionen.",
   path:        "/varumarken/gabor",
 });
-
-const brandLinks = [
-  { label: "Sortiment",  href: "/skor" },
-  { label: "Varumärken", href: "/varumarken", active: true },
-  { label: "Blogg",      href: "/blogg" },
-  { label: "Journal",    href: "/journal" },
-];
 
 type Feature = {
   num:     string;
@@ -68,60 +62,20 @@ export default function GaborPage() {
         { name: "Varumärken", path: "/varumarken" },
         { name: "Gabor",      path: "/varumarken/gabor" },
       ]} />
-      <Header links={brandLinks} />
+      <Header />
       <main>
 
         <GaborHero />
 
         {/* ── ALTERNATING FEATURE ROWS ── */}
-        <section className="bg-white">
-          {FEATURES.map(({ num, eyebrow, title, body, image, alt, reverse }) => (
-            <div
-              key={num}
-              className="grid grid-cols-1 items-stretch md:grid-cols-2"
-            >
-              {/* Image */}
-              <div
-                className={`relative aspect-[4/3] md:aspect-auto md:min-h-[70vh] ${
-                  reverse ? "md:order-2" : "md:order-1"
-                } bg-stone-100`}
-              >
-                <Image
-                  src={image}
-                  alt={alt}
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Text */}
-              <div
-                className={`flex flex-col justify-center px-8 py-20 md:px-16 lg:px-24 ${
-                  reverse ? "md:order-1" : "md:order-2"
-                } ${reverse ? "bg-stone-50" : "bg-white"}`}
-              >
-                <span className="font-(family-name:--font-inter) mb-6 block text-xs uppercase tracking-[0.3em] text-primary">
-                  {num} · {eyebrow}
-                </span>
-                <h2 className="font-(family-name:--font-manrope) mb-8 text-3xl font-light leading-tight text-stone-900 md:text-4xl lg:text-5xl">
-                  {title}
-                </h2>
-                <div className="mb-8 h-px w-16 bg-primary" />
-                <p className="font-(family-name:--font-inter) max-w-md text-base leading-relaxed text-secondary">
-                  {body}
-                </p>
-              </div>
-            </div>
-          ))}
-        </section>
+        <GaborFeatures features={FEATURES} />
 
   {/* ── HERITAGE: pull-quote left, body right ── */}
         <section className="bg-stone-50 py-32">
-          <div className="max-w-screen-xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
               {/* Left: pull-quote */}
-              <div>
+              <Reveal from="left">
                 <blockquote className="font-(family-name:--font-manrope) text-3xl md:text-4xl font-light text-stone-900 leading-relaxed italic">
                   &ldquo;En välsittande sko är en välmående fot.&rdquo;
                 </blockquote>
@@ -129,10 +83,10 @@ export default function GaborPage() {
                 <p className="mt-4 font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary">
                   Gabors filosofi sedan 1949
                 </p>
-              </div>
+              </Reveal>
 
               {/* Right: brand story */}
-              <div className="space-y-6">
+              <Reveal from="right" delay={0.1} className="space-y-6">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block">
                   Tyskt Damhantverk
                 </span>
@@ -142,7 +96,7 @@ export default function GaborPage() {
                 <p className="font-(family-name:--font-inter) text-base text-outline leading-relaxed">
                   Hos Pewes Skor i Anderstorp hittar du ett noggrant urval av Gabors säsongsmodeller, utvalda med den svenska damfoten i fokus.
                 </p>
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>

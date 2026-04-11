@@ -1,4 +1,6 @@
-import Image from "next/image";
+"use client";
+
+import Reveal from "./Reveal";
 
 interface HeritageImage {
   url?: string;
@@ -48,8 +50,8 @@ export default function EccoHeritage({ data }: Props) {
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-      <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary mb-8 block">
+      <Reveal className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-white mb-8 block">
         {d.eyebrow}
       </span>
       <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light leading-tight text-white mb-12">
@@ -58,7 +60,7 @@ export default function EccoHeritage({ data }: Props) {
       <p className="text-lg text-white/90 font-light leading-relaxed mb-16">
         {d.body}
       </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

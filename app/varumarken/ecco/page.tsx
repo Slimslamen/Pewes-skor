@@ -15,13 +15,6 @@ export const metadata: Metadata = generatePageMetadata({
   path:        "/varumarken/ecco",
 });
 
-const eccoLinks = [
-  { label: "Sortiment",  href: "/skor" },
-  { label: "Varumärken", href: "/varumarken", active: true },
-  { label: "Blogg",      href: "/blogg" },
-  { label: "Journal",    href: "/journal" },
-];
-
 export default async function EccoPage() {
   const { data: page } = await sanityFetch({ query: eccoPageQuery });
 
@@ -30,7 +23,7 @@ export default async function EccoPage() {
 
   return (
     <>
-      <Header links={eccoLinks} />
+      <Header />
       <main className="pt-10">
         <EccoHero data={page?.hero} />
 

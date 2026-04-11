@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "./Reveal";
 
 interface Category {
   name: string;
@@ -56,21 +59,24 @@ export default function CollectionPreview({ data }: Props) {
     <section className="py-32 bg-surface" id="collection">
       <div className="max-w-screen-2xl mx-auto px-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <Reveal className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div className="max-w-2xl">
             <h2 className="font-(family-name:--font-manrope) text-5xl font-bold tracking-tighter mb-4 text-on-surface">
               {d.heading}
             </h2>
           </div>
-        </div>
+        </Reveal>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {d.categories.map((cat, i) => (
-            <Link
+            <Reveal
               key={cat.name}
+              delay={i * 0.12}
+            >
+            <Link
               href={cat.href}
-              className={`group cursor-pointer ${i === 1 ? "md:translate-y-12" : ""}`}
+              className="group cursor-pointer block"
             >
               <div className="overflow-hidden mb-6 aspect-[3/4]">
                 {cat.image?.url ? (
@@ -94,6 +100,7 @@ export default function CollectionPreview({ data }: Props) {
                 </span>
               </div>
             </Link>
+            </Reveal>
           ))}
         </div>
       </div>

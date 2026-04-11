@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/blocks/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import { shoeCarePageQuery } from "@/sanity/lib/queries";
@@ -270,7 +271,7 @@ export default async function SkoVardPage() {
               className="scroll-mt-36"
             >
               {/* Section header */}
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 mb-16 items-end">
+              <Reveal className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-12 mb-16 items-end">
                 <div>
                   <h2 className="font-(family-name:--font-manrope) text-5xl font-bold tracking-tighter text-on-surface">
                     {material.title}
@@ -280,13 +281,14 @@ export default async function SkoVardPage() {
                 <p className="text-secondary font-light text-lg leading-relaxed">
                   {material.intro}
                 </p>
-              </div>
+              </Reveal>
 
               {/* Steps */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                 {material.steps.map((step, si) => (
-                  <div
+                  <Reveal
                     key={si}
+                    delay={(si % 2) * 0.1}
                     className={`bg-surface-container-low p-8 rounded-xl border border-outline-variant/20 ${
                       si === 0 && material.steps.length % 2 !== 0 ? "md:col-span-2" : ""
                     }`}
@@ -304,20 +306,20 @@ export default async function SkoVardPage() {
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
 
               {/* Pro tip */}
               {material.proTip && (
-                <div className="bg-primary/5 border-l-4 border-primary px-8 py-6 rounded-r-xl">
+                <Reveal className="bg-primary/5 border-l-4 border-primary px-8 py-6 rounded-r-xl">
                   <p className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary font-bold mb-2">
                     Pro-tips
                   </p>
                   <p className="text-on-surface font-light leading-relaxed">
                     {material.proTip}
                   </p>
-                </div>
+                </Reveal>
               )}
 
               {/* Divider (not on last) */}
@@ -330,7 +332,7 @@ export default async function SkoVardPage() {
 
         {/* ── CTA banner ─────────────────────────────────────────── */}
         <section className="max-w-screen-2xl mx-auto px-6 mt-32">
-          <div className="bg-inverse-surface rounded-xl px-10 py-14 flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <Reveal className="bg-inverse-surface rounded-xl px-10 py-14 flex flex-col md:flex-row md:items-center justify-between gap-8">
             <div>
               <p className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-white/50 mb-3">
                 Personlig rådgivning
@@ -348,7 +350,7 @@ export default async function SkoVardPage() {
             >
               Hitta till oss →
             </Link>
-          </div>
+          </Reveal>
         </section>
 
       </main>

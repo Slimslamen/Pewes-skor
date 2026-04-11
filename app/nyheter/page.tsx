@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import NyheterList, { type NyhetCard } from "@/components/blocks/NyheterList";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import { nyheterIndexQuery } from "@/sanity/lib/queries";
@@ -17,15 +17,6 @@ export const metadata: Metadata = generatePageMetadata({
 
 // ── Fallback (displayed before any Sanity documents exist) ───────────────────
 
-interface NyhetCard {
-  title:       string;
-  slug:        string;
-  publishedAt: string;
-  season:      string;
-  excerpt:     string;
-  coverImage?: { url?: string; alt?: string } | null;
-}
-
 const FALLBACK_POSTS: NyhetCard[] = [
   {
     title:       "Sommarens nyheter 2026",
@@ -34,6 +25,8 @@ const FALLBACK_POSTS: NyhetCard[] = [
     season:      "Sommar 2026",
     excerpt:
       "Solen lockar fram de ljusaste skorna. Utforska vår nysläppta sommarkollektion — från luftiga sandaler till färgglada sneakers och tidlösa loafers för de varmaste dagarna.",
+    body:
+      "Sommarkollektionen 2026 handlar om ljus, luftighet och material som låter foten andas när temperaturen stiger. Vi har handplockat modeller från ECCO, Gabor och Skechers som alla bär den där självklara sommarkänslan — men utan att kompromissa med komfort eller hållbarhet.\n\nFör dam har vi satsat stort på mjuka sandaler i naturläder, med justerbara remmar och formade innersulor som klarar en hel dag på stan. Gabors nya remsandal i benvitt är en av säsongens mest efterfrågade modeller, och ECCO:s Flash-serie har fått både nya färger och en uppdaterad passform.\n\nPå herrsidan dominerar lätta sneakers och slip-ons i mesh och perforerat läder. Skechers Air-Cooled Memory Foam gör comeback i en renare, mer vuxen silhuett — perfekt för dig som vill ha komforten men inte det sportiga utseendet.\n\nKom in till butiken i Anderstorp och prova — hela kollektionen finns på plats från och med den 15 april.",
     coverImage: {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuDFAWcfPkJ6h9yAnoCHnZ8mzjeC9S9V4IPWtSfAsegdJJYWqPc9nw6UCiu42nuwaavV7P0ykPLI-a_ZOmTBmWfPk9jJh6G5ckEtU8s_86-j2ahrla63P8C3BOPpiGZ3e0ltFJ_jZXyhnA65RUJGuuLKmGuVslsTTHKbr7GUT8c5ZssTKbfKj1VjRGWqxCoEUdoUMeE-Ou0QHILANAa4rIyL0LST96dpAQ3oaqcCFSe41jQW0kyLO-ARAUWMWJaLhXp0xHhlPS9aCZ",
       alt: "Sommarens skokollektion 2026",
@@ -46,6 +39,8 @@ const FALLBACK_POSTS: NyhetCard[] = [
     season:      "Vår 2026",
     excerpt:
       "Vårens kollektion är här — med mjuka pasteller, klassiska läderloafers och lättviktiga sneakers för de första varma dagarna.",
+    body:
+      "När snön börjar smälta lyfts också garderoben. Vårkollektionen 2026 är byggd kring mjuka pasteller, jordnära toner och material som passar den svenska övergångsperioden — då marken fortfarande är fuktig men vinterkängorna känns overkill.\n\nLoafern står i centrum i år. Vi har tagit in Gabors nya pennyloafer i tre färger, ECCO:s klassiker i mörkbrunt kalvläder och Riekers lättviktsmodell med elastisk krage. Gemensamt för alla tre: de är gjorda för att bäras utan strumpor när det blir varmare, och med strumpor tills dess.\n\nVid sidan av loafrarna hittar du årets första sneakers i det ljusare segmentet — rena silhuetter, dämpade färger och sulor som tål en blöt vårgata. Ett litet men välvalt urval, precis som vi vill ha det.",
     coverImage: {
       url: "https://lh3.googleusercontent.com/aida-public/AB6AXuBk1thIjXgaGZUZykC15MQL5PkQJuyAvSlPfNEIF-A5_7122HbX29C4hcTy7_ecLsHyKH1RO0xE3Upli1fg9PPMOwWDuFm0U3m0Yc3utzxrxJjS5cYJXR7Tr_yeMfQpwuhqnRltRfQJG0wjwerH9h-G0oPaiWX763VekWTTgqi5cNi2u4e-PWKw3po_Tcy1jUXnnZDSf6xZohHIEMrxqDk5gbXfrdMSYdDdPAYBYixLgrc1DtYQyg3cXMW724pVDwPQ-ROQPmGw3ryV",
       alt: "Vårens skokollektion 2026",
@@ -53,18 +48,9 @@ const FALLBACK_POSTS: NyhetCard[] = [
   },
 ];
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("sv-SE", {
-    day:   "numeric",
-    month: "long",
-    year:  "numeric",
-  });
-}
-
 export default async function NyheterPage() {
   const { data: posts } = await sanityFetch({ query: nyheterIndexQuery });
   const items = (posts?.length ? posts : FALLBACK_POSTS) as NyhetCard[];
-  const [featured, ...rest] = items;
 
   return (
     <>
@@ -94,91 +80,7 @@ export default async function NyheterPage() {
             </p>
           </div>
 
-          {/* Featured post */}
-          <Link
-            href={`/nyheter/${featured.slug}`}
-            className="group grid grid-cols-1 lg:grid-cols-2 gap-0 mb-20 overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-shadow duration-500 bg-surface-container-low"
-          >
-            <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[480px] overflow-hidden">
-              {featured.coverImage?.url ? (
-                <Image
-                  src={featured.coverImage.url}
-                  alt={featured.coverImage.alt ?? featured.title}
-                  fill
-                  priority
-                  className="object-cover transition-transform duration-700"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              ) : (
-                <div className="w-full h-full bg-surface-container" />
-              )}
-              {/* Season badge */}
-              <div className="absolute top-6 left-6 bg-primary text-white px-4 py-2 rounded-sm text-xs font-bold uppercase tracking-widest">
-                {featured.season}
-              </div>
-            </div>
-
-            <div className="flex flex-col justify-center p-10 lg:p-14">
-              <p className="font-(family-name:--font-inter) text-xs text-outline mb-4">
-                {formatDate(featured.publishedAt)}
-              </p>
-              <h2 className="font-(family-name:--font-manrope) text-3xl md:text-4xl font-bold text-on-surface tracking-tight leading-tight mb-5 group-hover:text-primary transition-colors duration-300">
-                {featured.title}
-              </h2>
-              <p className="text-secondary font-light leading-relaxed mb-8 line-clamp-4">
-                {featured.excerpt}
-              </p>
-              <span className="inline-flex items-center gap-2 font-(family-name:--font-manrope) text-xs font-bold uppercase tracking-widest text-on-surface group-hover:text-primary transition-colors">
-                Utforska kollektion
-                <span className="transition-transform group-hover:translate-x-1">→</span>
-              </span>
-            </div>
-          </Link>
-
-          {/* Remaining posts */}
-          {rest.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-              {rest.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={`/nyheter/${post.slug}`}
-                  className="group overflow-hidden rounded-xl bg-surface-container-low shadow-sm hover:shadow-lg transition-shadow duration-500"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    {post.coverImage?.url ? (
-                      <Image
-                        src={post.coverImage.url}
-                        alt={post.coverImage.alt ?? post.title}
-                        fill
-                        className="object-cover transition-transform duration-700"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-surface-container" />
-                    )}
-                    <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest">
-                      {post.season}
-                    </div>
-                  </div>
-                  <div className="p-8">
-                    <p className="text-xs text-outline mb-3">
-                      {formatDate(post.publishedAt)}
-                    </p>
-                    <h3 className="font-(family-name:--font-manrope) text-xl font-bold text-on-surface tracking-tight leading-tight mb-3 group-hover:text-primary transition-colors duration-300">
-                      {post.title}
-                    </h3>
-                    <p className="text-secondary font-light text-sm leading-relaxed line-clamp-3 mb-6">
-                      {post.excerpt}
-                    </p>
-                    <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-outline group-hover:text-primary transition-colors font-(family-name:--font-manrope)">
-                      Utforska
-                      <span className="transition-transform group-hover:translate-x-1">→</span>
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          <NyheterList posts={items} />
 
         </div>
       </main>

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "./Reveal";
 
 interface AboutData {
   eyebrow?: string;
@@ -40,7 +43,7 @@ export default function AboutSection({ data }: Props) {
     <section className="py-32 bg-surface-container-low">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
         {/* Image */}
-        <div className="relative order-2 lg:order-1">
+        <Reveal from="left" className="relative order-2 lg:order-1">
           <div className="absolute -top-12 -left-12 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl" />
           {d.image?.url && (
             <div className="relative rounded-xl overflow-hidden shadow-2xl w-full aspect-[4/5]">
@@ -53,10 +56,10 @@ export default function AboutSection({ data }: Props) {
               />
             </div>
           )}
-        </div>
+        </Reveal>
 
         {/* Text */}
-        <div className="order-1 lg:order-2 space-y-8">
+        <Reveal from="right" delay={0.1} className="order-1 lg:order-2 space-y-8">
           <span className="font-(family-name:--font-inter) text-xs uppercase tracking-[0.2em] text-primary font-bold">
             {d.eyebrow}
           </span>
@@ -75,7 +78,7 @@ export default function AboutSection({ data }: Props) {
               <span className="inline-block transition-transform group-hover:translate-x-2">→</span>
             </Link>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

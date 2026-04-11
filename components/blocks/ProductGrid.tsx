@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Reveal from "./Reveal";
 
 interface Product {
   brand?: string;
@@ -94,8 +97,10 @@ export default function ProductGrid({ products }: Props) {
     <section className="max-w-screen-2xl mx-auto px-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
         {items.map((product, i) => (
-          <div
+          <Reveal
             key={`${product.brand}-${product.name}-${i}`}
+            delay={(i % 4) * 0.08}
+            amount={0.15}
             className={`group cursor-pointer ${
               i === 2 || i === 5 ? "lg:mt-12" : ""
             }`}
@@ -132,7 +137,7 @@ export default function ProductGrid({ products }: Props) {
                 {product.price}
               </p>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
 

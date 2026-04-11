@@ -3,6 +3,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkechersHero from "@/components/blocks/SkechersHero";
 import SkechersScroll from "@/components/blocks/SkechersScroll";
+import Reveal from "@/components/blocks/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -12,13 +13,6 @@ export const metadata: Metadata = generatePageMetadata({
     "Skechers skor hos Pewes Skor i Anderstorp. Memory Foam-komfort, breda passformar och innovativ design sedan 1992 — utforska hela Skechers-kollektionen.",
   path:        "/varumarken/skechers",
 });
-
-const brandLinks = [
-  { label: "Sortiment",  href: "/skor" },
-  { label: "Varumärken", href: "/varumarken", active: true },
-  { label: "Blogg",      href: "/blogg" },
-  { label: "Journal",    href: "/journal" },
-];
 
 const TECH_TAGS = ["Memory Foam", "Air-Cooled", "Wide Fit", "Vegan Options"];
 
@@ -43,7 +37,7 @@ export default function SkechersPage() {
         { name: "Varumärken", path: "/varumarken" },
         { name: "Skechers",   path: "/varumarken/skechers" },
       ]} />
-      <Header links={brandLinks} />
+      <Header />
       <main className="pt-20">
 
         <SkechersHero techTags={TECH_TAGS} />
@@ -53,11 +47,11 @@ export default function SkechersPage() {
 
         {/* ── MEMORY FOAM: dark section, two-column with spec grid ── */}
         <section className="bg-inverse-surface py-24">
-          <div className="max-w-screen-xl mx-auto px-6">
+          <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
               {/* Left: feature description */}
-              <div>
+              <Reveal from="left">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-6">
                   Signaturteknologi
                 </span>
@@ -67,10 +61,10 @@ export default function SkechersPage() {
                 <p className="font-(family-name:--font-inter) text-base text-stone-400 leading-relaxed">
                   Innersulor i Air-Cooled Memory Foam formar sig efter din unika fotprofil och ventilerar värme bort från foten. Resultatet: ett mjukt, svalt steg hela dagen lång.
                 </p>
-              </div>
+              </Reveal>
 
               {/* Right: 2×2 spec grid */}
-              <div className="grid grid-cols-2 gap-px bg-stone-700">
+              <Reveal from="right" delay={0.1} className="grid grid-cols-2 gap-px bg-stone-700">
                 {FOAM_SPECS.map(({ label, value }) => (
                   <div key={label} className="bg-stone-900 p-8">
                     <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-widest text-stone-500 block mb-3">
@@ -81,7 +75,7 @@ export default function SkechersPage() {
                     </span>
                   </div>
                 ))}
-              </div>
+              </Reveal>
 
             </div>
           </div>

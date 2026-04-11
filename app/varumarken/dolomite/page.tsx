@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import DolomiteHero from "@/components/blocks/DolomiteHero";
 import DolomiteContent from "@/components/blocks/DolomiteContent";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
@@ -11,13 +12,6 @@ export const metadata: Metadata = generatePageMetadata({
     "Dolomite vandringsskor hos Pewes Skor i Anderstorp. Över 125 år av italienskt bergshantverk och teknisk precision — utforska hela Dolomite-kollektionen.",
   path:        "/varumarken/dolomite",
 });
-
-const brandLinks = [
-  { label: "Sortiment",  href: "/skor" },
-  { label: "Varumärken", href: "/varumarken", active: true },
-  { label: "Blogg",      href: "/blogg" },
-  { label: "Journal",    href: "/journal" },
-];
 
 const TECH_FEATURES = [
   {
@@ -38,7 +32,7 @@ const TECH_FEATURES = [
   },
 ];
 
-export default function DolomiePage() {
+export default function DolomitePage() {
   return (
     <>
       <BreadcrumbJsonLd crumbs={[
@@ -46,8 +40,9 @@ export default function DolomiePage() {
         { name: "Varumärken", path: "/varumarken" },
         { name: "Dolomite",   path: "/varumarken/dolomite" },
       ]} />
-      <Header links={brandLinks} />
-      <main className="pt-20">
+      <Header />
+      <main>
+        <DolomiteHero />
         <DolomiteContent tech={TECH_FEATURES} />
       </main>
       <Footer />

@@ -68,13 +68,13 @@ export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "An
   });
 
   // ── Opacity: each image fades OUT before the next fades IN ──────────
-  // Every range explicitly spans [0, 1] so values stay locked at 0 outside
-  // their visible window. Zone 0 gets more dwell so the first text is readable.
-  const opacity0 = useTransform(scrollYProgress, [0.00, 0.18, 0.20, 1.00],                   [1, 1, 0, 0]);
-  const opacity1 = useTransform(scrollYProgress, [0.00, 0.20, 0.22, 0.38, 0.40, 1.00],       [0, 0, 1, 1, 0, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.00, 0.40, 0.42, 0.58, 0.60, 1.00],       [0, 0, 1, 1, 0, 0]);
-  const opacity3 = useTransform(scrollYProgress, [0.00, 0.60, 0.62, 0.76, 0.78, 1.00],       [0, 0, 1, 1, 0, 0]);
-  const opacity4 = useTransform(scrollYProgress, [0.00, 0.78, 0.80, 1.00],                   [0, 0, 1, 1]);
+  // Zone 4 (assembled) gets ~30% of scroll so the user sees it fully before
+  // the sticky frame releases.
+  const opacity0 = useTransform(scrollYProgress, [0.00, 0.12, 0.14, 1.00],                   [1, 1, 0, 0]);
+  const opacity1 = useTransform(scrollYProgress, [0.00, 0.14, 0.16, 0.26, 0.28, 1.00],       [0, 0, 1, 1, 0, 0]);
+  const opacity2 = useTransform(scrollYProgress, [0.00, 0.28, 0.30, 0.40, 0.42, 1.00],       [0, 0, 1, 1, 0, 0]);
+  const opacity3 = useTransform(scrollYProgress, [0.00, 0.42, 0.44, 0.53, 0.55, 1.00],       [0, 0, 1, 1, 0, 0]);
+  const opacity4 = useTransform(scrollYProgress, [0.00, 0.55, 0.58, 1.00],                   [0, 0, 1, 1]);
 
   // ── Display: switch to "none" once fully invisible ───────────────────
   // Prevents GPU compositing bleed-through when opacity = 0.
@@ -88,11 +88,11 @@ export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "An
   const displays = [disp0, disp1, disp2, disp3, disp4];
 
   return (
-    <div ref={containerRef} className="relative h-[420vh] md:h-[350vh]">
+    <div ref={containerRef} className="relative h-[500vh] md:h-[450vh]">
       {/* Sticky viewport frame */}
-      <div className="sticky top-0 h-screen flex flex-col mt-20">
-        {/* Title */}
-        <div className="pt-8 text-center shrink-0">
+      <div className="sticky top-0 h-screen flex flex-col">
+        {/* Title — pt clears the fixed site header so it's fully visible when stuck */}
+        <div className="pt-24 md:pt-28 text-center shrink-0">
           <h2 className="font-(family-name:--font-manrope) text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-on-surface">
             {sectionTitle}
           </h2>
@@ -100,7 +100,7 @@ export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "An
         </div>
 
         {/* Shoe + annotations */}
-        <div className="flex-1 flex flex-col lg:flex-row items-center md:mt-[-20rem] max-w-7xl mx-auto w-full px-6 pb-8">
+        <div className="flex-1 flex flex-col lg:flex-row items-center mt-12 md:mt-16 lg:mt-[-6rem] max-w-7xl mx-auto w-full px-6 pb-8">
           {/* ── Left 55%: scroll-indexed images ── */}
           <div className="w-full lg:w-[55%] flex items-center justify-center" style={{ pointerEvents: "none" }}>
             <div className="relative w-60 h-60 md:w-120 md:h-120 lg:w-150 lg:h-150">

@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "./Reveal";
 
 export default function FeaturedBanner() {
   return (
@@ -7,7 +10,7 @@ export default function FeaturedBanner() {
       <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[560px]">
 
         {/* Left — editorial text */}
-        <div className="flex flex-col justify-center px-10 py-20 md:px-16 lg:px-24 order-2 lg:order-1">
+        <Reveal from="left" className="flex flex-col justify-center px-10 py-20 md:px-16 lg:px-24 order-2 lg:order-1">
           <span className="font-(family-name:--font-inter) text-xs uppercase tracking-[0.2em] text-primary font-bold mb-6">
             Ny Kollektion · 2026
           </span>
@@ -50,10 +53,10 @@ export default function FeaturedBanner() {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
 
         {/* Right — image */}
-        <div className="relative order-1 lg:order-2 min-h-[360px] lg:min-h-0">
+        <Reveal from="right" className="relative order-1 lg:order-2 min-h-90 lg:min-h-0">
           <Image
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXWueTO72_4Vp8RNvWcEfrTNnIFpWBC6HJqhn234wOMAUoPPThRvKtqwH_NJyEzG1Bh_aT-aTnui-00yK5BEkaiBe4aSEzSpkjFAb84rCHg0_h_kUJprc5d46KEe4cf30PmOkxqLwyCHOM_cLZHVSZwfzPBYUmEYQ7nYPWQ8qRNXBZFHO-6SYrP8lnNRiEJXlfYETanWiEUEsgJ77EhlNL4Yqxm1mHy6MSEClH_6__wXYTtN2rS4cij1dvhGE9KOL2Bq3ONbaii2GQ"
             alt="Ny skokollektion 2026"
@@ -69,7 +72,7 @@ export default function FeaturedBanner() {
               Ny kollektion
             </p>
           </div>
-        </div>
+        </Reveal>
 
       </div>
     </section>

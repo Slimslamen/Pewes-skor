@@ -1,3 +1,7 @@
+"use client";
+
+import Reveal from "./Reveal";
+
 interface Brand {
   name: string;
 }
@@ -19,7 +23,7 @@ export default function BrandsBar({ data }: Props) {
 
   return (
     <section className="py-24 bg-surface">
-      <div className="max-w-screen-2xl mx-auto px-6">
+      <Reveal className="max-w-screen-2xl mx-auto px-6">
         <p className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.3em] text-outline mb-12 text-center">
           Varumärken vi bär
         </p>
@@ -33,7 +37,7 @@ export default function BrandsBar({ data }: Props) {
             </span>
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
