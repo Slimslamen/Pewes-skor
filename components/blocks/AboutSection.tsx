@@ -25,7 +25,7 @@ const FALLBACK: AboutData = {
   ctaHref: "#",
   image: {
     url: "https://lh3.googleusercontent.com/aida-public/AB6AXuB35ZrxF02880phzT7ssz7OnxfTjwwtp-dYdU__7EEkC_6kQHZiJ6kNpPfxKMpLMzOVXuEiO5P-ovcw9RnNmmqB68p17b8vQz1JYyYIi3BD_EVCj6Wu4o97n9lQ4_QMh7_EwbHaWQlvFEwQJ7LUzi0Fj8CzQxoA8A5PcOhbB_8a5h8KtPNgvrLase_OwKXNag66A5_NGf-Hdf4Zrm544tUZsoLSqduBVdxwHArKSn7XCdJFXHCwaGSjOaadn4T6bUZVxI8GzLtz_i-3",
-    alt: "Interior of Pewes Skor boutique with warm wood shelving",
+    alt: "Interior of Pewes Skor Logo boutique with warm wood shelving",
   },
 };
 

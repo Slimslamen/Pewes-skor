@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 interface FooterProps {
@@ -22,9 +23,13 @@ export default function Footer({ year = 2025 }: FooterProps) {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 py-20 max-w-7xl mx-auto">
         {/* Brand */}
         <div className="space-y-6">
-          <span className="font-(family-name:--font-manrope) text-lg font-bold uppercase tracking-widest text-stone-900">
-            Pewes Skor
-          </span>
+          <Image
+            src="/Logo.png"
+            alt="Pewes Skor Logo"
+            width={180}
+            height={60}
+            className="h-10 w-auto object-contain"
+          />
           <p className="font-(family-name:--font-inter) text-sm tracking-normal text-stone-500 leading-relaxed">
             © {year} Pewes Skor. Curator of Footwear.
             <br />

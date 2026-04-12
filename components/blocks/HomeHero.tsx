@@ -39,7 +39,7 @@ export default function HomeHero({ data }: Props) {
   const lines = d.heading.split("\n");
 
   return (
-    <section className="relative h-[795px] flex items-center px-6 md:px-12 overflow-hidden bg-surface-container">
+    <section className="relative min-h-screen flex items-center px-6 md:px-12 overflow-hidden bg-surface-container">
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         {d.image.url && (

@@ -23,7 +23,7 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <main className="pt-20">
+      <main>
         <HomeHero data={page?.hero} />
         <BrandsBar data={page?.brands} />
         <FeaturedBanner />

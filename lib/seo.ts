@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 /** Central site config — single source of truth for all SEO */
 export const siteConfig = {
   name:      "Pewes Skor i Anderstorp AB",
-  shortName: "Pewes Skor",
+  shortName: "Pewes Skor Logo",
+
   url:       "https://pewesskor.se",
   description:
     "Familjens skoaffär i Anderstorp sedan generationer. Noggrant utvalda skor från ECCO, Rieker, Gabor, Skechers och Dolomite — med personlig service.",
@@ -57,7 +58,7 @@ export function generatePageMetadata({
 }: PageSeoInput): Metadata {
   const canonicalUrl = `${siteConfig.url}${path}`;
   const fullTitle    = title
-    ? `${title} | ${siteConfig.shortName}`
+    ? `${title} | Pewes Skor Logo`
     : `${siteConfig.shortName} — Skor med känsla sedan generationer`;
   const desc = description ?? siteConfig.description;
 

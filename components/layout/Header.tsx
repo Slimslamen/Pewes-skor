@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
 
 interface NavLink {
@@ -41,6 +42,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   // Close desktop dropdown when clicking outside nav
@@ -54,11 +56,26 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, []);
 
+  // Change header background on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    document.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
+
   return (
-    <header className="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_20px_40px_rgba(15,15,15,0.04)]">
-      <div className="flex justify-between items-center px-6 py-4 w-full max-w-screen-2xl mx-auto">
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-surface/80 backdrop-blur-md shadow-[0_20px_40px_rgba(15,15,15,0.04)]" : "bg-transparent"}`}>
+      <div className="flex justify-between items-center px-6 pt-4 pb-8 w-full max-w-screen-2xl mx-auto">
         {/* ── Left: hamburger + desktop nav ── */}
-        <div className="flex items-center gap-8" ref={navRef}>
+        <div className="flex items-center" ref={navRef}>
           <button
             aria-label="Öppna meny"
             className="text-stone-800 scale-95 active:scale-100 transition-transform duration-200 sm:hidden"
@@ -83,7 +100,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8 pt-2">
             {links.map((link) =>
               link.dropdown ? (
                 <div key={link.label} className="relative">
@@ -93,7 +110,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                     onMouseLeave={() => setOpenDropdown(null)}
                     onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                     className={`flex items-center gap-1 font-(family-name:--font-manrope) font-medium tracking-tight transition-colors duration-300 ${
-                      link.active ? "text-primary font-semibold" : "text-stone-500 hover:text-stone-900"
+                      link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -134,7 +151,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                         onClick={() => setOpenDropdown(null)}
                         className={`block px-4 py-2.5
                           font-(family-name:--font-manrope) text-sm font-medium
-                          text-stone-600 hover:text-primary hover:bg-primary-container/20
+                          text-stone-500 hover:text-primary hover:bg-primary-container/20
                           transition-colors duration-150
                           ${i < link.dropdown!.length - 1 ? "border-b border-outline-variant/20" : ""}
                         `}
@@ -149,7 +166,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                   key={link.href}
                   href={link.href}
                   className={`font-(family-name:--font-manrope) font-medium tracking-tight transition-colors duration-300 ${
-                    link.active ? "text-primary font-semibold" : "text-stone-500 hover:text-stone-900"
+                    link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-white"
                   }`}
                 >
                   {link.label}
@@ -162,9 +179,16 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
         {/* ── Centre: wordmark ── */}
         <Link
           href="/"
-          className="ml-[-40px] font-(family-name:--font-manrope) text-xl font-bold uppercase tracking-[0.2em] text-stone-900 absolute left-1/2 -translate-x-1/2"
+          className="absolute left-1/2 -translate-x-1/2 flex items-center"
         >
-          Pewes Skor
+          <Image
+            src="/Logo.png"
+            alt="Pewes Skor Logo"
+            width={160}
+            height={60}
+            priority
+            className="h-14 w-auto object-contain"
+          />
         </Link>
       </div>
 
