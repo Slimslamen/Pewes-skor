@@ -6,7 +6,8 @@
       "mcp__claude_ai_Notion__notion-fetch",
       "mcp__claude_ai_Notion__notion-update-page",
       "Bash(xargs sed:*)",
-      "Bash(node -e \"const m = require\\('./node_modules/motion/package.json'\\); console.log\\(m.version\\)\")"
+      "Bash(node -e \"const m = require\\('./node_modules/motion/package.json'\\); console.log\\(m.version\\)\")",
+      "Bash(npx next:*)"
     ]
   }
 }

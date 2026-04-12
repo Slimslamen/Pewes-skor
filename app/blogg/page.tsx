@@ -3,6 +3,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import BloggList, { type BlogPost } from "@/components/blocks/BloggList";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -83,6 +84,10 @@ const POSTS: BlogPost[] = [
 export default function BloggPage() {
   return (
     <>
+      <BreadcrumbJsonLd crumbs={[
+        { name: "Hem",   path: "/" },
+        { name: "Blogg", path: "/blogg" },
+      ]} />
       <Header />
       <main className="pt-28 pb-24 bg-surface min-h-screen">
         <div className="max-w-screen-2xl mx-auto px-6">

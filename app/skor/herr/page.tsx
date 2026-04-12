@@ -124,31 +124,6 @@ export default function HerrPage() {
                 En noggrant utvald kollektion av skor för den moderna mannen. Från tidlösa klassiker till funktionella friluftsskor, alltid med fokus på komfort och hantverk.
               </p>
             </div>
-            <div className="flex items-center gap-4 text-sm font-medium">
-              <span className="text-outline">Visar 8 produkter</span>
-            </div>
-          </div>
-        </section>
-
-        {/* Brand Filter */}
-        <section className="max-w-screen-2xl mx-auto px-6 mb-12 sticky top-[72px] z-40 py-4 bg-surface/95 backdrop-blur-sm">
-          <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
-            {["Alla märken", "ECCO", "Rieker", "Skechers", "Dolomite"].map((brand, i) => (
-              <button
-                key={brand}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  i === 0
-                    ? "bg-primary text-white"
-                    : "bg-[#e5e2e1] text-[#656464] hover:bg-stone-200"
-                }`}
-              >
-                {brand}
-              </button>
-            ))}
-            <div className="h-8 w-px bg-[#d1c5b8]/30 mx-2" />
-            <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium hover:text-primary transition-colors">
-              ⚙ Filtrera
-            </button>
           </div>
         </section>
 

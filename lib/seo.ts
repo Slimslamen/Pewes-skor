@@ -29,7 +29,7 @@ export const siteConfig = {
     "Skechers skor",
     "skobutik Jönköpings län",
     "Pewes Skor",
-  ],
+  ] as string[],
 } as const;
 
 export interface PageSeoInput {

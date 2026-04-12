@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useMemo, useState } from "react";
 import Reveal from "./Reveal";
 
 interface Product {
@@ -90,67 +91,103 @@ const FALLBACK_PRODUCTS: Product[] = [
   },
 ];
 
+const ALL = "Alla märken";
+
 export default function ProductGrid({ products }: Props) {
   const items = products?.length ? products : FALLBACK_PRODUCTS;
+  const [activeBrand, setActiveBrand] = useState(ALL);
+
+  const brands = useMemo(() => {
+    const unique = Array.from(new Set(items.map((p) => p.brand?.toUpperCase() ?? "").filter(Boolean)));
+    unique.sort();
+    return [ALL, ...unique];
+  }, [items]);
+
+  const filtered = activeBrand === ALL
+    ? items
+    : items.filter((p) => p.brand?.toUpperCase() === activeBrand);
 
   return (
-    <section className="max-w-screen-2xl mx-auto px-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-        {items.map((product, i) => (
-          <Reveal
-            key={`${product.brand}-${product.name}-${i}`}
-            delay={(i % 4) * 0.08}
-            amount={0.15}
-            className={`group cursor-pointer ${
-              i === 2 || i === 5 ? "lg:mt-12" : ""
-            }`}
-          >
-            <div className="aspect-[3/4] overflow-hidden bg-surface-container-low mb-6 rounded-xl relative">
-              {product.image?.url ? (
-                <Image
-                  src={product.image.url}
-                  alt={product.image.alt ?? product.name ?? ""}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                />
-              ) : (
-                <div className="w-full h-full bg-surface-container" />
-              )}
-              <button className="absolute bottom-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-sm">
-                ♡
-              </button>
-            </div>
-            <div className="space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-primary font-(family-name:--font-inter)">
-                {product.brand}
-              </p>
-              <h3 className="text-lg font-medium text-stone-900 font-(family-name:--font-manrope)">
-                {product.name}
-              </h3>
-              {product.description && (
-                <p className="text-stone-400 text-xs font-light leading-snug line-clamp-2 font-(family-name:--font-inter)">
-                  {product.description}
-                </p>
-              )}
-              <p className="text-stone-500 font-light text-sm tracking-tight">
-                {product.price}
-              </p>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-
-      {/* Load more */}
-      <div className="mt-24 flex flex-col items-center gap-6">
-        <p className="text-outline text-sm">Visar 8 av 24 produkter</p>
-        <div className="w-48 h-1 bg-stone-200 rounded-full overflow-hidden">
-          <div className="w-1/3 h-full bg-primary" />
+    <>
+      {/* Brand Filter */}
+      <section className="max-w-screen-2xl mx-auto px-6 mb-12 sticky top-18 z-40 py-4 bg-surface/95 backdrop-blur-sm">
+        <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
+          {brands.map((brand) => (
+            <button
+              key={brand}
+              type="button"
+              onClick={() => setActiveBrand(brand)}
+              className={`cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                activeBrand === brand
+                  ? "bg-primary text-white"
+                  : "bg-[#e5e2e1] text-[#656464] hover:bg-stone-200"
+              }`}
+            >
+              {brand === ALL ? brand : brand.charAt(0) + brand.slice(1).toLowerCase()}
+            </button>
+          ))}
         </div>
-        <button className="mt-4 px-12 py-4 border border-[#7f766a]/20 text-stone-900 font-semibold tracking-tight hover:bg-stone-900 hover:text-white transition-all duration-500 rounded-lg">
-          Ladda fler
-        </button>
-      </div>
-    </section>
+      </section>
+
+      {/* Products */}
+      <section className="max-w-screen-2xl mx-auto px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+          {filtered.map((product, i) => (
+            <Reveal
+              key={`${product.brand}-${product.name}-${i}`}
+              delay={(i % 4) * 0.08}
+              amount={0.15}
+              className="group cursor-pointer flex flex-col"
+            >
+              <div className="aspect-3/4 overflow-hidden bg-surface-container-low mb-6 rounded-xl relative">
+                {product.image?.url ? (
+                  <Image
+                    src={product.image.url}
+                    alt={product.image.alt ?? product.name ?? ""}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-surface-container" />
+                )}
+                <button className="absolute bottom-4 right-4 w-10 h-10 bg-white/90 backdrop-blur rounded-full flex items-center justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-sm">
+                  ♡
+                </button>
+              </div>
+              <div className="space-y-1">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-primary font-(family-name:--font-inter)">
+                  {product.brand}
+                </p>
+                <h3 className="text-lg font-medium text-stone-900 font-(family-name:--font-manrope)">
+                  {product.name}
+                </h3>
+                {product.description && (
+                  <p className="text-stone-400 text-xs font-light leading-snug line-clamp-2 font-(family-name:--font-inter)">
+                    {product.description}
+                  </p>
+                )}
+                <p className="text-stone-500 font-light text-sm tracking-tight">
+                  {product.price}
+                </p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Result count */}
+        <div className="mt-24 flex flex-col items-center gap-6">
+          <p className="text-outline text-sm">
+            Visar {filtered.length} av {items.length} produkter
+          </p>
+          <div className="w-48 h-1 bg-stone-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-primary transition-all duration-500"
+              style={{ width: `${(filtered.length / items.length) * 100}%` }}
+            />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

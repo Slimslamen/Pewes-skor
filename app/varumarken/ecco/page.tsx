@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import ShoeAnatomy from "@/components/blocks/ShoeAnatomy";
 import EccoHero from "@/components/blocks/EccoHero";
 import EccoHeritage from "@/components/blocks/EccoHeritage";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -23,6 +24,11 @@ export default async function EccoPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd crumbs={[
+        { name: "Hem",        path: "/" },
+        { name: "Varumärken", path: "/varumarken" },
+        { name: "ECCO",       path: "/varumarken/ecco" },
+      ]} />
       <Header />
       <main className="pt-10">
         <EccoHero data={page?.hero} />
