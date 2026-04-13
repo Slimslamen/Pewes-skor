@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import RiekerHero from "@/components/blocks/RiekerHero";
+import BrandProductGrid from "@/components/blocks/BrandProductGrid";
 import Reveal from "@/components/blocks/Reveal";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
@@ -31,6 +32,30 @@ const PILLARS = [
   },
 ];
 
+const MOCK_SHOES = [
+  {
+    name: "Rieker Antistress Sneaker",
+    price: "899 kr",
+    sizes: ["36", "37", "38", "39", "40", "41", "42"],
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
+    category: "Vardag",
+  },
+  {
+    name: "Rieker Comfort Loafer",
+    price: "949 kr",
+    sizes: ["40", "41", "42", "43", "44", "45", "46"],
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=800",
+    category: "Dress",
+  },
+  {
+    name: "Rieker Summer Sandal",
+    price: "799 kr",
+    sizes: ["36", "37", "38", "39", "40", "41"],
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&q=80&w=800",
+    category: "Sandaler",
+  },
+];
+
 export default function RiekerPage() {
   return (
     <>
@@ -43,6 +68,18 @@ export default function RiekerPage() {
       <main className="pt-20">
 
         <RiekerHero />
+
+        {/* ── PRODUCT LIST ── */}
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-6 pt-24">
+            <Reveal>
+              <h2 className="text-sm font-bold uppercase tracking-widest text-stone-400 mb-2 font-(family-name:--font-inter)">
+                Aktuellt sortiment
+              </h2>
+            </Reveal>
+          </div>
+          <BrandProductGrid brandName="Rieker" shoes={MOCK_SHOES} />
+        </div>
 
         {/* ── ANTISTRESS PILLARS: numbered cards with top rule ── */}
         <section className="bg-stone-50 py-24">

@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import GaborHero from "@/components/blocks/GaborHero";
 import GaborFeatures from "@/components/blocks/GaborFeatures";
 import Reveal from "@/components/blocks/Reveal";
+import BrandProductGrid from "@/components/blocks/BrandProductGrid";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -54,6 +55,30 @@ const FEATURES: Feature[] = [
   },
 ];
 
+const MOCK_SHOES = [
+  {
+    name: "Gabor Rollingsoft Sneaker",
+    price: "1.399 kr",
+    sizes: ["36", "37", "38", "39", "40", "41", "42"],
+    image: "/gabor/sneaker.png",
+    category: "Sneakers",
+  },
+  {
+    name: "Gabor Comfort Sandal",
+    price: "899 kr",
+    sizes: ["37", "38", "39", "40", "41"],
+    image: "/gabor/sandaler.png",
+    category: "Sandaler",
+  },
+  {
+    name: "Gabor Classic Loafer",
+    price: "1.100 kr",
+    sizes: ["36", "37", "38", "39", "40"],
+    image: "/gabor/loafer.png",
+    category: "Loafers",
+  },
+];
+
 export default function GaborPage() {
   return (
     <>
@@ -69,6 +94,18 @@ export default function GaborPage() {
 
         {/* ── ALTERNATING FEATURE ROWS ── */}
         <GaborFeatures features={FEATURES} />
+
+        {/* ── PRODUCT LIST ── */}
+        <div className="bg-white border-t border-stone-100">
+          <div className="max-w-7xl mx-auto px-6 pt-24">
+            <Reveal>
+              <h2 className="text-sm font-bold uppercase tracking-widest text-stone-400 mb-2 font-(family-name:--font-inter)">
+                Aktuellt sortiment
+              </h2>
+            </Reveal>
+          </div>
+          <BrandProductGrid brandName="Gabor" shoes={MOCK_SHOES} />
+        </div>
 
   {/* ── HERITAGE: pull-quote left, body right ── */}
         <section className="bg-stone-50 py-32">

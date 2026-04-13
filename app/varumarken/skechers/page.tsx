@@ -4,6 +4,7 @@ import Footer from "@/components/layout/Footer";
 import SkechersHero from "@/components/blocks/SkechersHero";
 import SkechersScroll from "@/components/blocks/SkechersScroll";
 import Reveal from "@/components/blocks/Reveal";
+import BrandProductGrid from "@/components/blocks/BrandProductGrid";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 
@@ -29,6 +30,30 @@ const STATS = [
   { stat: "3 000+", label: "modeller globalt" },
 ];
 
+const MOCK_SHOES = [
+  {
+    name: "Skechers Arch Fit",
+    price: "1.299 kr",
+    sizes: ["40", "41", "42", "43", "44", "45", "46"],
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
+    category: "Walk",
+  },
+  {
+    name: "Skechers Slip-ins",
+    price: "1.199 kr",
+    sizes: ["36", "37", "38", "39", "40", "41"],
+    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=800",
+    category: "Fritid",
+  },
+  {
+    name: "Skechers GoRun Trail",
+    price: "1.449 kr",
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    image: "https://images.unsplash.com/photo-1520639889410-1dfa467409f4?auto=format&fit=crop&q=80&w=800",
+    category: "Sport",
+  },
+];
+
 export default function SkechersPage() {
   return (
     <>
@@ -43,6 +68,18 @@ export default function SkechersPage() {
         <SkechersHero techTags={TECH_TAGS} />
         {/* ── HERITAGE + STATS + scroll-scrubbed rotating shoe ── */}
         <SkechersScroll stats={STATS} />
+
+        {/* ── PRODUCT LIST ── */}
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-6 pt-24">
+            <Reveal>
+              <h2 className="text-sm font-bold uppercase tracking-widest text-stone-400 mb-2 font-(family-name:--font-inter)">
+                Aktuellt sortiment
+              </h2>
+            </Reveal>
+          </div>
+          <BrandProductGrid brandName="Skechers" shoes={MOCK_SHOES} />
+        </div>
 
 
         {/* ── MEMORY FOAM: dark section, two-column with spec grid ── */}

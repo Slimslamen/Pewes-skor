@@ -11,7 +11,7 @@ interface NavLink {
   dropdown?: { label: string; href: string }[];
 }
 
-const BRANDS_DROPDOWN = [
+const BEST_SELLING_BRANDS = [
   { label: "Gabor",    href: "/varumarken/gabor" },
   { label: "ECCO",     href: "/varumarken/ecco" },
   { label: "Dolomite", href: "/varumarken/dolomite" },
@@ -19,6 +19,22 @@ const BRANDS_DROPDOWN = [
   { label: "Skechers", href: "/varumarken/skechers" },
 ];
 
+const OTHER_POPULAR_BRANDS = [
+  { label: "Kavat", href: "/varumarken/kavat" },
+  { label: "Viking", href: "/varumarken/viking" },
+  { label: "Pax", href: "/varumarken/pax" },
+  { label: "Superfit", href: "/varumarken/superfit" },
+  { label: "Legero", href: "/varumarken/legero" },
+  { label: "Bagheera", href: "/varumarken/bagheera" },
+  { label: "Merrell", href: "/varumarken/merrell" },
+  { label: "Salomon", href: "/varumarken/salomon" },
+  { label: "Icebug", href: "/varumarken/icebug" },
+  { label: "Vagabond", href: "/varumarken/vagabond" },
+  { label: "Ten Points", href: "/varumarken/ten-points" },
+  { label: "Dockers", href: "/varumarken/dockers" },
+  { label: "Lloyd", href: "/varumarken/lloyd" },
+  { label: "Ara", href: "/varumarken/ara" },
+];
 
 interface HeaderProps {
   links?: NavLink[];
@@ -31,8 +47,8 @@ const SORTIMENT_DROPDOWN = [
 ];
 
 const defaultLinks: NavLink[] = [
+  { label: "Varumärken", href: "" },
   { label: "Sortiment", href: "/skor", dropdown: SORTIMENT_DROPDOWN },
-  { label: "Varumärken", href: "", dropdown: BRANDS_DROPDOWN },
   { label: "Nyheter", href: "/nyheter" },
   { label: "Skovård", href: "/skovard" },
   { label: "Blogg", href: "/blogg" },
@@ -101,8 +117,11 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-8 pt-2">
-            {links.map((link) =>
-              link.dropdown ? (
+            {links.map((link) => {
+              const isVarumarken = link.label === "Varumärken";
+              const hasDropdown = link.dropdown || isVarumarken;
+
+              return hasDropdown ? (
                 <div key={link.label} className="relative">
                   {/* Trigger */}
                   <button
@@ -110,7 +129,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                     onMouseLeave={() => setOpenDropdown(null)}
                     onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
                     className={`flex items-center gap-1 font-(family-name:--font-manrope) font-medium tracking-tight transition-colors duration-300 ${
-                      link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-white"
+                      link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-stone-600"
                     }`}
                   >
                     {link.label}
@@ -134,31 +153,71 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                   <div
                     onMouseEnter={() => setOpenDropdown(link.label)}
                     onMouseLeave={() => setOpenDropdown(null)}
-                    className={`absolute top-full left-0 w-44 bg-surface
+                    className={`absolute top-full left-0 bg-surface
                       border border-outline-variant/40
                       shadow-[0_8px_32px_rgba(15,15,15,0.1)] rounded-sm
                       transition-all duration-200 origin-top
+                      ${isVarumarken ? "w-[400px]" : "w-44"}
                       ${
                         openDropdown === link.label
                           ? "opacity-100 scale-y-100 pointer-events-auto"
                           : "opacity-0 scale-y-95 pointer-events-none"
                       }`}
                   >
-                    {link.dropdown.map((sub, i) => (
-                      <Link
-                        key={sub.href}
-                        href={sub.href}
-                        onClick={() => setOpenDropdown(null)}
-                        className={`block px-4 py-2.5
-                          font-(family-name:--font-manrope) text-sm font-medium
-                          text-stone-500 hover:text-primary hover:bg-primary-container/20
-                          transition-colors duration-150
-                          ${i < link.dropdown!.length - 1 ? "border-b border-outline-variant/20" : ""}
-                        `}
-                      >
-                        {sub.label}
-                      </Link>
-                    ))}
+                    {isVarumarken ? (
+                      <div className="grid grid-cols-2 p-6 gap-8">
+                        <div>
+                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4 font-(family-name:--font-inter)">
+                            Bäst säljande
+                          </h4>
+                          <div className="space-y-1">
+                            {BEST_SELLING_BRANDS.map((sub) => (
+                              <Link
+                                key={sub.href}
+                                href={sub.href}
+                                onClick={() => setOpenDropdown(null)}
+                                className="block py-1.5 font-(family-name:--font-manrope) text-sm font-medium text-stone-500 hover:text-primary transition-colors duration-150"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4 font-(family-name:--font-inter)">
+                            Fler märken
+                          </h4>
+                          <div className="grid grid-cols-1 gap-x-4 space-y-1 h-[240px] overflow-y-auto pr-2">
+                            {OTHER_POPULAR_BRANDS.map((sub) => (
+                              <Link
+                                key={sub.href}
+                                href={sub.href}
+                                onClick={() => setOpenDropdown(null)}
+                                className="block py-1.5 font-(family-name:--font-manrope) text-sm font-medium text-stone-500 hover:text-primary transition-colors duration-150"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      link.dropdown?.map((sub, i) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          onClick={() => setOpenDropdown(null)}
+                          className={`block px-4 py-2.5
+                            font-(family-name:--font-manrope) text-sm font-medium
+                            text-stone-500 hover:text-primary hover:bg-primary-container/20
+                            transition-colors duration-150
+                            ${i < link.dropdown!.length - 1 ? "border-b border-outline-variant/20" : ""}
+                          `}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))
+                    )}
                   </div>
                 </div>
               ) : (
@@ -166,13 +225,13 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                   key={link.href}
                   href={link.href}
                   className={`font-(family-name:--font-manrope) font-medium tracking-tight transition-colors duration-300 ${
-                    link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-white"
+                    link.active ? "text-primary font-semibold" : "text-stone-400 hover:text-stone-600"
                   }`}
                 >
                   {link.label}
                 </Link>
-              ),
-            )}
+              );
+            })}
           </nav>
         </div>
 
@@ -194,61 +253,112 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
 
       {/* ── Mobile menu ── */}
       {menuOpen && (
-        <div className="md:hidden bg-surface border-t border-outline-variant/40 px-6 py-4">
-          {links.map((link) => (
-            <div key={link.label}>
-              {link.dropdown ? (
-                <>
-                  {/* Expandable mobile brand item */}
-                  <button
-                    className="w-full flex justify-between items-center py-3 font-(family-name:--font-manrope) font-medium text-stone-800 hover:text-primary transition-colors"
-                    onClick={() => setMobileOpen(mobileOpen === link.label ? null : link.label)}
+        <div className="md:hidden bg-surface border-t border-outline-variant/40 px-6 py-4 max-h-[80vh] overflow-y-auto">
+          {links.map((link) => {
+            const isVarumarken = link.label === "Varumärken";
+            const hasDropdown = link.dropdown || isVarumarken;
+
+            return (
+              <div key={link.label}>
+                {hasDropdown ? (
+                  <>
+                    {/* Expandable mobile brand item */}
+                    <button
+                      className="w-full flex justify-between items-center py-3 font-(family-name:--font-manrope) font-medium text-stone-800 hover:text-primary transition-colors"
+                      onClick={() => setMobileOpen(mobileOpen === link.label ? null : link.label)}
+                    >
+                      {link.label}
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        className={`transition-transform duration-200 ${mobileOpen === link.label ? "rotate-180" : ""}`}
+                      >
+                        <polyline points="1 3 5 7 9 3" />
+                      </svg>
+                    </button>
+                    {mobileOpen === link.label && (
+                      <div className="pl-4 mb-2 border-l-2 border-primary ml-1 space-y-4 pt-2">
+                        {isVarumarken ? (
+                          <>
+                            <div>
+                              <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2 font-(family-name:--font-inter)">
+                                Bäst säljande
+                              </h4>
+                              <div className="space-y-1">
+                                {BEST_SELLING_BRANDS.map((sub) => (
+                                  <Link
+                                    key={sub.href}
+                                    href={sub.href}
+                                    className="block py-1.5 font-(family-name:--font-manrope) text-sm text-stone-500 hover:text-primary transition-colors"
+                                    onClick={() => {
+                                      setMenuOpen(false);
+                                      setMobileOpen(null);
+                                    }}
+                                  >
+                                    {sub.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                            <div>
+                              <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-2 font-(family-name:--font-inter)">
+                                Fler märken
+                              </h4>
+                              <div className="space-y-1">
+                                {OTHER_POPULAR_BRANDS.map((sub) => (
+                                  <Link
+                                    key={sub.href}
+                                    href={sub.href}
+                                    className="block py-1.5 font-(family-name:--font-manrope) text-sm text-stone-500 hover:text-primary transition-colors"
+                                    onClick={() => {
+                                      setMenuOpen(false);
+                                      setMobileOpen(null);
+                                    }}
+                                  >
+                                    {sub.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          link.dropdown?.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className="block py-2 font-(family-name:--font-manrope) text-sm text-stone-500 hover:text-primary transition-colors"
+                              onClick={() => {
+                                setMenuOpen(false);
+                                setMobileOpen(null);
+                              }}
+                            >
+                              {sub.label}
+                            </Link>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="block py-3 font-(family-name:--font-manrope) font-medium text-stone-800 hover:text-primary transition-colors border-b border-outline-variant/10 last:border-0"
+                    onClick={() => setMenuOpen(false)}
                   >
                     {link.label}
-                    <svg
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      className={`transition-transform duration-200 ${mobileOpen === link.label ? "rotate-180" : ""}`}
-                    >
-                      <polyline points="1 3 5 7 9 3" />
-                    </svg>
-                  </button>
-                  {mobileOpen === link.label && (
-                    <div className="pl-4 mb-2 border-l-2 border-primary ml-1 space-y-0.5">
-                      {link.dropdown.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className="block py-2 font-(family-name:--font-manrope) text-sm text-stone-500 hover:text-primary transition-colors"
-                          onClick={() => {
-                            setMenuOpen(false);
-                            setMobileOpen(null);
-                          }}
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link
-                  href={link.href}
-                  className="block py-3 font-(family-name:--font-manrope) font-medium text-stone-800 hover:text-primary transition-colors border-b border-outline-variant/10 last:border-0"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              )}
-            </div>
-          ))}
+                  </Link>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </header>
   );
 }
+
