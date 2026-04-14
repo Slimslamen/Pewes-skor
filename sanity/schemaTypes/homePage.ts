@@ -121,6 +121,49 @@ export const homePage = defineType({
         defineField({ name: "email", title: "E-post",   type: "string" }),
       ],
     }),
+
+    defineField({
+      name: "featuredBanner",
+      title: "Utvald Banner",
+      type: "object",
+      fields: [
+        defineField({ name: "eyebrow",       title: "Eyebrow-text (t.ex. 'Ny Kollektion · 2026')", type: "string" }),
+        defineField({ name: "heading",       title: "Rubrik rad 1",                                type: "string" }),
+        defineField({ name: "headingAccent", title: "Rubrik accentord (visas i primärfärg)",       type: "string" }),
+        defineField({ name: "headingRest",   title: "Rubrik rad 2 (efter accent)",                 type: "string" }),
+        defineField({ name: "body",          title: "Brödtext",                                    type: "text", rows: 3 }),
+        defineField({ name: "cta1Label",     title: "Knapp 1 text (t.ex. Dam)",                    type: "string" }),
+        defineField({ name: "cta1Href",      title: "Knapp 1 länk",                                type: "string" }),
+        defineField({ name: "cta2Label",     title: "Knapp 2 text (t.ex. Herr)",                   type: "string" }),
+        defineField({ name: "cta2Href",      title: "Knapp 2 länk",                                type: "string" }),
+        defineField({
+          name: "stats",
+          title: "Statistikrad (max 3 st)",
+          type: "array",
+          validation: (Rule) => Rule.max(3),
+          of: [
+            {
+              type: "object",
+              fields: [
+                defineField({ name: "value", title: "Värde (t.ex. '200+')", type: "string" }),
+                defineField({ name: "label", title: "Etikett",              type: "string" }),
+              ],
+            },
+          ],
+        }),
+        defineField({
+          name: "image",
+          title: "Bild",
+          type: "object",
+          fields: [
+            defineField({ name: "asset", title: "Bild (Sanity upload)", type: "image", options: { hotspot: true } }),
+            defineField({ name: "url",   title: "Extern bild-URL",      type: "url" }),
+            defineField({ name: "alt",   title: "Alt-text",             type: "string" }),
+          ],
+        }),
+        defineField({ name: "badgeLabel", title: "Badge-text (t.ex. 'Ny kollektion')", type: "string" }),
+      ],
+    }),
   ],
 
   preview: {

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { sanityFetch } from "@/sanity/lib/live";
+import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import RiekerHero from "@/components/blocks/RiekerHero";
@@ -56,7 +58,18 @@ const MOCK_SHOES = [
   },
 ];
 
-export default function RiekerPage() {
+const FALLBACK_HERITAGE = {
+  eyebrow: "150 År av Komfort",
+  heading: "Rieker har under 150 år tillverkat skor som kroppen tackar dig för.",
+  body: "Sedan starten i Tuttlingen 1874 har Rieker levererat skor för det verkliga livet. ANTISTRESS-filosofin bygger på att skon ska vara lätt, flexibel och skonsam mot foten hela dagen — oavsett om du promenerar i city, arbetar på stan eller njuter av en dagsutflykt i naturen.",
+};
+
+export default async function RiekerPage() {
+  const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "rieker" } });
+
+  const shoes = brandData?.products ?? MOCK_SHOES;
+  const heritage = brandData?.heritage;
+
   return (
     <>
       <BreadcrumbJsonLd crumbs={[
@@ -78,7 +91,7 @@ export default function RiekerPage() {
               </h2>
             </Reveal>
           </div>
-          <BrandProductGrid brandName="Rieker" shoes={MOCK_SHOES} />
+          <BrandProductGrid brandName="Rieker" shoes={shoes} />
         </div>
 
         {/* ── ANTISTRESS PILLARS: numbered cards with top rule ── */}
@@ -102,25 +115,25 @@ export default function RiekerPage() {
           </div>
         </section>
 
-        {/* ── HERITAGE: text left (container-aligned), video breaks to right edge on desktop ── */}
+        {/* ── HERITAGE: text left, video right ── */}
         <section className="bg-white">
           <div className="grid grid-cols-1 items-stretch lg:grid-cols-2">
             {/* Left: heritage copy */}
             <Reveal from="left" className="px-6 py-24 lg:py-40 lg:pr-20 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
               <div className="max-w-xl">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-10">
-                  150 År av Komfort
+                  {heritage?.eyebrow ?? FALLBACK_HERITAGE.eyebrow}
                 </span>
                 <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight mb-12">
-                  Rieker har under 150 år tillverkat skor som kroppen tackar dig för.
+                  {heritage?.heading ?? FALLBACK_HERITAGE.heading}
                 </h2>
                 <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
-                  Sedan starten i Tuttlingen 1874 har Rieker levererat skor för det verkliga livet. ANTISTRESS-filosofin bygger på att skon ska vara lätt, flexibel och skonsam mot foten hela dagen — oavsett om du promenerar i city, arbetar på stan eller njuter av en dagsutflykt i naturen.
+                  {heritage?.body ?? FALLBACK_HERITAGE.body}
                 </p>
               </div>
             </Reveal>
 
-            {/* Right: looping video — full-bleed to viewport edge on desktop */}
+            {/* Right: looping video */}
             <Reveal from="right" delay={0.1} className="relative aspect-4/5 w-full overflow-hidden bg-stone-100 lg:aspect-auto lg:h-full lg:min-h-175">
               <video
                 className="absolute inset-0 h-full w-full object-cover"

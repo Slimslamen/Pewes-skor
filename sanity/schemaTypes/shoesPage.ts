@@ -22,7 +22,7 @@ export const shoesPage = defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "brand", title: "Varumärke", type: "string" }),
+            defineField({ name: "brand", title: "Varumärke",   type: "string" }),
             defineField({ name: "name",  title: "Produktnamn", type: "string" }),
             defineField({ name: "price", title: "Pris (t.ex. 1 299 kr)", type: "string" }),
             defineField({
@@ -30,8 +30,10 @@ export const shoesPage = defineType({
               title: "Produktbild",
               type: "object",
               fields: [
-                defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-                defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+                defineField({ name: "asset",    title: "Bild (Sanity upload)", type: "image", options: { hotspot: true } }),
+                defineField({ name: "url",      title: "Extern bild-URL",      type: "url" }),
+                defineField({ name: "imageAlt", title: "Alt-text",             type: "string" }),
+                defineField({ name: "alt",      title: "Alt-text (äldre fält)", type: "string" }),
               ],
             }),
           ],
