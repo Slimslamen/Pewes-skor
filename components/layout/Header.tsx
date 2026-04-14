@@ -51,7 +51,6 @@ const defaultLinks: NavLink[] = [
   { label: "Sortiment", href: "/skor", dropdown: SORTIMENT_DROPDOWN },
   { label: "Nyheter", href: "/nyheter" },
   { label: "Skovård", href: "/skovard" },
-  { label: "Blogg", href: "/blogg" },
 ];
 
 export default function Header({ links = defaultLinks }: HeaderProps) {

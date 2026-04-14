@@ -50,7 +50,6 @@ export default function FindUs({ data }: Props) {
             <div className="space-y-8">
               {/* Address */}
               <div className="flex gap-6">
-                <span className="text-primary text-3xl mt-1">📍</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">Besöksadress</h4>
                   <p className="text-secondary">{d.address}</p>
@@ -59,7 +58,6 @@ export default function FindUs({ data }: Props) {
 
               {/* Hours */}
               <div className="flex gap-6">
-                <span className="text-primary text-3xl mt-1">🕐</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">Öppettider</h4>
                   <div className="grid grid-cols-2 gap-x-8 text-secondary">
@@ -75,7 +73,6 @@ export default function FindUs({ data }: Props) {
 
               {/* Contact */}
               <div className="flex gap-6">
-                <span className="text-primary text-3xl mt-1">✉</span>
                 <div>
                   <h4 className="font-bold text-lg mb-2">Kontakt</h4>
                   <p className="text-secondary">{d.phone}</p>

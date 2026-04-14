@@ -8,7 +8,6 @@ import BrandsBar from "@/components/blocks/BrandsBar";
 import FeaturedBanner from "@/components/blocks/FeaturedBanner";
 import AboutSection from "@/components/blocks/AboutSection";
 import CollectionPreview from "@/components/blocks/CollectionPreview";
-import FindUs from "@/components/blocks/FindUs";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -29,7 +28,6 @@ export default async function HomePage() {
         <FeaturedBanner />
         <AboutSection data={page?.about} />
         <CollectionPreview data={page?.collection} />
-        <FindUs data={page?.findUs} />
       </main>
       <Footer />
     </>

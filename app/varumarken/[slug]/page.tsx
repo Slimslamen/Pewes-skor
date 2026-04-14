@@ -130,7 +130,7 @@ export default async function BrandPage({ params }: PageProps) {
         {/* Brand Hero */}
         <section className="bg-stone-50 py-24 border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-6">
-            <Reveal from="bottom">
+            <Reveal from="up">
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary mb-4 block">
                 Varumärken
               </span>
