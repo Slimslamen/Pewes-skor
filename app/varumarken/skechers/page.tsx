@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { sanityFetch } from "@/sanity/lib/live";
+import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkechersHero from "@/components/blocks/SkechersHero";
@@ -54,7 +56,11 @@ const MOCK_SHOES = [
   },
 ];
 
-export default function SkechersPage() {
+export default async function SkechersPage() {
+  const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "skechers" } });
+
+  const shoes = brandData?.products ?? MOCK_SHOES;
+
   return (
     <>
       <BreadcrumbJsonLd crumbs={[
@@ -78,9 +84,8 @@ export default function SkechersPage() {
               </h2>
             </Reveal>
           </div>
-          <BrandProductGrid brandName="Skechers" shoes={MOCK_SHOES} />
+          <BrandProductGrid brandName="Skechers" shoes={shoes} />
         </div>
-
 
         {/* ── MEMORY FOAM: dark section, two-column with spec grid ── */}
         <section className="bg-inverse-surface py-24">

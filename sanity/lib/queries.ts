@@ -9,7 +9,7 @@ export const homePageQuery = defineQuery(`
       hours,
       ctaLabel,
       ctaHref,
-      image { asset->{ url }, alt }
+      image { "url": coalesce(asset->url, url), alt }
     },
     brands[] { name },
     about {
@@ -18,7 +18,7 @@ export const homePageQuery = defineQuery(`
       body,
       ctaLabel,
       ctaHref,
-      image { asset->{ url }, alt }
+      image { "url": coalesce(asset->url, url), alt }
     },
     collection {
       heading,
@@ -26,7 +26,7 @@ export const homePageQuery = defineQuery(`
       categories[] {
         name,
         href,
-        image { asset->{ url }, alt }
+        image { "url": coalesce(asset->url, url), alt }
       }
     },
     findUs {
@@ -35,6 +35,20 @@ export const homePageQuery = defineQuery(`
       hoursRows[] { days, hours },
       phone,
       email
+    },
+    featuredBanner {
+      eyebrow,
+      heading,
+      headingAccent,
+      headingRest,
+      body,
+      cta1Label,
+      cta1Href,
+      cta2Label,
+      cta2Href,
+      stats[] { value, label },
+      image { "url": coalesce(asset->url, url), alt },
+      badgeLabel
     }
   }
 `);
@@ -58,7 +72,7 @@ export const eccoPageQuery = defineQuery(`
       eyebrow,
       heading,
       body,
-      images[] { asset->{ url }, alt }
+      images[] { "url": coalesce(asset->url, url), alt }
     }
   }
 `);
@@ -72,7 +86,57 @@ export const damPageQuery = defineQuery(`
       brand,
       name,
       price,
-      image { asset->{ url }, alt }
+      "image": { "url": coalesce(image.asset->url, image.url), "alt": coalesce(image.imageAlt, image.alt) }
+    }
+  }
+`);
+
+/* ── Men's shoes page ── */
+export const herrPageQuery = defineQuery(`
+  *[_type == "shoesPage" && slug.current == "herr"][0] {
+    title,
+    subtitle,
+    products[] {
+      brand,
+      name,
+      price,
+      "image": { "url": coalesce(image.asset->url, image.url), "alt": coalesce(image.imageAlt, image.alt) }
+    }
+  }
+`);
+
+/* ── Kids' shoes page ── */
+export const barnPageQuery = defineQuery(`
+  *[_type == "shoesPage" && slug.current == "barn"][0] {
+    title,
+    subtitle,
+    products[] {
+      brand,
+      name,
+      price,
+      "image": { "url": coalesce(image.asset->url, image.url), "alt": coalesce(image.imageAlt, image.alt) }
+    }
+  }
+`);
+
+/* ── Generic brand page (Gabor / Rieker / Dolomite / Skechers) ── */
+export const brandPageQuery = defineQuery(`
+  *[_type == "brandPage" && slug.current == $slug][0] {
+    name,
+    "slug": slug.current,
+    products[] {
+      name,
+      price,
+      category,
+      sizes,
+      "image": coalesce(image.asset->url, image.url),
+      "imageAlt": coalesce(image.imageAlt, "")
+    },
+    heritage {
+      eyebrow,
+      heading,
+      body,
+      images[] { "url": coalesce(asset->url, url), alt }
     }
   }
 `);
@@ -101,7 +165,7 @@ export const nyheterIndexQuery = defineQuery(`
     publishedAt,
     season,
     excerpt,
-    coverImage { asset->{ url }, alt }
+    coverImage { "url": coalesce(asset->url, url), alt }
   }
 `);
 
@@ -113,14 +177,14 @@ export const nyhetPostQuery = defineQuery(`
     publishedAt,
     season,
     excerpt,
-    coverImage { asset->{ url }, alt },
+    coverImage { "url": coalesce(asset->url, url), alt },
     editorial { heading, body },
     products[] {
       brand,
       name,
       description,
       price,
-      image { asset->{ url }, alt }
+      image { "url": coalesce(asset->url, url), alt }
     }
   }
 `);

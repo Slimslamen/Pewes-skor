@@ -25,7 +25,7 @@ export default async function HomePage() {
       <main>
         <HomeHero data={page?.hero} />
         <BrandsBar data={page?.brands} />
-        <FeaturedBanner />
+        <FeaturedBanner data={page?.featuredBanner} />
         <AboutSection data={page?.about} />
         <CollectionPreview data={page?.collection} />
       </main>

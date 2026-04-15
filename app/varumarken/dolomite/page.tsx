@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { sanityFetch } from "@/sanity/lib/live";
+import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import DolomiteHero from "@/components/blocks/DolomiteHero";
@@ -58,7 +60,11 @@ const MOCK_SHOES = [
   },
 ];
 
-export default function DolomitePage() {
+export default async function DolomitePage() {
+  const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "dolomite" } });
+
+  const shoes = brandData?.products ?? MOCK_SHOES;
+
   return (
     <>
       <BreadcrumbJsonLd crumbs={[
@@ -79,7 +85,7 @@ export default function DolomitePage() {
               </h2>
             </Reveal>
           </div>
-          <BrandProductGrid brandName="Dolomite" shoes={MOCK_SHOES} />
+          <BrandProductGrid brandName="Dolomite" shoes={shoes} />
         </div>
 
         <DolomiteContent tech={TECH_FEATURES} />

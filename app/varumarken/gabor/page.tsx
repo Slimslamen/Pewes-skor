@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { sanityFetch } from "@/sanity/lib/live";
+import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import GaborHero from "@/components/blocks/GaborHero";
@@ -79,7 +81,24 @@ const MOCK_SHOES = [
   },
 ];
 
-export default function GaborPage() {
+const FALLBACK_HERITAGE = {
+  eyebrow: "Tyskt Damhantverk",
+  pullQuote: "En välsittande sko är en välmående fot.",
+  attribution: "Gabors filosofi sedan 1949",
+  body: "Från sin bas i Rosenheim i Bayern tillverkar Gabor damskor av naturmaterial i kombination med modern teknik. Varje modell genomgår noggranna passformsstudier för att ge en sko som smälter samman med foten — vare sig du väljer sandal, sneaker eller loafer.\n\nHos Pewes Skor i Anderstorp hittar du ett noggrant urval av Gabors säsongsmodeller, utvalda med den svenska damfoten i fokus.",
+};
+
+export default async function GaborPage() {
+  const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "gabor" } });
+
+  const shoes = brandData?.products ?? MOCK_SHOES;
+  const heritage = brandData?.heritage;
+
+  // Split body into two paragraphs for the two-column layout
+  const bodyParts = (heritage?.body ?? FALLBACK_HERITAGE.body).split("\n\n");
+  const body1 = bodyParts[0] ?? "";
+  const body2 = bodyParts[1] ?? "";
+
   return (
     <>
       <BreadcrumbJsonLd crumbs={[
@@ -104,35 +123,39 @@ export default function GaborPage() {
               </h2>
             </Reveal>
           </div>
-          <BrandProductGrid brandName="Gabor" shoes={MOCK_SHOES} />
+          <BrandProductGrid brandName="Gabor" shoes={shoes} />
         </div>
 
-  {/* ── HERITAGE: pull-quote left, body right ── */}
+        {/* ── HERITAGE: pull-quote left, body right ── */}
         <section className="bg-stone-50 py-32">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
               {/* Left: pull-quote */}
               <Reveal from="left">
                 <blockquote className="font-(family-name:--font-manrope) text-3xl md:text-4xl font-light text-stone-900 leading-relaxed italic">
-                  &ldquo;En välsittande sko är en välmående fot.&rdquo;
+                  &ldquo;{heritage?.heading ?? FALLBACK_HERITAGE.pullQuote}&rdquo;
                 </blockquote>
                 <div className="mt-10 h-px w-20 bg-primary" />
                 <p className="mt-4 font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary">
-                  Gabors filosofi sedan 1949
+                  {heritage?.eyebrow ?? FALLBACK_HERITAGE.attribution}
                 </p>
               </Reveal>
 
               {/* Right: brand story */}
               <Reveal from="right" delay={0.1} className="space-y-6">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block">
-                  Tyskt Damhantverk
+                  {FALLBACK_HERITAGE.eyebrow}
                 </span>
-                <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
-                  Från sin bas i Rosenheim i Bayern tillverkar Gabor damskor av naturmaterial i kombination med modern teknik. Varje modell genomgår noggranna passformsstudier för att ge en sko som smälter samman med foten — vare sig du väljer sandal, sneaker eller loafer.
-                </p>
-                <p className="font-(family-name:--font-inter) text-base text-outline leading-relaxed">
-                  Hos Pewes Skor i Anderstorp hittar du ett noggrant urval av Gabors säsongsmodeller, utvalda med den svenska damfoten i fokus.
-                </p>
+                {body1 && (
+                  <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
+                    {body1}
+                  </p>
+                )}
+                {body2 && (
+                  <p className="font-(family-name:--font-inter) text-base text-outline leading-relaxed">
+                    {body2}
+                  </p>
+                )}
               </Reveal>
             </div>
           </div>
