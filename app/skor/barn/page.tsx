@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { barnPageQuery } from "@/sanity/lib/queries";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import Link from "next/link";
@@ -19,7 +19,11 @@ const FALLBACK_SUBTITLE =
   "Skor skapade för barnfötter i alla åldrar och aktiviteter. Kvalitet, komfort och hållbarhet — för att barnfötter förtjänar det bästa.";
 
 export default async function BarnPage() {
-  const { data: page } = await sanityFetch({ query: barnPageQuery });
+  const { data } = await sanityFetch({ query: barnPageQuery });
+
+  const products = (data?.brands ?? []).flatMap((b) =>
+    (b?.products ?? []).map((p) => ({ brand: b?.brand ?? undefined, ...p })),
+  );
 
   return (
     <>
@@ -42,17 +46,17 @@ export default async function BarnPage() {
                 <span className="text-on-surface">Barn</span>
               </nav>
               <h1 className="font-(family-name:--font-manrope) text-6xl md:text-8xl font-extrabold tracking-tighter text-stone-900 mb-6">
-                {page?.title ?? "Barn"}
+                {data?.page?.title ?? "Barn"}
               </h1>
               <p className="text-secondary leading-relaxed font-light text-lg">
-                {page?.subtitle ?? FALLBACK_SUBTITLE}
+                {data?.page?.subtitle ?? FALLBACK_SUBTITLE}
               </p>
             </div>
           </div>
         </section>
 
         {/* Products */}
-        <ProductGrid products={page?.products} />
+        <ProductGrid products={products} />
       </main>
       <Footer />
     </>

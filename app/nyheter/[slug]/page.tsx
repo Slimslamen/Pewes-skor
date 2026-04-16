@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import { BreadcrumbJsonLd, JsonLd } from "@/components/seo/JsonLd";

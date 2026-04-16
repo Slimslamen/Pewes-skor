@@ -7,7 +7,12 @@
       "mcp__claude_ai_Notion__notion-update-page",
       "Bash(xargs sed:*)",
       "Bash(node -e \"const m = require\\('./node_modules/motion/package.json'\\); console.log\\(m.version\\)\")",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Read(//c/Users/jimmo/OneDrive/Desktop/Forma-projekt/Pewes/ skor/pewes-skor/tasks/**)",
+      "Bash(npx sanity *)",
+      "mcp__Sanity__query_documents",
+      "mcp__Sanity__patch_document_from_json",
+      "mcp__Sanity__publish_documents"
     ]
   }
 }

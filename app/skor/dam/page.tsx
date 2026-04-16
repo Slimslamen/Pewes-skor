@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { damPageQuery } from "@/sanity/lib/queries";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
@@ -15,7 +15,11 @@ export const metadata: Metadata = generatePageMetadata({
 });
 
 export default async function DamPage() {
-  const { data: page } = await sanityFetch({ query: damPageQuery });
+  const { data } = await sanityFetch({ query: damPageQuery });
+
+  const products = (data?.brands ?? []).flatMap((b) =>
+    (b?.products ?? []).map((p) => ({ brand: b?.brand ?? undefined, ...p })),
+  );
 
   return (
     <>
@@ -38,10 +42,10 @@ export default async function DamPage() {
                 <span className="text-on-surface">Dam</span>
               </nav>
               <h1 className="font-(family-name:--font-manrope) text-6xl md:text-8xl font-extrabold tracking-tighter text-stone-900 mb-6">
-                {page?.title ?? "Dam"}
+                {data?.page?.title ?? "Dam"}
               </h1>
               <p className="text-secondary leading-relaxed font-light text-lg">
-                {page?.subtitle ??
+                {data?.page?.subtitle ??
                   "En noggrant utvald kollektion av skor för den moderna kvinnan. Från tidlösa klassiker till nutida design, utvald med fokus på hantverk och komfort."}
               </p>
             </div>
@@ -49,7 +53,7 @@ export default async function DamPage() {
         </section>
 
         {/* Products */}
-        <ProductGrid products={page?.products} />
+        <ProductGrid products={products} />
       </main>
       <Footer />
     </>

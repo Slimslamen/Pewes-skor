@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { brandPageQuery } from "@/sanity/lib/queries";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import GaborHero from "@/components/blocks/GaborHero";
 import GaborFeatures from "@/components/blocks/GaborFeatures";
@@ -91,7 +91,7 @@ const FALLBACK_HERITAGE = {
 export default async function GaborPage() {
   const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "gabor" } });
 
-  const shoes = brandData?.products ?? MOCK_SHOES;
+  const shoes = brandData?.products;
   const heritage = brandData?.heritage;
 
   // Split body into two paragraphs for the two-column layout

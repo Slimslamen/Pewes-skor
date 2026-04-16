@@ -6,13 +6,39 @@ export const brandPage = defineType({
   type: "document",
   fields: [
     defineField({
-      name: "slug",
-      title: "Slug (t.ex. gabor / rieker / dolomite / skechers)",
-      type: "slug",
-      options: { source: "name" },
+      name: "name",
+      title: "Varumärkesnamn",
+      type: "string",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({ name: "name", title: "Varumärkesnamn", type: "string" }),
+    defineField({
+      name: "description",
+      title: "Beskrivning",
+      description: "Kort text som beskriver varumärket. Visas under namnet på varumärkessidan.",
+      type: "text",
+      rows: 3,
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug (URL, t.ex. kavat → /varumarken/kavat)",
+      type: "slug",
+      options: { source: "name", maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "featured",
+      title: "Visa som Bästsäljande i menyn",
+      description:
+        "När aktiverat visas varumärket i 'Bästsäljande' i menyn. Annars hamnar det under 'Fler märken'.",
+      type: "boolean",
+      initialValue: false,
+    }),
+    defineField({
+      name: "navOrder",
+      title: "Ordning i menyn",
+      description: "Lägre siffra = tidigare i menylistan. Lämna tomt för alfabetisk ordning.",
+      type: "number",
+    }),
 
     defineField({
       name: "products",
@@ -22,9 +48,23 @@ export const brandPage = defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "name",     title: "Produktnamn",  type: "string" }),
-            defineField({ name: "price",    title: "Pris",         type: "string" }),
-            defineField({ name: "category", title: "Kategori",     type: "string" }),
+            defineField({ name: "name",  title: "Produktnamn", type: "string" }),
+            defineField({ name: "price", title: "Pris",        type: "string" }),
+            defineField({
+              name: "categories",
+              title: "Kategorier",
+              description: "Välj en eller flera. Produkten visas på motsvarande /skor/-sida.",
+              type: "array",
+              of: [{ type: "string" }],
+              options: {
+                list: [
+                  { title: "Dam",  value: "dam"  },
+                  { title: "Herr", value: "herr" },
+                  { title: "Barn", value: "barn" },
+                ],
+              },
+              validation: (Rule) => Rule.unique(),
+            }),
             defineField({
               name: "sizes",
               title: "Storlekar",
@@ -34,11 +74,11 @@ export const brandPage = defineType({
             defineField({
               name: "image",
               title: "Produktbild",
-              type: "object",
+              type: "image",
+              options: { hotspot: true },
               fields: [
-                defineField({ name: "asset",    title: "Bild (Sanity upload)", type: "image", options: { hotspot: true } }),
-                defineField({ name: "url",      title: "Extern bild-URL",      type: "url" }),
-                defineField({ name: "imageAlt", title: "Alt-text",             type: "string" }),
+                defineField({ name: "imageAlt", title: "Alt-text",        type: "string" }),
+                defineField({ name: "url",      title: "Extern bild-URL", type: "url" }),
               ],
             }),
           ],
@@ -49,32 +89,6 @@ export const brandPage = defineType({
       ],
     }),
 
-    defineField({
-      name: "heritage",
-      title: "Arv & Historia",
-      type: "object",
-      fields: [
-        defineField({ name: "eyebrow", title: "Eyebrow-label",  type: "string" }),
-        defineField({ name: "heading", title: "Rubrik",         type: "text",  rows: 2 }),
-        defineField({ name: "body",    title: "Brödtext",       type: "text",  rows: 5 }),
-        defineField({
-          name: "images",
-          title: "Bilder (max 2)",
-          type: "array",
-          validation: (Rule) => Rule.max(2),
-          of: [
-            {
-              type: "object",
-              fields: [
-                defineField({ name: "asset", title: "Bild (Sanity upload)", type: "image", options: { hotspot: true } }),
-                defineField({ name: "url",   title: "Extern bild-URL",      type: "url" }),
-                defineField({ name: "alt",   title: "Alt-text",             type: "string" }),
-              ],
-            },
-          ],
-        }),
-      ],
-    }),
   ],
 
   preview: {

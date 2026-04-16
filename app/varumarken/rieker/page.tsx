@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { brandPageQuery } from "@/sanity/lib/queries";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import RiekerHero from "@/components/blocks/RiekerHero";
 import BrandProductGrid from "@/components/blocks/BrandProductGrid";

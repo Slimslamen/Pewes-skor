@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { herrPageQuery } from "@/sanity/lib/queries";
-import Header from "@/components/layout/Header";
+import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import ProductGrid from "@/components/blocks/ProductGrid";
 import Link from "next/link";
@@ -19,7 +19,11 @@ const FALLBACK_SUBTITLE =
   "En noggrant utvald kollektion av skor för den moderna mannen. Från tidlösa klassiker till funktionella friluftsskor, alltid med fokus på komfort och hantverk.";
 
 export default async function HerrPage() {
-  const { data: page } = await sanityFetch({ query: herrPageQuery });
+  const { data } = await sanityFetch({ query: herrPageQuery });
+
+  const products = (data?.brands ?? []).flatMap((b) =>
+    (b?.products ?? []).map((p) => ({ brand: b?.brand ?? undefined, ...p })),
+  );
 
   return (
     <>
@@ -42,17 +46,17 @@ export default async function HerrPage() {
                 <span className="text-on-surface">Herr</span>
               </nav>
               <h1 className="font-(family-name:--font-manrope) text-6xl md:text-8xl font-extrabold tracking-tighter text-stone-900 mb-6">
-                {page?.title ?? "Herr"}
+                {data?.page?.title ?? "Herr"}
               </h1>
               <p className="text-secondary leading-relaxed font-light text-lg">
-                {page?.subtitle ?? FALLBACK_SUBTITLE}
+                {data?.page?.subtitle ?? FALLBACK_SUBTITLE}
               </p>
             </div>
           </div>
         </section>
 
         {/* Products */}
-        <ProductGrid products={page?.products} />
+        <ProductGrid products={products} />
       </main>
       <Footer />
     </>

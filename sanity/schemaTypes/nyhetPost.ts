@@ -23,12 +23,13 @@ export const nyhetPost = defineType({
     defineField({ name: "excerpt",     title: "Kortbeskrivning",      type: "text", rows: 2 }),
 
     defineField({
-      name:  "coverImage",
-      title: "Omslagsbild",
-      type:  "object",
+      name:    "coverImage",
+      title:   "Omslagsbild",
+      type:    "image",
+      options: { hotspot: true },
       fields: [
-        defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-        defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+        defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+        defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
       ],
     }),
 
@@ -55,12 +56,13 @@ export const nyhetPost = defineType({
             defineField({ name: "description", title: "Kort beskrivning", type: "text", rows: 2 }),
             defineField({ name: "price",       title: "Pris",             type: "string" }),
             defineField({
-              name:  "image",
-              title: "Produktbild",
-              type:  "object",
+              name:    "image",
+              title:   "Produktbild",
+              type:    "image",
+              options: { hotspot: true },
               fields: [
-                defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-                defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+                defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+                defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
               ],
             }),
           ],

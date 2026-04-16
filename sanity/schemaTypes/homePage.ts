@@ -18,10 +18,11 @@ export const homePage = defineType({
         defineField({
           name: "image",
           title: "Bakgrundsbild",
-          type: "object",
+          type: "image",
+          options: { hotspot: true },
           fields: [
-            defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-            defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+            defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+            defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
           ],
         }),
       ],
@@ -54,10 +55,11 @@ export const homePage = defineType({
         defineField({
           name: "image",
           title: "Bild",
-          type: "object",
+          type: "image",
+          options: { hotspot: true },
           fields: [
-            defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-            defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+            defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+            defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
           ],
         }),
       ],
@@ -83,10 +85,11 @@ export const homePage = defineType({
                 defineField({
                   name: "image",
                   title: "Bild",
-                  type: "object",
+                  type: "image",
+                  options: { hotspot: true },
                   fields: [
-                    defineField({ name: "asset", title: "Bild",    type: "image", options: { hotspot: true } }),
-                    defineField({ name: "alt",   title: "Alt-text", type: "string" }),
+                    defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+                    defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
                   ],
                 }),
               ],
@@ -154,11 +157,11 @@ export const homePage = defineType({
         defineField({
           name: "image",
           title: "Bild",
-          type: "object",
+          type: "image",
+          options: { hotspot: true },
           fields: [
-            defineField({ name: "asset", title: "Bild (Sanity upload)", type: "image", options: { hotspot: true } }),
-            defineField({ name: "url",   title: "Extern bild-URL",      type: "url" }),
-            defineField({ name: "alt",   title: "Alt-text",             type: "string" }),
+            defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+            defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
           ],
         }),
         defineField({ name: "badgeLabel", title: "Badge-text (t.ex. 'Ny kollektion')", type: "string" }),

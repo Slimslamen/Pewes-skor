@@ -8,7 +8,7 @@ interface Shoe {
   price: string;
   sizes: string[];
   image: string;
-  category: string;
+  categories?: string[];
 }
 
 interface Props {

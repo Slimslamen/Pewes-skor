@@ -11,7 +11,9 @@ interface NavLink {
   dropdown?: { label: string; href: string }[];
 }
 
-const BEST_SELLING_BRANDS = [
+type BrandLink = { label: string; href: string };
+
+const DEFAULT_BEST_SELLING: BrandLink[] = [
   { label: "Gabor",    href: "/varumarken/gabor" },
   { label: "ECCO",     href: "/varumarken/ecco" },
   { label: "Dolomite", href: "/varumarken/dolomite" },
@@ -19,25 +21,27 @@ const BEST_SELLING_BRANDS = [
   { label: "Skechers", href: "/varumarken/skechers" },
 ];
 
-const OTHER_POPULAR_BRANDS = [
-  { label: "Kavat", href: "/varumarken/kavat" },
-  { label: "Viking", href: "/varumarken/viking" },
-  { label: "Pax", href: "/varumarken/pax" },
-  { label: "Superfit", href: "/varumarken/superfit" },
-  { label: "Legero", href: "/varumarken/legero" },
-  { label: "Bagheera", href: "/varumarken/bagheera" },
-  { label: "Merrell", href: "/varumarken/merrell" },
-  { label: "Salomon", href: "/varumarken/salomon" },
-  { label: "Icebug", href: "/varumarken/icebug" },
-  { label: "Vagabond", href: "/varumarken/vagabond" },
+const DEFAULT_OTHER_BRANDS: BrandLink[] = [
+  { label: "Kavat",      href: "/varumarken/kavat" },
+  { label: "Viking",     href: "/varumarken/viking" },
+  { label: "Pax",        href: "/varumarken/pax" },
+  { label: "Superfit",   href: "/varumarken/superfit" },
+  { label: "Legero",     href: "/varumarken/legero" },
+  { label: "Bagheera",   href: "/varumarken/bagheera" },
+  { label: "Merrell",    href: "/varumarken/merrell" },
+  { label: "Salomon",    href: "/varumarken/salomon" },
+  { label: "Icebug",     href: "/varumarken/icebug" },
+  { label: "Vagabond",   href: "/varumarken/vagabond" },
   { label: "Ten Points", href: "/varumarken/ten-points" },
-  { label: "Dockers", href: "/varumarken/dockers" },
-  { label: "Lloyd", href: "/varumarken/lloyd" },
-  { label: "Ara", href: "/varumarken/ara" },
+  { label: "Dockers",    href: "/varumarken/dockers" },
+  { label: "Lloyd",      href: "/varumarken/lloyd" },
+  { label: "Ara",        href: "/varumarken/ara" },
 ];
 
 interface HeaderProps {
   links?: NavLink[];
+  bestSelling?: BrandLink[] | null;
+  otherBrands?: BrandLink[] | null;
 }
 
 const SORTIMENT_DROPDOWN = [
@@ -53,7 +57,9 @@ const defaultLinks: NavLink[] = [
   { label: "Skovård", href: "/skovard" },
 ];
 
-export default function Header({ links = defaultLinks }: HeaderProps) {
+export default function Header({ links = defaultLinks, bestSelling, otherBrands }: HeaderProps) {
+  const bestSellingList = bestSelling ?? DEFAULT_BEST_SELLING;
+  const otherBrandsList = otherBrands ?? DEFAULT_OTHER_BRANDS;
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState<string | null>(null);
@@ -170,7 +176,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                             Bäst säljande
                           </h4>
                           <div className="space-y-1">
-                            {BEST_SELLING_BRANDS.map((sub) => (
+                            {bestSellingList.map((sub) => (
                               <Link
                                 key={sub.href}
                                 href={sub.href}
@@ -187,7 +193,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                             Fler märken
                           </h4>
                           <div className="grid grid-cols-1 gap-x-4 space-y-1 h-[240px] overflow-y-auto pr-2">
-                            {OTHER_POPULAR_BRANDS.map((sub) => (
+                            {otherBrandsList.map((sub) => (
                               <Link
                                 key={sub.href}
                                 href={sub.href}
@@ -289,7 +295,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                                 Bäst säljande
                               </h4>
                               <div className="space-y-1">
-                                {BEST_SELLING_BRANDS.map((sub) => (
+                                {bestSellingList.map((sub) => (
                                   <Link
                                     key={sub.href}
                                     href={sub.href}
@@ -309,7 +315,7 @@ export default function Header({ links = defaultLinks }: HeaderProps) {
                                 Fler märken
                               </h4>
                               <div className="space-y-1">
-                                {OTHER_POPULAR_BRANDS.map((sub) => (
+                                {otherBrandsList.map((sub) => (
                                   <Link
                                     key={sub.href}
                                     href={sub.href}
