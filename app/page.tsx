@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import HomeHero from "@/components/blocks/HomeHero";
+import HeroShoe3DClient from "@/components/blocks/HeroShoe3DClient";
 import BrandsBar from "@/components/blocks/BrandsBar";
 import FeaturedBanner from "@/components/blocks/FeaturedBanner";
 import AboutSection from "@/components/blocks/AboutSection";
@@ -23,7 +23,7 @@ export default async function HomePage() {
     <>
       <Header />
       <main>
-        <HomeHero data={page?.hero} />
+        <HeroShoe3DClient data={page?.hero} />
         <BrandsBar data={page?.brands} />
         <FeaturedBanner data={page?.featuredBanner} />
         <AboutSection data={page?.about} />

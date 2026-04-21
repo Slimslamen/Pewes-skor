@@ -233,6 +233,50 @@ It's a test runner config that Next.js doesn't need to check.
 
 ---
 
+### R3F / Canvas components need a client wrapper with `dynamic({ ssr: false })`
+`@react-three/fiber`'s `<Canvas>` instantiates a `WebGLRenderer` that touches
+`window`, so it can't render on the server. Next.js App Router only allows
+`dynamic(..., { ssr: false })` inside a `"use client"` file — you can't call
+it from a server component directly.
+
+**Why:** The Pewes home page is a server component (Sanity fetch at request
+time). Attempting to import `HeroShoe3D` directly — even with `"use client"` —
+still SSRs the shell, which crashes R3F. A thin client wrapper that does the
+`dynamic({ ssr: false })` import is the standard workaround.
+
+**How to apply:** For any R3F / Canvas / WebGL component used from a server
+page, create a sibling `*.Client.tsx` with `"use client"` that imports the
+heavy component via `dynamic(() => import("./X"), { ssr: false, loading: ... })`.
+Also provide a `loading` fallback at the same height as the final component so
+layout doesn't jump while the R3F bundle loads. See
+`components/blocks/HeroShoe3DClient.tsx`.
+
+---
+
+### Lazy-init `useState` from `window.*` in ssr:false components, never sync-set in useEffect
+When a component is dynamic-imported with `ssr: false`, `window` is available
+at first render — so `useState(() => window.matchMedia(...).matches)` works.
+Don't use `useState(false)` + `useEffect(() => setState(window....matches), [])`
+— React 19's lint rule `react-hooks/set-state-in-effect` flags the
+synchronous `setState` in the effect body as a cascading-render antipattern.
+
+**Why:** Lint errored on `HeroShoe3D.tsx` because the effect set state on mount
+to read `matchMedia`. Lazy init avoids the extra render entirely and is safe
+here because the `ssr: false` wrapper guarantees `window` exists.
+
+**How to apply:**
+```tsx
+// ❌ Wrong — cascading render, lint error
+const [x, setX] = useState(false);
+useEffect(() => { setX(window.matchMedia(q).matches); /* subscribe */ }, []);
+
+// ✅ Correct — for ssr:false components only
+const [x, setX] = useState(() => window.matchMedia(q).matches);
+useEffect(() => { /* subscribe to change events only */ }, []);
+```
+
+---
+
 ## Log
 
 ### 2026-04-09 — ShoeAnatomy initial build
@@ -273,3 +317,72 @@ It's a test runner config that Next.js doesn't need to check.
 - Excluded vitest config from tsconfig to fix unrelated build error.
 - Created PostModal + BloggList/NyheterList for click-to-open post modals with longer
   descriptions. Added body text to all blog and nyheter fallback posts.
+
+### 2026-04-21 — 3D shoe hero with R3F
+- Installed `@react-three/fiber@9.6`, `@react-three/drei@10.7`, `@types/three`.
+  `three` v0.184 was already a direct dep.
+- Built a scroll-driven camera rig that reads `scrollYProgress.get()` inside
+  `useFrame` rather than piping through `useTransform` — avoids all the
+  keyframe-array pitfalls that bit ShoeAnatomy.
+- Had to add a thin `HeroShoe3DClient.tsx` wrapper because App Router
+  server-renders anything a server page imports, including `"use client"`
+  modules, and R3F's Canvas needs `window`. Wrapped the dynamic import
+  with `ssr: false` in a client file.
+- Lint caught a `setState` inside `useEffect` — fixed by lazy-initialising
+  state from `window.matchMedia()` (safe because the whole component only
+  mounts client-side).
+
+### 2026-04-16 — Seed script image upload failures
+
+#### Rules learned:
+
+### Always validate external image URLs before committing them to seed scripts
+When copying URLs from component fallback data into seed scripts, verify each URL actually
+returns a 200 response. Google Photos (`lh3.googleusercontent.com/aida-public/`) URLs expire
+and return HTTP 400 without warning.
+
+**Why:** 4 out of ~15 image uploads failed silently during seeding because the URLs were
+either truncated, hybridized (copy-paste error merging two URLs), or expired.
+
+**How to apply:** Before adding an external image URL to a seed script, `curl -I <url>` to
+check the status code. If it fails, look for a local equivalent in `public/` or use a
+different working URL.
+
+---
+
+### Prefer local images in `public/` over external URLs for seed scripts
+External URLs (especially Google Photos) expire unpredictably. Local files in `public/`
+are stable and always available.
+
+**Why:** The `pGaborSandal` URL was broken across ALL source files in the codebase — not
+just the seed script. The fix was to point at `public/gabor/sandaler.png` instead.
+
+**How to apply:** When a local equivalent exists in `public/`, always prefer it over an
+external URL in seed data. Use the path format `"/folder/file.png"` and detect local vs
+remote in the upload function.
+
+---
+
+### Log response bodies on HTTP errors in upload functions
+A bare `HTTP 400` error gives zero diagnostic information. Always capture and log the
+response body (truncated) when an upload fails.
+
+**Why:** Debugging the 4 failed uploads required manually curling each URL to understand
+the failures. With response body logging, the cause would have been immediately visible.
+
+**How to apply:**
+```typescript
+if (!res.ok) {
+  const body = await res.text().catch(() => "");
+  throw new Error(`HTTP ${res.status}${body ? `: ${body.slice(0, 200)}` : ""}`);
+}
+```
+
+#### Log entry:
+- `collectionBarn` URL was truncated at ~192 chars (full URL ~320 chars) — inherited from
+  `CollectionPreview.tsx:45` where it was already broken. Replaced with working substitute.
+- `pEccoSneaker` URL was a hybrid: correct first half but suffix from `collectionHerr` URL
+  (copy-paste error during script generation). Fixed with correct URL from `ProductGrid.tsx:67`.
+- `pGaborSandal` external URL expired (HTTP 400 from Google). Same broken URL in all source
+  files. Fixed by pointing to `public/gabor/sandaler.png`.
+- Added response body logging to `uploadOne` error handler for future debugging.
