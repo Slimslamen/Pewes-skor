@@ -3,11 +3,12 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import HeroShoe3DClient from "@/components/blocks/HeroShoe3DClient";
-import BrandsBar from "@/components/blocks/BrandsBar";
-import FeaturedBanner from "@/components/blocks/FeaturedBanner";
-import AboutSection from "@/components/blocks/AboutSection";
-import CollectionPreview from "@/components/blocks/CollectionPreview";
+import HeroSection from "@/components/blocks/HeroSection";
+// import HeroShoe3DClient from "@/components/blocks/HeroShoe3DClient";
+import StoryReveal from "@/components/blocks/StoryReveal";
+import ShoeRiseClient from "@/components/blocks/ShoeRiseClient";
+import CategoriesSection from "@/components/blocks/CategoriesSection";
+import FindUs from "@/components/blocks/FindUs";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({
@@ -23,11 +24,12 @@ export default async function HomePage() {
     <>
       <Header />
       <main>
-        <HeroShoe3DClient data={page?.hero} />
-        <BrandsBar data={page?.brands} />
-        <FeaturedBanner data={page?.featuredBanner} />
-        <AboutSection data={page?.about} />
-        <CollectionPreview data={page?.collection} />
+        <HeroSection />
+        {/* <HeroShoe3DClient /> */}
+        <StoryReveal />
+        <ShoeRiseClient />
+        <CategoriesSection />
+        <FindUs data={page?.findUs} />
       </main>
       <Footer />
     </>

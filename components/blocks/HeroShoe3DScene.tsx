@@ -9,18 +9,23 @@ import * as THREE from "three";
 useGLTF.preload("/Pewes.glb");
 
 // Keyframes are in "normalized" space — the ShoeModel below scales the GLB so
-// its longest axis is 1 unit and re-centers it on the origin. The shoe's
-// length lies along Z, so +Z is the "right end" (toe/heel — flip sign if the
-// logo sits at the opposite end once we see it in browser).
+// its longest axis is 1 unit and re-centers it on the origin. Shoe length is
+// along Z. +Z is assumed to be the heel end (where the collar opening sits);
+// flip all Z signs if the camera dives toward the toe instead.
+// Camera arcs in the XY plane (no horizontal spin). Both pos.z and look.z
+// share the same offset so the forward vector stays in XY — no image spin.
+// The +Z offset pans the frame to the left (camera right = -Z), with the
+// offset scaling proportionally to the zoom level so the pan reads as a
+// consistent ~250 px left shift across the top-view segment.
 const KEYFRAMES = [
-  // profile, pulled back — shoe is horizontal in frame
-  { t: 0.0,  pos: new THREE.Vector3(1.8, 0.4, 0),    look: new THREE.Vector3(0, 0, 0),    fov: 38 },
-  // dolly in, drift toward the right end, stay level
-  { t: 0.33, pos: new THREE.Vector3(1.3, 0.3, 0.2),  look: new THREE.Vector3(0, 0, 0.15), fov: 32 },
-  // closer, eye-level with the shoe, aimed at the right end
-  { t: 0.66, pos: new THREE.Vector3(0.85, 0.2, 0.4), look: new THREE.Vector3(0, 0, 0.35), fov: 24 },
-  // tight horizontal zoom on the right end — no arc, no tilt; shoe reads as horizontal
-  { t: 1.0,  pos: new THREE.Vector3(0.5, 0.15, 0.5), look: new THREE.Vector3(0, 0, 0.5),  fov: 16 },
+  // side profile — shoe reads horizontally across the frame
+  { t: 0.0,  pos: new THREE.Vector3(2.4,  0.15, 0),     look: new THREE.Vector3(0, 0,    0),     fov: 34 },
+  // swing upward, still centred (no Z offset yet)
+  { t: 0.35, pos: new THREE.Vector3(0.8,  1.6,  0),     look: new THREE.Vector3(0, 0.1,  0),     fov: 26 },
+  // above the shoe — start panning 250 px left (Z=0.078 at this zoom depth)
+  { t: 0.65, pos: new THREE.Vector3(0.04, 1.3,  0.078), look: new THREE.Vector3(0, 0.1,  0.078), fov: 16 },
+  // extreme close-up — sole fills frame, 250 px left (Z=0.002 at fov=4)
+  { t: 1.0,  pos: new THREE.Vector3(0.03, 0.28, 0.002), look: new THREE.Vector3(0, 0.18, 0.002), fov: 4  },
 ] as const;
 
 // Canvas background lerps from surface-container → surface so the seam between
@@ -136,7 +141,7 @@ export default function HeroShoe3DScene({ progress, reducedMotion = false, isMob
       shadows={!isMobile}
       dpr={isMobile ? [1, 1.5] : [1, 2]}
       gl={{ antialias: true, preserveDrawingBuffer: false }}
-      camera={{ fov: 38, position: [1.8, 0.4, 0], near: 0.01, far: 100 }}
+      camera={{ fov: 34, position: [2.4, 0.15, 0], near: 0.005, far: 100 }}
       className="absolute inset-0"
     >
       <color attach="background" args={["#edeeef"]} />

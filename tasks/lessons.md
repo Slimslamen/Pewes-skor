@@ -386,3 +386,31 @@ if (!res.ok) {
 - `pGaborSandal` external URL expired (HTTP 400 from Google). Same broken URL in all source
   files. Fixed by pointing to `public/gabor/sandaler.png`.
 - Added response body logging to `uploadOne` error handler for future debugging.
+
+---
+
+### `useScroll({ target, offset: ["start start", "end end"] })` is unreliable for sticky sections
+Never use framer-motion's `scrollYProgress` with a target ref for sticky-scroll sections loaded via dynamic import (`ssr: false`).
+
+**Why:** The component only mounts after the user has already scrolled to that part of the page. By the time `scrollYProgress` initialises, the scroll position can already be mid-section, skipping earlier animation phases entirely. This caused the Herr shoe (ShoeRise) and the first two StoryReveal sections to be invisible on first render.
+
+**How to apply:** Use `useScroll()` (global `scrollY`) instead. Measure the container's document offset in `useEffect` and store it in a ref. Compute each transform with the function form of `useTransform`:
+```tsx
+const { scrollY } = useScroll();
+const secTopRef = useRef(0);
+const vhRef = useRef(800);
+useEffect(() => {
+  const measure = () => {
+    vhRef.current = window.innerHeight;
+    secTopRef.current = containerRef.current!.getBoundingClientRect().top + window.scrollY;
+  };
+  measure();
+  window.addEventListener("resize", measure);
+  return () => window.removeEventListener("resize", measure);
+}, []);
+// Effective scroll = containerHeight − viewport (e.g. 500vh → vhRef * 4, 420vh → vhRef * 3.2)
+const op = useTransform(scrollY, (y) => {
+  const p = Math.max(0, Math.min(1, (y - secTopRef.current) / (vhRef.current * 4)));
+  // use p like scrollYProgress...
+});
+```
