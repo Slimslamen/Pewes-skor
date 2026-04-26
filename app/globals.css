@@ -80,6 +80,26 @@ body {
   color: var(--color-on-primary-container);
 }
 
+/* ── WCAG 2.1 AA: focus-visible keyboard ring ── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── WCAG 2.1 success criterion 2.3.3: respect reduced-motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee { animation: none !important; }
+}
+
 /* ── Utility: hide scrollbar ── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

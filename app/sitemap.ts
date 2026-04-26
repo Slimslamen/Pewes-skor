@@ -10,7 +10,6 @@ const STATIC: MetadataRoute.Sitemap = [
   { url: `${BASE}/skor/herr`,        priority: 0.9, changeFrequency: "weekly"  },
   { url: `${BASE}/skor/barn`,        priority: 0.9, changeFrequency: "weekly"  },
   { url: `${BASE}/nyheter`,          priority: 0.8, changeFrequency: "weekly"  },
-  { url: `${BASE}/blogg`,            priority: 0.7, changeFrequency: "weekly"  },
   { url: `${BASE}/varumarken`,          priority: 0.8, changeFrequency: "monthly" },
   { url: `${BASE}/varumarken/ecco`,     priority: 0.7, changeFrequency: "monthly" },
   { url: `${BASE}/varumarken/gabor`,    priority: 0.7, changeFrequency: "monthly" },

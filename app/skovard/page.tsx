@@ -226,7 +226,7 @@ export default async function SkoVardPage() {
 
         {/* ── Page hero ─────────────────────────────────────────── */}
         <section className="max-w-screen-2xl mx-auto px-6 mb-16">
-          <nav className="flex items-center gap-2 mb-6 text-[10px] uppercase tracking-widest text-outline">
+          <nav aria-label="Brödsmulor" className="flex items-center gap-2 mb-6 text-[10px] uppercase tracking-widest text-outline">
             <Link href="/" className="hover:text-primary transition-colors">Hem</Link>
             <span>›</span>
             <span className="text-on-surface">Skovård</span>

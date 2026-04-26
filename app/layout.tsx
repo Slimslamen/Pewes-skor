@@ -52,6 +52,12 @@ export default function RootLayout({
         className={`${manrope.variable} ${inter.variable} min-h-dvh flex flex-col antialiased`}
         style={{ fontFamily: "var(--font-inter), sans-serif" }}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-9999 focus:px-6 focus:py-3 focus:bg-primary focus:text-white focus:font-bold focus:rounded-sm"
+        >
+          Hoppa till innehåll
+        </a>
         {/* Site-wide structured data — appears on every page */}
         <LocalBusinessJsonLd />
         {children}

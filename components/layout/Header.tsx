@@ -98,7 +98,9 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
         {/* ── Left: hamburger + desktop nav ── */}
         <div className="flex items-center" ref={navRef}>
           <button
-            aria-label="Öppna meny"
+            aria-label={menuOpen ? "Stäng meny" : "Öppna meny"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
             className="text-stone-800 scale-95 active:scale-100 transition-transform duration-200 sm:hidden"
             onClick={() => {
               setMenuOpen(!menuOpen);
@@ -113,6 +115,7 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
               stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
+              aria-hidden="true"
             >
               <line x1="3" y1="6" x2="21" y2="6" />
               <line x1="3" y1="12" x2="21" y2="12" />
@@ -146,6 +149,7 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
                       stroke="currentColor"
                       strokeWidth="2"
                       strokeLinecap="round"
+                      aria-hidden="true"
                       className={`transition-transform duration-200 mt-px ${
                         openDropdown === link.label ? "rotate-180" : ""
                       }`}
@@ -162,7 +166,7 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
                       border border-outline-variant/40
                       shadow-[0_8px_32px_rgba(15,15,15,0.1)] rounded-sm
                       transition-all duration-200 origin-top
-                      ${isVarumarken ? "w-[400px]" : "w-44"}
+                      ${isVarumarken ? "w-100" : "w-44"}
                       ${
                         openDropdown === link.label
                           ? "opacity-100 scale-y-100 pointer-events-auto"
@@ -192,7 +196,7 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
                           <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4 font-(family-name:--font-inter)">
                             Fler märken
                           </h4>
-                          <div className="grid grid-cols-1 gap-x-4 space-y-1 h-[240px] overflow-y-auto pr-2">
+                          <div className="grid grid-cols-1 gap-x-4 space-y-1 h-60 overflow-y-auto pr-2">
                             {otherBrandsList.map((sub) => (
                               <Link
                                 key={sub.href}
@@ -258,7 +262,7 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
 
       {/* ── Mobile menu ── */}
       {menuOpen && (
-        <div className="md:hidden bg-surface border-t border-outline-variant/40 px-6 py-4 max-h-[80vh] overflow-y-auto">
+        <div id="mobile-menu" className="md:hidden bg-surface border-t border-outline-variant/40 px-6 py-4 max-h-[80vh] overflow-y-auto">
           {links.map((link) => {
             const isVarumarken = link.label === "Varumärken";
             const hasDropdown = link.dropdown || isVarumarken;

@@ -119,17 +119,18 @@ export default function ProductGrid({ products }: Props) {
   return (
     <>
       {/* Brand Filter */}
-      <section className="max-w-screen-2xl mx-auto px-6 mb-12 sticky top-18 z-40 py-4 bg-surface/95 backdrop-blur-sm">
-        <div className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
+      <section aria-label="Filtrera efter märke" className="max-w-screen-2xl mx-auto px-6 mb-12 sticky top-18 z-40 py-4 bg-surface/95 backdrop-blur-sm">
+        <div role="group" aria-label="Märkesfilter" className="flex items-center gap-4 overflow-x-auto no-scrollbar pb-2">
           {brands.map((brand) => (
             <button
               key={brand}
               type="button"
+              aria-pressed={activeBrand === brand}
               onClick={() => setActiveBrand(brand)}
               className={`cursor-pointer flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
                 activeBrand === brand
                   ? "bg-primary text-white"
-                  : "bg-[#e5e2e1] text-[#656464] hover:bg-stone-200"
+                  : "bg-[#e5e2e1] text-on-secondary-container hover:bg-stone-200"
               }`}
             >
               {brand === ALL ? brand : brand.charAt(0) + brand.slice(1).toLowerCase()}
@@ -203,7 +204,7 @@ export default function ProductGrid({ products }: Props) {
 
         {/* Result count */}
         <div className="mt-24 flex flex-col items-center gap-6">
-          <p className="text-outline text-sm">
+          <p aria-live="polite" aria-atomic="true" className="text-outline text-sm">
             Visar {filtered.length} av {items.length} produkter
           </p>
           <div className="w-48 h-1 bg-stone-200 rounded-full overflow-hidden">

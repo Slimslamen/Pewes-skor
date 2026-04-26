@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
 
@@ -31,7 +31,8 @@ function remap(v: number, inA: number, inB: number, outA: number, outB: number):
   return outA + c * (outB - outA);
 }
 
-export default function StoryReveal() {
+/** Desktop sticky-scroll version */
+function StoryRevealDesktop() {
   const containerRef = useRef<HTMLDivElement>(null);
   const secTopRef = useRef(0);
   const vhRef = useRef(800);
@@ -159,4 +160,55 @@ export default function StoryReveal() {
       </div>
     </div>
   );
+}
+
+/** Mobile static version — each card stacked with image + text */
+function StoryRevealMobile() {
+  return (
+    <section className="bg-surface py-16 px-6" aria-label="Vår historia">
+      <div className="flex flex-col gap-16 max-w-lg mx-auto">
+        {LINES.map((line) => (
+          <div key={line.label} className="flex flex-col gap-5">
+            <div className="rounded-sm overflow-hidden aspect-4/3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={line.img}
+                alt={line.label}
+                className="w-full h-full object-cover block"
+              />
+            </div>
+            <div>
+              <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.25em] text-primary font-bold block mb-2">
+                {line.label}
+              </span>
+              <h2
+                className="font-(family-name:--font-manrope) font-extrabold tracking-[-0.03em] text-on-surface leading-[1.1] mb-3"
+                style={{ fontSize: "clamp(24px, 7vw, 36px)" }}
+              >
+                {line.text}
+              </h2>
+              <p className="font-(family-name:--font-inter) text-[15px] text-secondary leading-[1.7] font-light">
+                {line.sub}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export default function StoryReveal() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  if (isMobile) return <StoryRevealMobile />;
+  return <StoryRevealDesktop />;
 }

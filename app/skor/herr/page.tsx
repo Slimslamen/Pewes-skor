@@ -33,12 +33,12 @@ export default async function HerrPage() {
         { name: "Herr",      path: "/skor/herr" },
       ]} />
       <Header />
-      <main className="pt-32 pb-24">
+      <main id="main-content" className="pt-32 pb-24">
         {/* Category Header */}
         <section className="max-w-screen-2xl mx-auto px-6 mb-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div className="max-w-2xl">
-              <nav className="flex items-center gap-2 mb-4 text-[10px] uppercase tracking-widest text-outline">
+              <nav aria-label="Brödsmulor" className="flex items-center gap-2 mb-4 text-[10px] uppercase tracking-widest text-outline">
                 <Link href="/" className="hover:text-primary transition-colors">Hem</Link>
                 <span>›</span>
                 <Link href="/skor" className="hover:text-primary transition-colors">Sortiment</Link>

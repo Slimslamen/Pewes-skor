@@ -50,10 +50,10 @@ export default function FindUs({ data }: Props) {
   }, []);
 
   return (
-    <section id="hitta" className="py-24 px-16 bg-surface">
+    <section id="hitta" aria-label="Hitta till oss" className="py-16 md:py-24 px-6 md:px-16 bg-surface">
       <div
         ref={ref}
-        className="max-w-7xl mx-auto grid grid-cols-2 gap-20 items-start"
+        className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start"
       >
         {/* Left: info */}
         <div
@@ -76,7 +76,7 @@ export default function FindUs({ data }: Props) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {INFO_BLOCKS(d).map((block) => (
               <div key={block.label}>
                 <p className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.2em] font-bold text-outline mb-2">
@@ -117,7 +117,7 @@ export default function FindUs({ data }: Props) {
         >
           <div className="bg-surface-container rounded aspect-4/3 flex flex-col items-center justify-center relative overflow-hidden">
             {/* Grid lines */}
-            <svg className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="none">
+            <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="none">
               {[50, 100, 150, 200, 250, 300, 350].map((x) => (
                 <line key={x} x1={x} y1={0} x2={x} y2={300} stroke="var(--color-outline)" strokeWidth="1" />
               ))}

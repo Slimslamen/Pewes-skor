@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { useScroll, useTransform, motion } from "motion/react";
+import { useRef, useState } from "react";
+import { useScroll, useTransform, motion, useMotionValueEvent } from "motion/react";
 
 export interface AnatomyZone {
   label: string;
@@ -61,10 +61,20 @@ const LAYER_IMAGES = [
 
 export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "Anatomy of Innovation" }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeZone, setActiveZone] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    let idx = 0;
+    if (v >= 0.55) idx = 4;
+    else if (v >= 0.42) idx = 3;
+    else if (v >= 0.28) idx = 2;
+    else if (v >= 0.14) idx = 1;
+    setActiveZone(idx);
   });
 
   // ── Opacity: each image fades OUT before the next fades IN ──────────
@@ -88,7 +98,11 @@ export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "An
   const displays = [disp0, disp1, disp2, disp3, disp4];
 
   return (
-    <div ref={containerRef} className="relative h-[500vh] md:h-[450vh]">
+    <div ref={containerRef} aria-label={sectionTitle} className="relative h-[500vh] md:h-[450vh]">
+      {/* Screen-reader live region announces active zone as user scrolls */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {zones[activeZone]?.title ?? ""}
+      </div>
       {/* Sticky viewport frame */}
       <div className="sticky top-0 h-screen flex flex-col">
         {/* Title — pt clears the fixed site header so it's fully visible when stuck */}
@@ -100,7 +114,7 @@ export default function ShoeAnatomy({ zones = FALLBACK_ZONES, sectionTitle = "An
         </div>
 
         {/* Shoe + annotations */}
-        <div className="flex-1 flex flex-col lg:flex-row items-center mt-12 md:mt-16 lg:mt-[-6rem] max-w-7xl mx-auto w-full px-6 pb-8">
+        <div className="flex-1 flex flex-col lg:flex-row items-center mt-12 md:mt-16 lg:-mt-24 max-w-7xl mx-auto w-full px-6 pb-8">
           {/* ── Left 55%: scroll-indexed images ── */}
           <div className="w-full lg:w-[55%] flex items-center justify-center" style={{ pointerEvents: "none" }}>
             <div className="relative w-60 h-60 md:w-120 md:h-120 lg:w-150 lg:h-150">

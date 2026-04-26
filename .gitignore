@@ -35,6 +35,8 @@ yarn-error.log*
 COMPONENTS.md
 DESIGN_SYSTEM.md
 /.CLAUDE.md
+lessons.md
+project.md
 
 # vercel
 .vercel

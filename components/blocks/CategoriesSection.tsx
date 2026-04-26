@@ -33,38 +33,50 @@ function ExpandCard({ title, label, body, href, image, delay = 0 }: CardProps) {
     return () => io.disconnect();
   }, []);
 
+  const toggleId = `category-${title.toLowerCase()}`;
+
   return (
     <div
       ref={ref}
-      onClick={() => setOpen(!open)}
-      className="border-t border-outline-variant py-7 cursor-pointer"
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? "none" : "translateY(32px)",
         transition: `opacity 0.8s ${delay}s cubic-bezier(0.22,1,0.36,1), transform 0.8s ${delay}s cubic-bezier(0.22,1,0.36,1)`,
       }}
     >
-      <div className="flex justify-between items-center">
-        <div>
-          <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.22em] text-primary font-bold block mb-1.5">
-            {label}
-          </span>
-          <h3 className="font-(family-name:--font-manrope) text-[22px] font-bold tracking-[-0.02em] text-on-surface">
-            {title}
-          </h3>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={toggleId}
+        onClick={() => setOpen(!open)}
+        className="w-full border-t border-outline-variant py-7 cursor-pointer text-left"
+      >
+        <div className="flex justify-between items-center">
+          <div>
+            <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.22em] text-primary font-bold block mb-1.5">
+              {label}
+            </span>
+            <h3 className="font-(family-name:--font-manrope) text-[22px] font-bold tracking-[-0.02em] text-on-surface">
+              {title}
+            </h3>
+          </div>
+          <div
+            className="w-9 h-9 rounded-full border border-outline-variant flex items-center justify-center flex-shrink-0 transition-transform duration-300"
+            style={{ transform: open ? "rotate(45deg)" : "none" }}
+            aria-hidden="true"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--color-outline)" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <line x1="7" y1="2" x2="7" y2="12" />
+              <line x1="2" y1="7" x2="12" y2="7" />
+            </svg>
+          </div>
         </div>
-        <div
-          className="w-9 h-9 rounded-full border border-outline-variant flex items-center justify-center flex-shrink-0 transition-transform duration-300"
-          style={{ transform: open ? "rotate(45deg)" : "none" }}
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="var(--color-outline)" strokeWidth="1.8" strokeLinecap="round">
-            <line x1="7" y1="2" x2="7" y2="12" />
-            <line x1="2" y1="7" x2="12" y2="7" />
-          </svg>
-        </div>
-      </div>
+      </button>
 
       <div
+        id={toggleId}
+        role="region"
+        aria-label={`${title} detaljer`}
         className="overflow-hidden transition-all duration-500"
         style={{
           maxHeight: open ? "320px" : "0",
@@ -74,7 +86,7 @@ function ExpandCard({ title, label, body, href, image, delay = 0 }: CardProps) {
         <div className="pt-5 flex gap-5">
           <div className="w-25 h-30 flex-shrink-0 rounded-sm overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image} alt={title} className="w-full h-full object-cover" />
+            <img src={image} alt={`${title} skor hos Pewes Skor`} className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col gap-3">
             <p className="font-(family-name:--font-inter) text-sm text-secondary leading-[1.7] font-light">
@@ -82,7 +94,6 @@ function ExpandCard({ title, label, body, href, image, delay = 0 }: CardProps) {
             </p>
             <Link
               href={href}
-              onClick={(e) => e.stopPropagation()}
               className="inline-flex items-center gap-1.5 font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] text-primary hover:opacity-70 transition-opacity"
             >
               Utforska {title} →
@@ -96,9 +107,9 @@ function ExpandCard({ title, label, body, href, image, delay = 0 }: CardProps) {
 
 export default function CategoriesSection() {
   return (
-    <section id="collection" className="py-24 bg-surface-container-low">
-      <div className="max-w-7xl mx-auto px-16">
-        <div className="mb-14">
+    <section id="collection" className="py-16 md:py-24 bg-surface-container-low">
+      <div className="max-w-7xl mx-auto px-6 md:px-16">
+        <div className="mb-10 md:mb-14">
           <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.25em] text-primary font-bold block mb-3">
             Sortiment
           </span>
@@ -110,7 +121,8 @@ export default function CategoriesSection() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-3 gap-12 items-start">
+        {/* On mobile: single column. On md+: 3 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-12 items-start">
           <ExpandCard
             title="Herr"
             label="Herrkollektion"

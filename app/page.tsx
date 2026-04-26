@@ -23,7 +23,7 @@ export default async function HomePage() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content">
         <HeroSection />
         {/* <HeroShoe3DClient /> */}
         <StoryReveal />

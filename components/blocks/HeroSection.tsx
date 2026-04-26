@@ -11,7 +11,8 @@ const BRANDS = [
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex flex-col overflow-hidden">
+    <section className="relative h-screen flex flex-col overflow-hidden" aria-label="Välkommen till Pewes Skor">
+      {/* Decorative background video — hidden from assistive tech */}
       <video
         className="absolute inset-0 h-full w-full object-cover z-0 opacity-20"
         src="/gabor/video.mp4"
@@ -19,9 +20,12 @@ export default function HeroSection() {
         muted
         loop
         playsInline
+        aria-hidden="true"
+        tabIndex={-1}
       />
-      {/* Main grid */}
-      <div className="flex-1 grid grid-cols-2 items-end px-16 pb-16 pt-32 z-10">
+
+      {/* Main grid — stacks on mobile, side-by-side on md+ */}
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 items-end px-6 md:px-16 pb-10 md:pb-16 pt-28 md:pt-32 z-10">
         {/* Left: headline */}
         <div className="flex flex-col gap-4">
           <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.3em] text-primary font-bold">
@@ -29,31 +33,31 @@ export default function HeroSection() {
           </span>
           <h1
             className="font-(family-name:--font-manrope) font-black leading-[0.88] tracking-[-0.05em] text-on-surface"
-            style={{ fontSize: "clamp(72px, 10vw, 140px)" }}
+            style={{ fontSize: "clamp(56px, 10vw, 140px)" }}
           >
             Pewes<br />Skor
           </h1>
           <p className="font-(family-name:--font-inter) font-light text-base text-secondary leading-[1.65] mt-2 max-w-72">
             Skoaffär med hjärtat<br />i Anderstorp — sedan generationer.
           </p>
-          <div className="flex gap-3 mt-5">
+          <div className="flex flex-wrap gap-3 mt-5">
             <Link
               href="#collection"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-white font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:opacity-85 transition-opacity"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-white font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:opacity-85 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Se sortiment
             </Link>
             <Link
               href="#hitta"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline/30 text-on-surface font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:bg-surface-container transition-colors"
+              className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline/30 text-on-surface font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:bg-surface-container transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Hitta hit
             </Link>
           </div>
         </div>
 
-        {/* Right: descriptor */}
-        <div className="flex flex-col items-end gap-3 pb-2">
+        {/* Right: descriptor — hidden on smallest screens to preserve clarity */}
+        <div className="hidden md:flex flex-col items-end gap-3 pb-2">
           <p className="font-(family-name:--font-inter) text-sm text-secondary leading-[1.7] text-right max-w-56 font-light">
             Premium skor för hela familjen.<br />
             Storgatan 11, Anderstorp.
@@ -61,12 +65,15 @@ export default function HeroSection() {
           <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.22em] text-outline">
             MÅN–FRE 10–18 · LÖR 10–13
           </span>
-          <div className="w-px h-16 bg-outline-variant mt-2" />
+          <div className="w-px h-16 bg-outline-variant mt-2" aria-hidden="true" />
         </div>
       </div>
 
       {/* Brand marquee band */}
-      <div className="border-t border-outline-variant overflow-hidden whitespace-nowrap py-3.5 bg-surface-container-low">
+      <div
+        className="border-t border-outline-variant overflow-hidden whitespace-nowrap py-3.5 bg-surface-container-low z-10"
+        aria-hidden="true"
+      >
         <div
           className="inline-flex animate-marquee"
           onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = "paused")}

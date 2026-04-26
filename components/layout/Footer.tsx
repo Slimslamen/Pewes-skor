@@ -2,24 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 
 interface FooterProps {
   year?: number;
 }
 
 export default function Footer({ year = 2025 }: FooterProps) {
-  const [email, setEmail] = useState("");
-
-  function handleSubscribe() {
-    // Newsletter submission via state — no form element
-    if (!email.trim()) return;
-    setEmail("");
-    // TODO: connect to Sanity-driven newsletter endpoint
-  }
-
   return (
-    <footer id="hitta" className="w-full bg-stone-100 border-t border-stone-200">
+    <footer aria-label="Sidfot" className="w-full bg-stone-100 border-t border-stone-200">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-8 py-20 max-w-7xl mx-auto">
         {/* Brand */}
         <div className="space-y-6">
@@ -89,7 +79,7 @@ export default function Footer({ year = 2025 }: FooterProps) {
               { days: "Lördag",          hours: "10:00 – 14:00" },
               { days: "Söndag",          hours: "Stängt" },
             ].map((row) => (
-              <div key={row.days} className="flex justify-between max-w-[240px]">
+              <div key={row.days} className="flex justify-between max-w-60">
                 <span>{row.days}</span>
                 <span className="text-stone-900">{row.hours}</span>
               </div>
@@ -98,7 +88,7 @@ export default function Footer({ year = 2025 }: FooterProps) {
         </div>
 
         {/* Map */}
-        <div className="relative h-[200px] rounded-xl overflow-hidden bg-stone-200 shadow-inner flex items-center justify-center">
+        <div className="relative h-50 rounded-xl overflow-hidden bg-stone-200 shadow-inner flex items-center justify-center">
           <div className="text-center p-4">
             <p className="font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-[10px] text-stone-400">
               Karta

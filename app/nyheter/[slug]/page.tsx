@@ -190,7 +190,7 @@ export default async function NyhetPostPage({
 
           <div className="absolute bottom-0 left-0 right-0 px-6 pb-12 md:px-12 max-w-screen-2xl mx-auto">
             {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 mb-6 text-[10px] uppercase tracking-widest text-white/50">
+            <nav aria-label="Brödsmulor" className="flex items-center gap-2 mb-6 text-[10px] uppercase tracking-widest text-white/50">
               <Link href="/" className="hover:text-white/80 transition-colors">Hem</Link>
               <span>›</span>
               <Link href="/nyheter" className="hover:text-white/80 transition-colors">Nyheter</Link>

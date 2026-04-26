@@ -136,7 +136,7 @@ export default function ShoeRise() {
     else setLabel("Herr");
   });
 
-  const shoeSize = "clamp(280px, 52vmin, 560px)";
+  const shoeSize = "clamp(200px, 52vmin, 560px)";
 
   return (
     <div ref={containerRef} className="relative" style={{ height: "420vh" }}>
@@ -146,11 +146,11 @@ export default function ShoeRise() {
       >
         {/* Eyebrow */}
         <motion.div
-          className="absolute top-[72px] inset-x-0 text-center pointer-events-none"
+          className="absolute top-20 md:top-20 inset-x-0 text-center pointer-events-none"
           style={{ opacity: labelOp }}
         >
           <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.3em] text-primary font-bold">
-            Vårens kollektion · 2026
+            En del av våran kollektion · 2026
           </span>
         </motion.div>
 
@@ -186,7 +186,7 @@ export default function ShoeRise() {
 
         {/* Category label — bottom */}
         <motion.div
-          className="absolute bottom-[72px] inset-x-0 text-center pointer-events-none"
+          className="absolute bottom-16 md:bottom-18 inset-x-0 text-center pointer-events-none"
           style={{ opacity: labelOp }}
         >
           <h2

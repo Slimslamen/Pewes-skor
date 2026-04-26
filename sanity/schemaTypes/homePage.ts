@@ -10,9 +10,10 @@ export const homePage = defineType({
       title: "Hero",
       type: "object",
       fields: [
-        defineField({ name: "heading",  title: "Rubrik",    type: "text",   rows: 2 }),
-        defineField({ name: "address",  title: "Adress",    type: "string" }),
-        defineField({ name: "hours",    title: "Öppettider (kort)", type: "string" }),
+        defineField({ name: "heading",  title: "Rubrik (används ej direkt — varumärkesnamnet är fast)", type: "text",   rows: 2 }),
+        defineField({ name: "subtext",  title: "Undertext under logotyp",                               type: "text",   rows: 2 }),
+        defineField({ name: "address",  title: "Högertext / adressrad",                                 type: "text",   rows: 2 }),
+        defineField({ name: "hours",    title: "Öppettider (kort, t.ex. MÅN–FRE 10–18 · LÖR 10–13)",  type: "string" }),
         defineField({ name: "ctaLabel", title: "CTA-text",  type: "string" }),
         defineField({ name: "ctaHref",  title: "CTA-länk",  type: "string" }),
         defineField({
@@ -43,6 +44,42 @@ export const homePage = defineType({
     }),
 
     defineField({
+      name: "storyReveal",
+      title: "Historiesegment (StoryReveal)",
+      type: "object",
+      fields: [
+        defineField({
+          name: "items",
+          title: "Segment",
+          type: "array",
+          of: [
+            {
+              type: "object",
+              fields: [
+                defineField({ name: "label", title: "Etiketttext (liten, övre)",  type: "string" }),
+                defineField({ name: "text",  title: "Rubrik",                     type: "string" }),
+                defineField({ name: "sub",   title: "Brödtext",                   type: "text", rows: 2 }),
+                defineField({
+                  name: "image",
+                  title: "Bild",
+                  type: "image",
+                  options: { hotspot: true },
+                  fields: [
+                    defineField({ name: "alt", title: "Alt-text",        type: "string" }),
+                    defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
+                  ],
+                }),
+              ],
+              preview: {
+                select: { title: "text", subtitle: "label" },
+              },
+            },
+          ],
+        }),
+      ],
+    }),
+
+    defineField({
       name: "about",
       title: "Om oss",
       type: "object",
@@ -67,11 +104,12 @@ export const homePage = defineType({
 
     defineField({
       name: "collection",
-      title: "Avdelningar",
+      title: "Avdelningar (Sortiment-sektion)",
       type: "object",
       fields: [
-        defineField({ name: "heading",    title: "Rubrik",    type: "string" }),
-        defineField({ name: "subheading", title: "Underrubrik", type: "string" }),
+        defineField({ name: "eyebrow",    title: "Eyebrow-text (t.ex. 'Sortiment')",  type: "string" }),
+        defineField({ name: "heading",    title: "Rubrik",                            type: "string" }),
+        defineField({ name: "subheading", title: "Underrubrik",                      type: "string" }),
         defineField({
           name: "categories",
           title: "Kategorier",
@@ -80,8 +118,10 @@ export const homePage = defineType({
             {
               type: "object",
               fields: [
-                defineField({ name: "name", title: "Namn", type: "string" }),
-                defineField({ name: "href", title: "Länk", type: "string" }),
+                defineField({ name: "name",  title: "Namn (t.ex. 'Herr')",                            type: "string" }),
+                defineField({ name: "label", title: "Etikett (t.ex. 'Herrkollektion')",               type: "string" }),
+                defineField({ name: "body",  title: "Kortbeskrivning",                                type: "text", rows: 2 }),
+                defineField({ name: "href",  title: "Länk",                                          type: "string" }),
                 defineField({
                   name: "image",
                   title: "Bild",

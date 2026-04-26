@@ -389,6 +389,38 @@ if (!res.ok) {
 
 ---
 
+### Mobile-first: sticky-scroll sections need a separate mobile fallback component
+Never use a `500vh` / `420vh` sticky-scroll container on mobile — it forces the user to scroll through 4+ viewports of dead space on a small screen.
+
+**Why:** `StoryReveal` used `grid grid-cols-2` inside a sticky viewport. On mobile this rendered two squished columns that were unusable. The fix: render a completely different component on mobile — a simple stacked cards layout that doesn't require any scroll-driven animation.
+
+**How to apply:** Use a `useEffect` media query check (`window.matchMedia("(max-width: 767px)")`) inside the component, defaulting to `false` on initial render. Render `<MobileFallback />` when true, `<DesktopStickyScroll />` when false. Both branches share the same data array.
+
+---
+
+### WCAG 2.1 AA checklist for interactive components
+When building interactive UI (accordions, dropdowns, buttons, videos):
+1. **Interactive `div`s**: Replace with `<button type="button">` + `aria-expanded` + `aria-controls` pointing to the panel's `id`. The panel needs `role="region"` + `aria-label`.
+2. **Decorative video/images/SVGs**: Add `aria-hidden="true"` + `tabIndex={-1}` on video; `aria-hidden="true"` on decorative SVGs.
+3. **Mobile hamburger**: `aria-expanded={menuOpen}` + `aria-controls="mobile-menu"` + dynamic `aria-label` ("Öppna meny" / "Stäng meny").
+4. **Breadcrumb `<nav>`**: Must have `aria-label="Brödsmulor"` (WCAG 2.1 SC 1.3.6).
+5. **Focus ring**: Add `focus-visible` outline in `globals.css`. Never suppress `:focus` without a `focus-visible` alternative.
+6. **Reduced motion**: Add `@media (prefers-reduced-motion: reduce)` in `globals.css` that sets `animation-duration: 0.01ms` and `transition-duration: 0.01ms` on all elements. WCAG 2.1 SC 2.3.3.
+
+---
+
+### Tailwind v4 canonical class names
+Tailwind v4 uses direct CSS values as class names. Avoid arbitrary bracket notation when a canonical form exists:
+- `w-[400px]` → `w-100`
+- `h-[240px]` → `h-60`
+- `top-[72px]` → `top-18`
+- `bottom-[72px]` → `bottom-18`
+- `aspect-[4/3]` → `aspect-4/3`
+
+The IDE linter (`suggestCanonicalClasses`) will flag these. Fix them immediately to keep the codebase consistent.
+
+---
+
 ### `useScroll({ target, offset: ["start start", "end end"] })` is unreliable for sticky sections
 Never use framer-motion's `scrollYProgress` with a target ref for sticky-scroll sections loaded via dynamic import (`ssr: false`).
 

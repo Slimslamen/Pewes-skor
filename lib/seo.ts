@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 /** Central site config — single source of truth for all SEO */
 export const siteConfig = {
   name:      "Pewes Skor i Anderstorp AB",
-  shortName: "Pewes Skor Logo",
+  shortName: "Pewes Skor",
 
   url:       "https://pewesskor.se",
   description:
@@ -58,7 +58,7 @@ export function generatePageMetadata({
 }: PageSeoInput): Metadata {
   const canonicalUrl = `${siteConfig.url}${path}`;
   const fullTitle    = title
-    ? `${title} | Pewes Skor Logo`
+    ? `${title} | ${siteConfig.shortName}`
     : `${siteConfig.shortName} — Skor med känsla sedan generationer`;
   const desc = description ?? siteConfig.description;
 

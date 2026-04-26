@@ -18,7 +18,7 @@ interface Props {
 
 export default function BrandProductGrid({ brandName, shoes }: Props) {
   return (
-    <section className="py-24 bg-white">
+    <section aria-label={`${brandName} produkter`} className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
           {shoes.map((shoe, i) => (
@@ -28,7 +28,7 @@ export default function BrandProductGrid({ brandName, shoes }: Props) {
               className="group flex flex-col"
             >
               {/* Image Container */}
-              <div className="aspect-[3/4] overflow-hidden bg-stone-100 rounded-2xl mb-6 relative">
+              <div className="aspect-3/4 overflow-hidden bg-stone-100 rounded-2xl mb-6 relative">
                 <Image
                   src={shoe.image}
                   alt={shoe.name}
