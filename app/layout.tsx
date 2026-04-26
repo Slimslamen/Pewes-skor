@@ -3,6 +3,7 @@ import { Manrope, Inter } from "next/font/google";
 import { SanityLive } from "@/sanity/lib/live";
 import { LocalBusinessJsonLd } from "@/components/seo/JsonLd";
 import { siteConfig } from "@/lib/seo";
+import LenisProvider from "@/components/layout/LenisProvider";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -60,6 +61,7 @@ export default function RootLayout({
         </a>
         {/* Site-wide structured data — appears on every page */}
         <LocalBusinessJsonLd />
+        <LenisProvider />
         {children}
         <SanityLive />
       </body>

@@ -446,3 +446,44 @@ const op = useTransform(scrollY, (y) => {
   // use p like scrollYProgress...
 });
 ```
+
+---
+
+### Use Lenis for smooth scrolling — never the Framer Motion fixed-container approach
+For site-wide smooth (inertial) scrolling, use **Lenis** (`npm install lenis`). Do not use
+the Framer Motion `useSpring(scrollYProgress)` + `position: fixed` wrapper pattern from
+articles like dev.to/ironcladdev/smooth-scrolling-with-react-framer-motion-dih.
+
+**Why:** The fixed-container approach works by putting all content inside a `position: fixed`
+`motion.div` with a `y` transform. This has two fatal incompatibilities with this project:
+1. CSS `position: sticky` stops working — it needs a scrollable ancestor, which the fixed
+   wrapper is not.
+2. `position: fixed` children are positioned relative to the nearest ancestor with a
+   transform (the wrapper), not the viewport. This breaks the fixed header.
+Both `StoryReveal` and `ShoeRise` use sticky layout, so the whole approach breaks.
+
+**How to apply:** Create a zero-render `"use client"` provider and add it once to
+`app/layout.tsx`:
+```tsx
+// components/layout/LenisProvider.tsx
+"use client";
+import { useEffect } from "react";
+import Lenis from "lenis";
+
+export default function LenisProvider() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+    let rafId: number;
+    function raf(time: number) { lenis.raf(time); rafId = requestAnimationFrame(raf); }
+    rafId = requestAnimationFrame(raf);
+    return () => { cancelAnimationFrame(rafId); lenis.destroy(); };
+  }, []);
+  return null;
+}
+```
+Lenis works by intercepting wheel/touch events and driving native scroll via
+`scrollTo({ behavior: "instant" })`. This means `window.scrollY`, `position: sticky`,
+IntersectionObserver, and Framer Motion's `useScroll` all keep working without any changes.
