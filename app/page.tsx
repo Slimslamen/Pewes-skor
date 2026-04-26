@@ -46,7 +46,7 @@ export default async function HomePage() {
     <>
       <Header />
       <main id="main-content">
-        <HeroSection data={page?.hero} />
+        <HeroSection data={page?.hero} brands={page?.brands} />
         <StoryReveal lines={storyLines} />
         <ShoeRiseClient />
         <CategoriesSection data={collectionData} />

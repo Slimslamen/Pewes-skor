@@ -14,7 +14,7 @@ interface FindUsData {
 interface Props { data?: FindUsData | null; }
 
 const FALLBACK: FindUsData = {
-  heading: "Where to find the store",
+  heading: "Hitta till oss",
   address: "Storgatan 11, 334 32 Anderstorp",
   hoursRows: [
     { days: "Måndag – Fredag", hours: "10:00 – 18:00" },

@@ -3,26 +3,34 @@
 import Link from "next/link";
 
 interface HeroData {
-  subtext?: string | null;
-  address?: string | null;
-  hours?: string | null;
+  heading?:  string | null;
+  subtext?:  string | null;
+  address?:  string | null;
+  hours?:    string | null;
+  ctaLabel?: string | null;
+  ctaHref?:  string | null;
 }
 
 interface Props {
-  data?: HeroData | null;
+  data?:   HeroData | null;
+  brands?: Array<{ name: string }> | null;
 }
 
-const BRANDS = [
-  "ECCO", "Rieker", "Gabor", "Skechers", "DOLOMITE",
-  "Kavat", "Vagabond", "Merrell", "Ten Points", "Ara",
+const FALLBACK_BRANDS = [
   "ECCO", "Rieker", "Gabor", "Skechers", "DOLOMITE",
   "Kavat", "Vagabond", "Merrell", "Ten Points", "Ara",
 ];
 
-export default function HeroSection({ data }: Props) {
+export default function HeroSection({ data, brands }: Props) {
+  const heading  = data?.heading  ?? "Pewes\nSkor";
   const subtext  = data?.subtext  ?? "Skoaffär med hjärtat\ni Anderstorp — sedan generationer.";
   const address  = data?.address  ?? "Premium skor för hela familjen.\nStorgatan 11, Anderstorp.";
   const hours    = data?.hours    ?? "MÅN–FRE 10–18 · LÖR 10–13";
+  const ctaLabel = data?.ctaLabel ?? "Se sortiment";
+  const ctaHref  = data?.ctaHref  ?? "#collection";
+
+  const brandList = brands?.length ? brands.map((b) => b.name) : FALLBACK_BRANDS;
+  const marqueeItems = [...brandList, ...brandList];
 
   return (
     <section className="relative h-screen flex flex-col overflow-hidden" aria-label="Välkommen till Pewes Skor">
@@ -49,7 +57,9 @@ export default function HeroSection({ data }: Props) {
             className="font-(family-name:--font-manrope) font-black leading-[0.88] tracking-[-0.05em] text-on-surface"
             style={{ fontSize: "clamp(56px, 10vw, 140px)" }}
           >
-            Pewes<br />Skor
+            {heading.split("\n").map((part, i, arr) => (
+              <span key={i}>{part}{i < arr.length - 1 && <br />}</span>
+            ))}
           </h1>
           <p className="font-(family-name:--font-inter) font-light text-base text-secondary leading-[1.65] mt-2 max-w-72">
             {subtext.split("\n").map((line, i) => (
@@ -58,10 +68,10 @@ export default function HeroSection({ data }: Props) {
           </p>
           <div className="flex flex-wrap gap-3 mt-5">
             <Link
-              href="#collection"
+              href={ctaHref}
               className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-white font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:opacity-85 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              Se sortiment
+              {ctaLabel}
             </Link>
             <Link
               href="#hitta"
@@ -96,12 +106,12 @@ export default function HeroSection({ data }: Props) {
           onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = "paused")}
           onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = "running")}
         >
-          {BRANDS.map((b, i) => (
+          {marqueeItems.map((name, i) => (
             <span
               key={i}
               className="font-(family-name:--font-manrope) text-[12px] font-bold uppercase tracking-[0.22em] text-outline mr-16 shrink-0"
             >
-              {b}
+              {name}
             </span>
           ))}
         </div>
