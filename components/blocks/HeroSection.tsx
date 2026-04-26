@@ -2,6 +2,16 @@
 
 import Link from "next/link";
 
+interface HeroData {
+  subtext?: string | null;
+  address?: string | null;
+  hours?: string | null;
+}
+
+interface Props {
+  data?: HeroData | null;
+}
+
 const BRANDS = [
   "ECCO", "Rieker", "Gabor", "Skechers", "DOLOMITE",
   "Kavat", "Vagabond", "Merrell", "Ten Points", "Ara",
@@ -9,7 +19,11 @@ const BRANDS = [
   "Kavat", "Vagabond", "Merrell", "Ten Points", "Ara",
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ data }: Props) {
+  const subtext  = data?.subtext  ?? "Skoaffär med hjärtat\ni Anderstorp — sedan generationer.";
+  const address  = data?.address  ?? "Premium skor för hela familjen.\nStorgatan 11, Anderstorp.";
+  const hours    = data?.hours    ?? "MÅN–FRE 10–18 · LÖR 10–13";
+
   return (
     <section className="relative h-screen flex flex-col overflow-hidden" aria-label="Välkommen till Pewes Skor">
       {/* Decorative background video — hidden from assistive tech */}
@@ -38,7 +52,9 @@ export default function HeroSection() {
             Pewes<br />Skor
           </h1>
           <p className="font-(family-name:--font-inter) font-light text-base text-secondary leading-[1.65] mt-2 max-w-72">
-            Skoaffär med hjärtat<br />i Anderstorp — sedan generationer.
+            {subtext.split("\n").map((line, i) => (
+              <span key={i}>{line}{i < subtext.split("\n").length - 1 && <br />}</span>
+            ))}
           </p>
           <div className="flex flex-wrap gap-3 mt-5">
             <Link
@@ -59,11 +75,12 @@ export default function HeroSection() {
         {/* Right: descriptor — hidden on smallest screens to preserve clarity */}
         <div className="hidden md:flex flex-col items-end gap-3 pb-2">
           <p className="font-(family-name:--font-inter) text-sm text-secondary leading-[1.7] text-right max-w-56 font-light">
-            Premium skor för hela familjen.<br />
-            Storgatan 11, Anderstorp.
+            {address.split("\n").map((line, i) => (
+              <span key={i}>{line}{i < address.split("\n").length - 1 && <br />}</span>
+            ))}
           </p>
           <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.22em] text-outline">
-            MÅN–FRE 10–18 · LÖR 10–13
+            {hours}
           </span>
           <div className="w-px h-16 bg-outline-variant mt-2" aria-hidden="true" />
         </div>
@@ -82,7 +99,7 @@ export default function HeroSection() {
           {BRANDS.map((b, i) => (
             <span
               key={i}
-              className="font-(family-name:--font-manrope) text-[12px] font-bold uppercase tracking-[0.22em] text-outline mr-16 flex-shrink-0"
+              className="font-(family-name:--font-manrope) text-[12px] font-bold uppercase tracking-[0.22em] text-outline mr-16 shrink-0"
             >
               {b}
             </span>

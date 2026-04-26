@@ -21,8 +21,8 @@ const FALLBACK_SUBTITLE =
 export default async function BarnPage() {
   const { data } = await sanityFetch({ query: barnPageQuery });
 
-  const products = (data?.brands ?? []).flatMap((b) =>
-    (b?.products ?? []).map((p) => ({ brand: b?.brand ?? undefined, ...p })),
+  const products = (data?.brands ?? []).flatMap((b: { brand?: string | null; products?: unknown[] | null }) =>
+    (b?.products ?? []).map((p: unknown) => ({ brand: b?.brand ?? undefined, ...(p as object) })),
   );
 
   return (

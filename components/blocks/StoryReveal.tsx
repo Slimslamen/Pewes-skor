@@ -3,8 +3,18 @@
 import { useRef, useEffect, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
+export interface StoryLine {
+  label: string;
+  text: string;
+  sub: string;
+  img: string;
+}
 
-const LINES = [
+interface Props {
+  lines?: StoryLine[] | null;
+}
+
+const FALLBACK_LINES: StoryLine[] = [
   {
     label: "Sedan generationer",
     text: "Skor med känsla",
@@ -32,7 +42,7 @@ function remap(v: number, inA: number, inB: number, outA: number, outB: number):
 }
 
 /** Desktop sticky-scroll version */
-function StoryRevealDesktop() {
+function StoryRevealDesktop({ lines }: { lines: StoryLine[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const secTopRef = useRef(0);
   const vhRef = useRef(800);
@@ -122,7 +132,7 @@ function StoryRevealDesktop() {
       <div className="sticky top-0 h-screen overflow-hidden grid grid-cols-2">
         {/* Left: images */}
         <div className="relative overflow-hidden m-20 mr-15 rounded-sm">
-          {LINES.map((line, i) => (
+          {lines.map((line, i) => (
             <motion.div
               key={i}
               className="absolute inset-0"
@@ -140,7 +150,7 @@ function StoryRevealDesktop() {
 
         {/* Right: text blocks */}
         <div className="flex flex-col justify-center px-20 pl-10 gap-14">
-          {LINES.map((line, i) => (
+          {lines.map((line, i) => (
             <motion.div key={i} style={{ opacity: textOpacities[i], y: textYs[i] }}>
               <span className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.25em] text-primary font-bold block mb-2.5">
                 {line.label}
@@ -163,11 +173,11 @@ function StoryRevealDesktop() {
 }
 
 /** Mobile static version — each card stacked with image + text */
-function StoryRevealMobile() {
+function StoryRevealMobile({ lines }: { lines: StoryLine[] }) {
   return (
     <section className="bg-surface py-16 px-6" aria-label="Vår historia">
       <div className="flex flex-col gap-16 max-w-lg mx-auto">
-        {LINES.map((line) => (
+        {lines.map((line) => (
           <div key={line.label} className="flex flex-col gap-5">
             <div className="rounded-sm overflow-hidden aspect-4/3">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -198,7 +208,8 @@ function StoryRevealMobile() {
   );
 }
 
-export default function StoryReveal() {
+export default function StoryReveal({ lines }: Props) {
+  const data = lines?.length ? lines : FALLBACK_LINES;
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -209,6 +220,6 @@ export default function StoryReveal() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  if (isMobile) return <StoryRevealMobile />;
-  return <StoryRevealDesktop />;
+  if (isMobile) return <StoryRevealMobile lines={data} />;
+  return <StoryRevealDesktop lines={data} />;
 }

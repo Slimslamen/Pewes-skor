@@ -4,7 +4,6 @@ import { homePageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/blocks/HeroSection";
-// import HeroShoe3DClient from "@/components/blocks/HeroShoe3DClient";
 import StoryReveal from "@/components/blocks/StoryReveal";
 import ShoeRiseClient from "@/components/blocks/ShoeRiseClient";
 import CategoriesSection from "@/components/blocks/CategoriesSection";
@@ -20,15 +19,37 @@ export const metadata: Metadata = generatePageMetadata({
 export default async function HomePage() {
   const { data: page } = await sanityFetch({ query: homePageQuery });
 
+  const storyLines = page?.storyReveal?.items?.length
+    ? page.storyReveal.items.map((item: { label?: string | null; text?: string | null; sub?: string | null; imageUrl?: string | null }) => ({
+        label: item.label ?? "",
+        text:  item.text  ?? "",
+        sub:   item.sub   ?? "",
+        img:   item.imageUrl ?? "",
+      }))
+    : undefined;
+
+  const collectionData = page?.collection
+    ? {
+        eyebrow:    page.collection.eyebrow    ?? undefined,
+        heading:    page.collection.heading    ?? undefined,
+        categories: page.collection.categories?.map((c: { name?: string | null; label?: string | null; body?: string | null; href?: string | null; image?: { url?: string | null } | null }) => ({
+          name:  c.name  ?? "",
+          label: c.label ?? "",
+          body:  c.body  ?? "",
+          href:  c.href  ?? "#",
+          image: c.image?.url ?? "",
+        })),
+      }
+    : undefined;
+
   return (
     <>
       <Header />
       <main id="main-content">
-        <HeroSection />
-        {/* <HeroShoe3DClient /> */}
-        <StoryReveal />
+        <HeroSection data={page?.hero} />
+        <StoryReveal lines={storyLines} />
         <ShoeRiseClient />
-        <CategoriesSection />
+        <CategoriesSection data={collectionData} />
         <FindUs data={page?.findUs} />
       </main>
       <Footer />

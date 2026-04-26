@@ -120,13 +120,17 @@ const IMG = {
   aboutInterior:    "https://lh3.googleusercontent.com/aida-public/AB6AXuB35ZrxF02880phzT7ssz7OnxfTjwwtp-dYdU__7EEkC_6kQHZiJ6kNpPfxKMpLMzOVXuEiO5P-ovcw9RnNmmqB68p17b8vQz1JYyYIi3BD_EVCj6Wu4o97n9lQ4_QMh7_EwbHaWQlvFEwQJ7LUzi0Fj8CzQxoA8A5PcOhbB_8a5h8KtPNgvrLase_OwKXNag66A5_NGf-Hdf4Zrm544tUZsoLSqduBVdxwHArKSn7XCdJFXHCwaGSjOaadn4T6bUZVxI8GzLtz_i-3",
   collectionDam:    "https://lh3.googleusercontent.com/aida-public/AB6AXuAkbc0XcQW3tjrMV1WalE25DQB1MCbgZyznh0ryA_FaPUlmSH7UMWGw-xzNfC2HmqSDdakIoxaxfHI8OldsBwGOUZRTWa9OAnfIHXCbax761VUpzu8GcnaT48I4AeHxtBubSIkwmYZwYNjugmOmyut-o5xATnD5pQiLYomeZKAfr1K-y9oPO4tIo4wjMyn93cLYA-TZbVAXqENNS5feGoU1JtpOgj2qJN-D-Ww1iSLDVXbCmfXqLfoTSzbQGr-tGQpTHQGkSpWw9trh",
   collectionHerr:   "https://lh3.googleusercontent.com/aida-public/AB6AXuCXWueTO72_4Vp8RNvWcEfrTNnIFpWBC6HJqhn234wOMAUoPPThRvKtqwH_NJyEzG1Bh_aT-aTnui-00yK5BEkaiBe4aSEzSpkjFAb84rCHg0_h_kUJprc5d46KEe4cf30PmOkxqLwyCHOM_cLZHVSZwfzPBYUmEYQ7nYPWQ8qRNXBZFHO-6SYrP8lnNRiEJXlfYETanWiEUEsgJ77EhlNL4Yqxm1mHy6MSEClH_6__wXYTtN2rS4cij1dvhGE9KOL2Bq3ONbaii2GQ",
-  collectionBarn:   "https://lh3.googleusercontent.com/aida-public/AB6AXuAkbc0XcQW3tjrMV1WalE25DQB1MCbgZyznh0ryA_FaPUlmSH7UMWGw-xzNfC2HmqSDdakIoxaxfHI8OldsBwGOUZRTWa9OAnfIHXCbax761VUpzu8GcnaT48I4AeHxtBubSIkwmYZwYNjugmOmyut-o5xATnD5pQiLYomeZKAfr1K-y9oPO4tIo4wjMyn93cLYA-TZbVAXqENNS5feGoU1JtpOgj2qJN-D-Ww1iSLDVXbCmfXqLfoTSzbQGr-tGQpTHQGkSpWw9trh",
+  collectionBarn:   "/gabor/sandaler.png",
+  // StoryReveal local images
+  storySedanGen:    "/SedanGenerationer.png",
+  storyKvalite:     "/Kvalite.png",
+  storyPersonlig:   "/PersonligService.png",
 
   // ECCO heritage
   eccoHeritage:     "https://lh3.googleusercontent.com/aida-public/AB6AXuDDjE8BechN6WiGCD7wr0l_6IlKFtnuYELGOJudeXhGLn1uNt4TZlnpFFIexmQFQSGBmNH9cLojp7Mc7g56ZOYNFAVXFbxehkkl8AiKsrUNtz1tY3xFSYCophER-J7d5ddFi-wluo7fCmNGTQBrZcDAu-0DjhL5HpuUNNN-2L9vluQHOAuHZ3xxUxQpAjs5ylVe1FbApJ_p7LT5wmXkPfhlRlbAsYHgagnRgJkbNuoi28eqC6Py3DFuocjuvM0W4bVmCTd_1GDGNiVu",
 
   // Shared product photos (reused across brands/pages)
-  pBoots:           "https://lh3.googleusercontent.com/aida-public/AB6AXuBllu7V4UfIDA__RYIvIvVxNOeVCYM5cuW26DutTwmW7FbL7gpvDiPr7VzkIxabx0C6o6cMrQW_xlu7JtneUVRE6WVcwi_XH_1NwG2GkD87PJ4WyWCVojZKVAeRCNwYzLQKcZzWnTSQ2sTwpEFAPnVy70c0g7GQzdfg2NDgmLwmJvSNSFLHWnuW1wMUYaOwN555SAecS2qH530cav_DMbhXauDuF-5hen-s54YEkKtF3LGr9KysYjc31fKrNb5Jt7zJrnuKZPGm2YHu",
+  pBoots:           "/ecco/shoe-assembled.png",
   pRiekerSneaker:   "https://lh3.googleusercontent.com/aida-public/AB6AXuDbPjRJBiveiH4Zsdv-tKUajuBJGT-E-c74JHdgWWTKlos4THgBA2_JCOTrns2Jnx-4hiWv514LZKH5_tfOXgM2cOBz_pj-i05-uEfJG7e9izC4_NMkJ-EKGuoVnL_Buz9ZkPjB9D4OuZJoqPfLCER5L016dr2dX6Q9BCu6wtkgUVZdK92W15cxspt1anPaD6GSL_kVUGt605cfkeFNXG38zI66PhhHRed8CurJASvTv8RcHtUhs1tak5iYLmOufUDZIcp_NnQSkMdx",
   pGaborLoafer:     "https://lh3.googleusercontent.com/aida-public/AB6AXuBk1thIjXgaGZUZykC15MQL5PkQJuyAvSlPfNEIF-A5_7122HbX29C4hcTy7_ecLsHyKH1RO0xE3Upli1fg9PPMOwWDuFm0U3m0Yc3utzxrxJjS5cYJXR7Tr_yeMfQpwuhqnRltRfQJG0wjwerH9h-G0oPaiWX763VekWTTgqi5cNi2u4e-PWKw3po_Tcy1jUXnnZDSf6xZohHIEMrxqDk5gbXfrdMSYdDdPAYBYixLgrc1DtYQyg3cXMW724pVDwPQ-ROQPmGw3ryV",
   pSkechersGrey:    "https://lh3.googleusercontent.com/aida-public/AB6AXuDtSDPwsNsjld1f5vUL5Js-MNavJlKQbp6il9N98VTwdN4XcXj1QN257LlgwGvuDr1CY0p-ALOXi7fH4FtjV8jxf5n3Sn6zsFWP186smdPp-7eeQf-PSD62Yf69M2JMe43JEHctp84JhUmcE0NGIswxGPHczaQQAHmCtucslPM6njV6LkBwq9xpcsIGutzv3lm9_0oaI8vpkMgBtMhBAlNGjhesFUyjDvfxt5b8Lbc9hksav9KHd3O6CAT8hK1dSEQk-y0vmUKJILI-",
@@ -145,33 +149,74 @@ const IMG = {
 
 async function seedHomePage() {
   console.log("▸ Seeding home page…");
-  const [imgHero, imgAbout, imgDam, imgHerr, imgBarn, imgFeat] = await Promise.all([
-    img(IMG.heroLocal,       "Premium leather shoes on minimal concrete pedestal", "home-hero.png"),
-    img(IMG.aboutInterior,   "Interior of Pewes Skor boutique with warm wood shelving", "home-about.jpg"),
-    img(IMG.collectionDam,   "Damkollektion",        "collection-dam.jpg"),
-    img(IMG.collectionHerr,  "Herrkollektion",       "collection-herr.jpg"),
-    img(IMG.collectionBarn,  "Barnkollektion",       "collection-barn.jpg"),
-    img(IMG.collectionHerr,  "Ny skokollektion 2026","featured-banner.jpg"),
+  const [
+    imgHero, imgAbout, imgDam, imgHerr, imgBarn, imgFeat,
+    imgStorySedanGen, imgStoryKvalite, imgStoryPersonlig,
+  ] = await Promise.all([
+    img(IMG.heroLocal,         "Premium leather shoes on minimal concrete pedestal",   "home-hero.png"),
+    img(IMG.aboutInterior,     "Interior of Pewes Skor boutique with warm wood shelving", "home-about.jpg"),
+    img(IMG.collectionDam,     "Damkollektion",         "collection-dam.jpg"),
+    img(IMG.collectionHerr,    "Herrkollektion",        "collection-herr.jpg"),
+    img(IMG.collectionBarn,    "Barnkollektion",        "collection-barn.jpg"),
+    img(IMG.collectionHerr,    "Ny skokollektion 2026", "featured-banner.jpg"),
+    img(IMG.storySedanGen,     "Pewes Skor — sedan generationer",  "story-sedan-generationer.png"),
+    img(IMG.storyKvalite,      "Kvalitetsskor noggrant utvalda",   "story-kvalite.png"),
+    img(IMG.storyPersonlig,    "Personlig service i butiken",      "story-personlig-service.png"),
   ]);
 
   await upsert({
     _id:   "homePage",
     _type: "homePage",
+
     hero: {
-      heading:  "Skor med känsla\nsedan generationer",
-      address:  "Storgatan 11, Anderstorp",
-      hours:    "Mån–Fre: 10–18 · Lör: 10–14",
-      ctaLabel: "Se vårt sortiment",
+      heading:  "Pewes\nSkor",
+      subtext:  "Skoaffär med hjärtat\ni Anderstorp — sedan generationer.",
+      address:  "Premium skor för hela familjen.\nStorgatan 11, Anderstorp.",
+      hours:    "MÅN–FRE 10–18 · LÖR 10–13",
+      ctaLabel: "Se sortiment",
       ctaHref:  "#collection",
       image:    imgHero,
     },
+
     brands: [
       { _key: "b1", name: "ECCO" },
       { _key: "b2", name: "Rieker" },
       { _key: "b3", name: "Gabor" },
       { _key: "b4", name: "Skechers" },
       { _key: "b5", name: "DOLOMITE" },
+      { _key: "b6", name: "Kavat" },
+      { _key: "b7", name: "Vagabond" },
+      { _key: "b8", name: "Merrell" },
+      { _key: "b9", name: "Ten Points" },
+      { _key: "b10", name: "Ara" },
     ],
+
+    storyReveal: {
+      items: [
+        {
+          _key:  "s1",
+          label: "Sedan generationer",
+          text:  "Skor med känsla",
+          sub:   "Pewes Skor har funnits i Anderstorp i generationer — ett arv av kvalitet och personlig service.",
+          image: imgStorySedanGen,
+        },
+        {
+          _key:  "s2",
+          label: "Noggrant utvalda",
+          text:  "Kvalitet i varje steg",
+          sub:   "Vi bär enbart märken vi tror på. ECCO, Gabor, Rieker, Skechers — skor byggda för att hålla.",
+          image: imgStoryKvalite,
+        },
+        {
+          _key:  "s3",
+          label: "Personlig service",
+          text:  "Vi hjälper dig hitta rätt",
+          sub:   "Välkommen in på Storgatan 11. Vår personal guidar dig till precis rätt sko för tillfället.",
+          image: imgStoryPersonlig,
+        },
+      ],
+    },
+
     about: {
       eyebrow:  "Vårt Arv",
       heading:  "En personlig skoaffär med hjärtat i Anderstorp.",
@@ -180,15 +225,39 @@ async function seedHomePage() {
       ctaHref:  "#",
       image:    imgAbout,
     },
+
     collection: {
-      heading:    "Noggrant utvalda kollektioner för livets alla tillfällen.",
+      eyebrow:    "Sortiment",
+      heading:    "Vårt sortiment",
       subheading: "Dam, Herr & Barn",
       categories: [
-        { _key: "c1", name: "Dam",  href: "/skor/dam",  image: imgDam  },
-        { _key: "c2", name: "Herr", href: "/skor/herr", image: imgHerr },
-        { _key: "c3", name: "Barn", href: "/skor/barn", image: imgBarn },
+        {
+          _key:  "c1",
+          name:  "Herr",
+          label: "Herrkollektion",
+          body:  "Klassiska kvalitetsskor från ECCO, Lloyd och Vagabond. Allt från eleganta derbies till bekväma promenadskor.",
+          href:  "/skor/herr",
+          image: imgHerr,
+        },
+        {
+          _key:  "c2",
+          name:  "Dam",
+          label: "Damkollektion",
+          body:  "Eleganta damskor från Gabor, Rieker och Ara. Stilfulla val för varje tillfälle.",
+          href:  "/skor/dam",
+          image: imgDam,
+        },
+        {
+          _key:  "c3",
+          name:  "Barn",
+          label: "Barnkollektion",
+          body:  "Hållbara och bekväma barnskor från Kavat, Viking och Superfit. Skor som håller med barnet.",
+          href:  "/skor/barn",
+          image: imgBarn,
+        },
       ],
     },
+
     findUs: {
       heading: "Hitta till oss",
       address: "Storgatan 11, 334 32 Anderstorp",
@@ -200,6 +269,7 @@ async function seedHomePage() {
       phone: "0371-150 20",
       email: "info@pewesskor.se",
     },
+
     featuredBanner: {
       eyebrow:       "Ny Kollektion · 2026",
       heading:       "Utforska",
@@ -211,9 +281,9 @@ async function seedHomePage() {
       cta2Label:     "Herr",
       cta2Href:      "/skor/herr",
       stats: [
-        { _key: "s1", value: "200+",    label: "Modeller" },
-        { _key: "s2", value: "5",       label: "Varumärken" },
-        { _key: "s3", value: "1 butik", label: "Anderstorp" },
+        { _key: "fs1", value: "200+",    label: "Modeller" },
+        { _key: "fs2", value: "5",       label: "Varumärken" },
+        { _key: "fs3", value: "1 butik", label: "Anderstorp" },
       ],
       image:      imgFeat,
       badgeLabel: "Ny kollektion",

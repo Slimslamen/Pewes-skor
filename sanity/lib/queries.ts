@@ -5,6 +5,7 @@ export const homePageQuery = defineQuery(`
   *[_type == "homePage"][0] {
     hero {
       heading,
+      subtext,
       address,
       hours,
       ctaLabel,
@@ -12,6 +13,14 @@ export const homePageQuery = defineQuery(`
       image { "url": coalesce(asset->url, url), alt }
     },
     brands[] { name },
+    storyReveal {
+      items[] {
+        label,
+        text,
+        sub,
+        "imageUrl": coalesce(image.asset->url, image.url)
+      }
+    },
     about {
       eyebrow,
       heading,
@@ -21,10 +30,13 @@ export const homePageQuery = defineQuery(`
       image { "url": coalesce(asset->url, url), alt }
     },
     collection {
+      eyebrow,
       heading,
       subheading,
       categories[] {
         name,
+        label,
+        body,
         href,
         image { "url": coalesce(asset->url, url), alt }
       }

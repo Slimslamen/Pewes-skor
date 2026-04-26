@@ -18,8 +18,8 @@ export const metadata: Metadata = generatePageMetadata({
 export default async function DamPage() {
   const { data } = await sanityFetch({ query: damPageQuery });
 
-  const products = (data?.brands ?? []).flatMap((b) =>
-    (b?.products ?? []).map((p) => ({ brand: b?.brand ?? undefined, ...p })),
+  const products = (data?.brands ?? []).flatMap((b: { brand?: string | null; products?: unknown[] | null }) =>
+    (b?.products ?? []).map((p: unknown) => ({ brand: b?.brand ?? undefined, ...(p as object) })),
   );
 
   return (
