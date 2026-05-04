@@ -7,7 +7,7 @@ interface FooterProps {
   year?: number;
 }
 
-export default function Footer({ year = 2025 }: FooterProps) {
+export default function Footer({ year = 2026 }: FooterProps) {
   return (
     <footer aria-label="Sidfot" className="w-full bg-stone-100 border-t border-stone-200">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-8 py-20 max-w-7xl mx-auto">
@@ -21,12 +21,10 @@ export default function Footer({ year = 2025 }: FooterProps) {
             className="h-10 w-auto object-contain"
           />
           <p className="font-(family-name:--font-inter) text-sm tracking-normal text-stone-500 leading-relaxed">
-            © {year} Pewes Skor. Curator of Footwear.
-            <br />
-            Kvalitet som känns sedan 1948.
+            © {year} Pewes Skor
           </p>
           {/* Social */}
-          <div className="pt-4">
+          <div className="">
             <h4 className="font-bold text-[10px] uppercase tracking-widest mb-4">
               Följ oss
             </h4>
@@ -88,13 +86,18 @@ export default function Footer({ year = 2025 }: FooterProps) {
         </div>
 
         {/* Map */}
-        <div className="relative h-50 rounded-xl overflow-hidden bg-stone-200 shadow-inner flex items-center justify-center">
-          <div className="text-center p-4">
-            <p className="font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-[10px] text-stone-400">
-              Karta
-            </p>
-            <p className="text-stone-400 text-[10px] mt-1 italic">Storgatan 11, Anderstorp</p>
-          </div>
+        <div className="relative h-50 rounded-xl overflow-hidden">
+          <iframe
+            src="https://maps.google.com/maps?q=Storgatan+11,+334+32+Anderstorp,+Sweden&output=embed&hl=sv"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Pewes Skor på kartan"
+            className="w-full h-full"
+          />
         </div>
       </div>
     </footer>

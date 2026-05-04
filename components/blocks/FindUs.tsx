@@ -115,31 +115,18 @@ export default function FindUs({ data }: Props) {
             transition: "opacity 0.9s 0.15s cubic-bezier(0.22,1,0.36,1), transform 0.9s 0.15s cubic-bezier(0.22,1,0.36,1)",
           }}
         >
-          <div className="bg-surface-container rounded aspect-4/3 flex flex-col items-center justify-center relative overflow-hidden">
-            {/* Grid lines */}
-            <svg aria-hidden="true" className="absolute inset-0 w-full h-full opacity-15" viewBox="0 0 400 300" preserveAspectRatio="none">
-              {[50, 100, 150, 200, 250, 300, 350].map((x) => (
-                <line key={x} x1={x} y1={0} x2={x} y2={300} stroke="var(--color-outline)" strokeWidth="1" />
-              ))}
-              {[50, 100, 150, 200, 250].map((y) => (
-                <line key={y} x1={0} y1={y} x2={400} y2={y} stroke="var(--color-outline)" strokeWidth="1" />
-              ))}
-            </svg>
-            {/* Map pin */}
-            <div className="relative z-10 flex flex-col items-center gap-2">
-              <div
-                className="w-11 h-11 bg-primary flex items-center justify-center"
-                style={{ borderRadius: "50% 50% 50% 0", transform: "rotate(-45deg)" }}
-              >
-                <div className="w-3 h-3 bg-white rounded-full" style={{ transform: "rotate(45deg)" }} />
-              </div>
-              <p className="font-(family-name:--font-manrope) font-bold text-[13px] text-on-surface mt-1">
-                Storgatan 11
-              </p>
-              <p className="font-(family-name:--font-inter) text-[12px] text-outline">
-                Anderstorp
-              </p>
-            </div>
+          <div className="rounded overflow-hidden aspect-4/3 w-full">
+            <iframe
+              src="https://maps.google.com/maps?q=Storgatan+11,+334+32+Anderstorp,+Sweden&output=embed&hl=sv"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Pewes Skor på kartan"
+              className="w-full h-full"
+            />
           </div>
         </div>
       </div>

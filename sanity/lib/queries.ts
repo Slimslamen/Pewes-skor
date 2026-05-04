@@ -21,14 +21,6 @@ export const homePageQuery = defineQuery(`
         "imageUrl": coalesce(image.asset->url, image.url)
       }
     },
-    about {
-      eyebrow,
-      heading,
-      body,
-      ctaLabel,
-      ctaHref,
-      image { "url": coalesce(asset->url, url), alt }
-    },
     collection {
       eyebrow,
       heading,
@@ -48,20 +40,6 @@ export const homePageQuery = defineQuery(`
       phone,
       email
     },
-    featuredBanner {
-      eyebrow,
-      heading,
-      headingAccent,
-      headingRest,
-      body,
-      cta1Label,
-      cta1Href,
-      cta2Label,
-      cta2Href,
-      stats[] { value, label },
-      image { "url": coalesce(asset->url, url), alt },
-      badgeLabel
-    }
   }
 `);
 
