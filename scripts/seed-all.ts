@@ -295,7 +295,14 @@ async function seedHomePage() {
 
 async function seedEccoBrandPage() {
   console.log("▸ Seeding ECCO brand page…");
-  const imgHeritage = await img(IMG.eccoHeritage, "Leather workshop with artisan tools", "ecco-heritage.jpg");
+  const [
+    imgHeritage,
+    pBoots, pSneaker,
+  ] = await Promise.all([
+    img(IMG.eccoHeritage,   "Leather workshop with artisan tools", "ecco-heritage.jpg"),
+    productImg(IMG.pBoots,      "ECCO klassisk sko i läder",           "ecco-boots.png"),
+    productImg(IMG.pEccoSneaker,"ECCO Street sneaker",                 "ecco-sneaker.jpg"),
+  ]);
 
   await upsert({
     _id:   "eccoBrandPage",
@@ -314,6 +321,14 @@ async function seedEccoBrandPage() {
         { _key: "z5", label: "Komplett",         title: "Byggd för att hålla",   body: "Fyra lager, en sko. Varje del samverkar för att ge dig komfort och stil du märker redan vid första steget." },
       ],
     },
+    products: [
+      { _key: "e1", name: "ECCO Soft 7 Sneaker",       price: "1.499 kr", categories: ["dam"],        sizes: "36-42", image: pSneaker },
+      { _key: "e2", name: "ECCO Street Lite Retro",     price: "1.099 kr", categories: ["dam"],        sizes: "37-41", image: pSneaker },
+      { _key: "e3", name: "ECCO Sculpted 45 Boot",      price: "1.299 kr", categories: ["dam"],        sizes: "36-41", image: pBoots   },
+      { _key: "e4", name: "ECCO Biom 2.1 X Country",   price: "1.699 kr", categories: ["herr"],       sizes: "40-46", image: pBoots   },
+      { _key: "e5", name: "ECCO Metropole London",      price: "1.599 kr", categories: ["herr"],       sizes: "40-45", image: pBoots   },
+      { _key: "e6", name: "ECCO Gruuv Sneaker",         price: "1.399 kr", categories: ["herr"],       sizes: "41-46", image: pSneaker },
+    ],
     heritage: {
       eyebrow: "Vårt Arv",
       heading: "Grundat 1963 av Karl Toosbuy, byggdes ECCO på filosofin att skon måste följa foten.",
@@ -359,10 +374,10 @@ async function seedBrandPages() {
     featured: true,
     navOrder: 10,
     products: [
-      { _key: "g1", name: "Gabor Rollingsoft Sneaker", price: "1.399 kr", categories: ["dam"],         sizes: ["36","37","38","39","40","41","42"], image: gSneaker },
-      { _key: "g2", name: "Gabor Comfort Sandal",      price: "899 kr",   categories: ["dam"],         sizes: ["37","38","39","40","41"],           image: gSandal  },
-      { _key: "g3", name: "Gabor Classic Loafer",      price: "1.100 kr", categories: ["dam"],         sizes: ["36","37","38","39","40"],           image: gLoafer  },
-      { _key: "g4", name: "Gabor Lena Lace Junior",    price: "649 kr",   categories: ["barn"],        sizes: ["28","29","30","31","32","33","34"], image: gLoafer  },
+      { _key: "g1", name: "Gabor Rollingsoft Sneaker", price: "1.399 kr", categories: ["dam"],  sizes: "36-42", image: gSneaker },
+      { _key: "g2", name: "Gabor Comfort Sandal",      price: "899 kr",   categories: ["dam"],  sizes: "37-41", image: gSandal  },
+      { _key: "g3", name: "Gabor Classic Loafer",      price: "1.100 kr", categories: ["dam"],  sizes: "36-40", image: gLoafer  },
+      { _key: "g4", name: "Gabor Lena Lace Junior",    price: "649 kr",   categories: ["barn"], sizes: "28-34", image: gLoafer  },
     ],
   });
 
@@ -375,12 +390,12 @@ async function seedBrandPages() {
     featured: true,
     navOrder: 30,
     products: [
-      { _key: "r1", name: "Rieker Modern Flow Sneaker", price: "899 kr",   categories: ["dam"],         sizes: ["36","37","38","39","40","41","42"], image: rSneakerW },
-      { _key: "r2", name: "Rieker Comfort Suede",       price: "849 kr",   categories: ["dam"],         sizes: ["37","38","39","40","41"],           image: rSuedeBoot },
-      { _key: "r3", name: "Rieker Tex Derby B1322",     price: "899 kr",   categories: ["herr"],        sizes: ["40","41","42","43","44","45","46"], image: rDerby },
-      { _key: "r4", name: "Rieker Comfort Suede Boot",  price: "1.099 kr", categories: ["herr"],        sizes: ["40","41","42","43","44","45"],      image: rSuedeBoot },
-      { _key: "r5", name: "Rieker Tex Sneaker Kids",    price: "549 kr",   categories: ["barn"],        sizes: ["28","29","30","31","32","33","34"], image: rSneakerW },
-      { _key: "r6", name: "Rieker Zip Ankle Boot Kids", price: "649 kr",   categories: ["barn"],        sizes: ["28","29","30","31","32","33","34"], image: rSuedeBoot },
+      { _key: "r1", name: "Rieker Modern Flow Sneaker", price: "899 kr",   categories: ["dam"],  sizes: "36-42", image: rSneakerW  },
+      { _key: "r2", name: "Rieker Comfort Suede",       price: "849 kr",   categories: ["dam"],  sizes: "37-41", image: rSuedeBoot },
+      { _key: "r3", name: "Rieker Tex Derby B1322",     price: "899 kr",   categories: ["herr"], sizes: "40-46", image: rDerby     },
+      { _key: "r4", name: "Rieker Comfort Suede Boot",  price: "1.099 kr", categories: ["herr"], sizes: "40-45", image: rSuedeBoot },
+      { _key: "r5", name: "Rieker Tex Sneaker Kids",    price: "549 kr",   categories: ["barn"], sizes: "28-34", image: rSneakerW  },
+      { _key: "r6", name: "Rieker Zip Ankle Boot Kids", price: "649 kr",   categories: ["barn"], sizes: "28-34", image: rSuedeBoot },
     ],
   });
 
@@ -393,9 +408,9 @@ async function seedBrandPages() {
     featured: true,
     navOrder: 20,
     products: [
-      { _key: "d1", name: "Dolomite Cinquantaquattro Low", price: "1.499 kr", categories: ["dam"],  sizes: ["36","37","38","39","40","41"],           image: dLow   },
-      { _key: "d2", name: "Dolomite Cinquantaquattro Low", price: "1.499 kr", categories: ["herr"], sizes: ["40","41","42","43","44","45","46"],      image: dLow   },
-      { _key: "d3", name: "Dolomite Torq Tech Hiker",      price: "1.749 kr", categories: ["herr"], sizes: ["40","41","42","43","44","45"],           image: dHiker },
+      { _key: "d1", name: "Dolomite Cinquantaquattro Low", price: "1.499 kr", categories: ["dam"],  sizes: "36-41", image: dLow   },
+      { _key: "d2", name: "Dolomite Cinquantaquattro Low", price: "1.499 kr", categories: ["herr"], sizes: "40-46", image: dLow   },
+      { _key: "d3", name: "Dolomite Torq Tech Hiker",      price: "1.749 kr", categories: ["herr"], sizes: "40-45", image: dHiker },
     ],
   });
 
@@ -408,10 +423,10 @@ async function seedBrandPages() {
     featured: true,
     navOrder: 40,
     products: [
-      { _key: "s1", name: "Skechers GoWalk Arch Fit",       price: "949 kr", categories: ["dam"],  sizes: ["36","37","38","39","40","41"], image: sGoWalk  },
-      { _key: "s2", name: "Skechers Relaxed Fit Elected",   price: "949 kr", categories: ["herr"], sizes: ["40","41","42","43","44","45"], image: sRelaxed },
-      { _key: "s3", name: "Skechers S-Lights Twinkle Sparks", price: "599 kr", categories: ["barn"], sizes: ["28","29","30","31","32"],    image: sGoWalk  },
-      { _key: "s4", name: "Skechers GoRun Fast Valor",       price: "699 kr", categories: ["barn"], sizes: ["28","29","30","31","32","33"], image: sRelaxed },
+      { _key: "s1", name: "Skechers GoWalk Arch Fit",         price: "949 kr", categories: ["dam"],  sizes: "36-41", image: sGoWalk  },
+      { _key: "s2", name: "Skechers Relaxed Fit Elected",     price: "949 kr", categories: ["herr"], sizes: "40-45", image: sRelaxed },
+      { _key: "s3", name: "Skechers S-Lights Twinkle Sparks", price: "599 kr", categories: ["barn"], sizes: "28-32", image: sGoWalk  },
+      { _key: "s4", name: "Skechers GoRun Fast Valor",         price: "699 kr", categories: ["barn"], sizes: "28-33", image: sRelaxed },
     ],
   });
 }

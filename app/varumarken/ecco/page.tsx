@@ -18,35 +18,18 @@ export const metadata: Metadata = generatePageMetadata({
   path:        "/varumarken/ecco",
 });
 
-const MOCK_SHOES = [
-  {
-    name: "ECCO Soft 7 Sneaker",
-    price: "1.499 kr",
-    sizes: ["36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46"],
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
-    category: "Sneakers",
-  },
-  {
-    name: "ECCO Biom 2.1",
-    price: "1.699 kr",
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&q=80&w=800",
-    category: "Outdoor",
-  },
-  {
-    name: "ECCO Street Lite",
-    price: "1.299 kr",
-    sizes: ["36", "37", "38", "39", "40", "41", "42"],
-    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&q=80&w=800",
-    category: "Vardag",
-  },
-];
-
 export default async function EccoPage() {
   const { data: page } = await sanityFetch({ query: eccoPageQuery });
 
   const anatomyZones = page?.anatomy?.zones ?? undefined;
   const anatomyTitle = page?.anatomy?.sectionTitle ?? "Anatomy of Innovation";
+  const shoes = (page?.products ?? []).map((p) => ({
+    name: p.name ?? "",
+    price: p.price ?? "",
+    sizes: p.sizes ?? "",
+    image: p.image ?? "",
+    categories: p.categories ?? [],
+  }));
 
   return (
     <>
@@ -73,7 +56,7 @@ export default async function EccoPage() {
               </h2>
             </Reveal>
           </div>
-          <BrandProductGrid brandName="ECCO" shoes={MOCK_SHOES} />
+          <BrandProductGrid brandName="ECCO" shoes={shoes} />
         </div>
 
         <EccoHeritage data={page?.heritage} />

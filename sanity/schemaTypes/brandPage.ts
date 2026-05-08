@@ -68,8 +68,8 @@ export const brandPage = defineType({
             defineField({
               name: "sizes",
               title: "Storlekar",
-              type: "array",
-              of: [{ type: "string" }],
+              description: "T.ex. 36-42 eller 37, 39, 41",
+              type: "string",
             }),
             defineField({
               name: "image",

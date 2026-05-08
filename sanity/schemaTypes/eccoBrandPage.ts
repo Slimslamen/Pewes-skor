@@ -64,6 +64,56 @@ export const eccoBrandPage = defineType({
       ],
     }),
 
+    /* ─── Products ─── */
+    defineField({
+      name: "products",
+      title: "Produkter",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({ name: "name",  title: "Produktnamn", type: "string" }),
+            defineField({ name: "price", title: "Pris",        type: "string" }),
+            defineField({
+              name: "categories",
+              title: "Kategorier",
+              description: "Produkten visas på motsvarande /skor/-sida.",
+              type: "array",
+              of: [{ type: "string" }],
+              options: {
+                list: [
+                  { title: "Dam",  value: "dam"  },
+                  { title: "Herr", value: "herr" },
+                  { title: "Barn", value: "barn" },
+                ],
+              },
+              validation: (Rule) => Rule.unique(),
+            }),
+            defineField({
+              name: "sizes",
+              title: "Storlekar",
+              description: "T.ex. 36-42 eller 37, 39, 41",
+              type: "string",
+            }),
+            defineField({
+              name: "image",
+              title: "Produktbild",
+              type: "image",
+              options: { hotspot: true },
+              fields: [
+                defineField({ name: "imageAlt", title: "Alt-text",        type: "string" }),
+                defineField({ name: "url",      title: "Extern bild-URL", type: "url" }),
+              ],
+            }),
+          ],
+          preview: {
+            select: { title: "name", subtitle: "price" },
+          },
+        },
+      ],
+    }),
+
     /* ─── Heritage ─── */
     defineField({
       name: "heritage",

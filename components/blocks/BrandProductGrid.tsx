@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 interface Shoe {
   name: string;
   price: string;
-  sizes: string[];
+  sizes: string;
   image: string;
   categories?: string[];
 }
@@ -53,21 +53,13 @@ export default function BrandProductGrid({ brandName, shoes }: Props) {
                 </div>
 
                 {/* Sizes */}
-                <div className="pt-2 border-t border-stone-100">
-                  <p className="text-[10px] uppercase tracking-wider text-stone-400 font-bold mb-2">
-                    Tillgängliga storlekar
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {shoe.sizes.map((size) => (
-                      <span
-                        key={size}
-                        className="text-[11px] font-medium px-2 py-1 bg-stone-50 text-stone-600 rounded border border-stone-100"
-                      >
-                        {size}
-                      </span>
-                    ))}
+                {shoe.sizes && (
+                  <div className="pt-2 border-t border-stone-100">
+                    <span className="text-[11px] font-medium px-2 py-1 bg-stone-50 text-stone-600 rounded border border-stone-100">
+                      {shoe.sizes}
+                    </span>
                   </div>
-                </div>
+                )}
               </div>
             </Reveal>
           ))}

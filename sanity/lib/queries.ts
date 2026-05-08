@@ -58,6 +58,14 @@ export const eccoPageQuery = defineQuery(`
         body
       }
     },
+    products[] {
+      name,
+      price,
+      sizes,
+      categories,
+      "image": coalesce(image.asset->url, image.url),
+      "imageAlt": coalesce(image.imageAlt, "")
+    },
     heritage {
       eyebrow,
       heading,
