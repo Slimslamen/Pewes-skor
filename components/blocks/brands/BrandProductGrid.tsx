@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
 
 interface Shoe {
   name: string;

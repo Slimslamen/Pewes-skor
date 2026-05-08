@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
 
 interface AboutData {
   eyebrow?: string;

@@ -74,7 +74,7 @@ export default function Footer({ year = 2026 }: FooterProps) {
           <div className="space-y-2 font-(family-name:--font-inter) text-sm text-stone-500">
             {[
               { days: "Måndag – Fredag", hours: "10:00 – 18:00" },
-              { days: "Lördag",          hours: "10:00 – 14:00" },
+              { days: "Lördag",          hours: "10:00 – 13:00" },
               { days: "Söndag",          hours: "Stängt" },
             ].map((row) => (
               <div key={row.days} className="flex justify-between max-w-60">

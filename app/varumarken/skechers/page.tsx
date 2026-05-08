@@ -3,10 +3,10 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import SkechersHero from "@/components/blocks/SkechersHero";
-import SkechersScroll from "@/components/blocks/SkechersScroll";
+import SkechersHero from "@/components/blocks/brands/SkechersHero";
+import SkechersScroll from "@/components/blocks/brands/SkechersScroll";
 import Reveal from "@/components/blocks/Reveal";
-import BrandProductGrid from "@/components/blocks/BrandProductGrid";
+import BrandProductGrid from "@/components/blocks/brands/BrandProductGrid";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 

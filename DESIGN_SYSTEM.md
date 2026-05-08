@@ -1,121 +1,206 @@
-# Design System — Pewes Skor
+# Design System — Forma Web Agency
 
-Aesthetic mode: **Luxury Minimal**. Warm earth tones, generous white space, editorial typography, and restrained animation.
-
----
-
-## Color Tokens
-
-All colors are Tailwind v4 `@theme` tokens defined in `app/globals.css`. Use the token names directly as Tailwind classes.
-
-### Primary (Cognac Brown)
-
-| Token                   | Value     | Usage                          |
-|-------------------------|-----------|-------------------------------|
-| `primary`               | `#725a39` | Buttons, active states, accents |
-| `primary-container`     | `#d2b48c` | Hover backgrounds, light fills |
-| `on-primary`            | `#ffffff` | Text on primary backgrounds    |
-| `inverse-primary`       | `#e1c299` | Inverted surfaces              |
-
-### Secondary (Warm Gray)
-
-| Token                   | Value     | Usage                          |
-|-------------------------|-----------|-------------------------------|
-| `secondary`             | `#5f5e5e` | Body text, secondary copy      |
-| `secondary-container`   | `#e5e2e1` | Chip/tag backgrounds           |
-
-### Surfaces
-
-| Token                          | Value     | Usage                          |
-|--------------------------------|-----------|-------------------------------|
-| `surface`                      | `#f8f9fa` | Page background                |
-| `surface-container-low`        | `#f3f4f5` | Card backgrounds               |
-| `surface-container`            | `#edeeef` | Sticky nav, chips              |
-| `surface-container-high`       | `#e7e8e9` | Borders, dividers              |
-| `inverse-surface`              | `#2e3132` | Dark sections (CTA banners)    |
-
-### Text
-
-| Token              | Value     | Usage             |
-|--------------------|-----------|-------------------|
-| `on-surface`       | `#191c1d` | Primary headings  |
-| `secondary`        | `#5f5e5e` | Body copy         |
-| `outline`          | `#7f766a` | Metadata, breadcrumbs |
-| `outline-variant`  | `#d1c5b8` | Borders, dividers |
+How we approach visual identity, tokens, and motion for any client project.
 
 ---
 
-## Typography
+## Step 1 — Choose an Aesthetic Mode
 
-### Fonts
+Pick one mode per project and commit to it. Mixing modes produces inconsistency.
 
-| Variable               | Family   | Weights         | Usage           |
-|------------------------|----------|-----------------|-----------------|
-| `--font-manrope`       | Manrope  | 200–800         | All headings    |
-| `--font-inter`         | Inter    | 300–600         | Body, labels, meta |
+| Mode | Character | Typical client |
+|------|-----------|----------------|
+| **Luxury Minimal** | Warm neutrals, generous white space, editorial type, restrained motion | Premium retail, boutique, artisan |
+| **Modern SaaS** | Cool grays, tight grid, data-heavy, subtle shadows | B2B tools, dashboards, dev products |
+| **Editorial / Magazine** | Strong type contrasts, full-bleed images, kinetic layout | Media, publishing, culture |
+| **Brutalist** | Raw typography, intentional misalignment, bold borders | Agencies, art, portfolio |
+| **Friendly Consumer** | Rounded corners, playful color, approachable type | E-commerce, lifestyle, food |
 
-### Applying fonts in Tailwind v4
+Once chosen, document the mode in `tasks/project.md` so every session starts with the right mental frame.
 
-```jsx
-// Heading
-<h1 className="font-(family-name:--font-manrope) font-extrabold tracking-tighter">
+---
 
-// Body / label
-<p className="font-(family-name:--font-inter) font-light">
+## Step 2 — Define Color Tokens
+
+All colors live as Tailwind v4 `@theme` tokens in `app/globals.css`. Never hardcode hex values in components — always use token names.
+
+### Token naming pattern (Material Design 3 inspired)
+
+```css
+@theme {
+  /* Primary action color */
+  --color-primary:           #...;
+  --color-primary-container: #...;   /* Hover fills, light variants */
+  --color-on-primary:        #fff;   /* Text on primary bg */
+  --color-inverse-primary:   #...;   /* Inverted accent */
+
+  /* Secondary / neutral */
+  --color-secondary:           #...;
+  --color-secondary-container: #...;
+
+  /* Surfaces */
+  --color-surface:                  #...;  /* Page background */
+  --color-surface-container-low:    #...;  /* Card bg */
+  --color-surface-container:        #...;  /* Sticky nav, chips */
+  --color-surface-container-high:   #...;  /* Borders, dividers */
+  --color-inverse-surface:          #...;  /* Dark CTA banners */
+
+  /* Text roles */
+  --color-on-surface:       #...;  /* Primary headings */
+  --color-outline:          #...;  /* Metadata, breadcrumbs */
+  --color-outline-variant:  #...;  /* Subtle borders */
+}
 ```
 
-### Heading Scale
+### Color palette recipes by mode
 
-| Element | Classes                                                              |
-|---------|----------------------------------------------------------------------|
-| Hero H1 | `text-6xl md:text-8xl font-extrabold tracking-tighter`              |
-| Section H2 | `text-5xl font-bold tracking-tighter`                           |
-| Card H3 | `text-xl md:text-2xl font-bold tracking-tight`                      |
-| Eyebrow | `text-xs uppercase tracking-[0.2em] text-primary font-bold`         |
-| Breadcrumb | `text-[10px] uppercase tracking-widest text-outline`            |
+**Luxury Minimal** — warm earth tones
+```
+primary: cognac / amber / tan
+surface: off-white (#f8f9fa)
+on-surface: near-black (#191c1d)
+secondary: warm gray (#5f5e5e)
+```
+
+**Modern SaaS** — cool neutrals
+```
+primary: indigo / blue / violet
+surface: white (#ffffff)
+on-surface: slate-900
+secondary: slate-500
+```
+
+**Brutalist** — high contrast
+```
+primary: black (#000)
+surface: white (#fff)
+accent: one vivid pop color only (e.g. lime, red, electric blue)
+```
 
 ---
 
-## Spacing & Layout
+## Step 3 — Set Typography
+
+Never use more than 2 font families per project.
+
+### Standard pairing roles
+
+| Role | Purpose | Weight range |
+|------|---------|--------------|
+| **Display / Headline** | H1–H3, hero text | 700–900 |
+| **Body / UI** | Paragraphs, labels, nav, captions | 300–600 |
+
+### Applying in Tailwind v4
+
+```jsx
+// Headline font (CSS variable set on <html> or <body>)
+<h1 className="font-(family-name:--font-display) font-extrabold tracking-tighter">
+
+// Body font
+<p className="font-(family-name:--font-body) font-light">
+```
+
+### Heading scale (use consistently)
+
+| Element | Class pattern |
+|---------|---------------|
+| Hero H1 | `text-6xl md:text-8xl font-extrabold tracking-tighter` |
+| Section H2 | `text-4xl md:text-5xl font-bold tracking-tight` |
+| Card H3 | `text-xl md:text-2xl font-bold tracking-tight` |
+| Eyebrow | `text-xs uppercase tracking-[0.2em] text-primary font-bold` |
+| Caption / breadcrumb | `text-[10px] uppercase tracking-widest text-outline` |
+
+---
+
+## Step 4 — Spacing & Layout
 
 - Max page width: `max-w-screen-2xl mx-auto px-6`
 - Section vertical padding: `py-24` (standard) / `py-32` (major sections)
-- Grid gap: `gap-12` (large) / `gap-8` (medium) / `gap-6` (tight)
+- Grid gaps: `gap-12` large / `gap-8` medium / `gap-6` tight
+- Never use arbitrary pixel values when a Tailwind v4 canonical class exists
 
 ---
 
-## Border Radius
+## Step 5 — Border Radius
 
-| Token       | Value      | Usage                    |
-|-------------|------------|--------------------------|
-| `rounded`   | `0.125rem` | Inputs, buttons, tags    |
-| `rounded-lg`| `0.25rem`  | Cards, modals            |
-| `rounded-xl`| `0.5rem`   | Large cards, sections    |
-| `rounded-full` | 9999px  | Chips, badges, avatars   |
+Radius communicates personality — pick a level and hold it.
 
-Buttons and primary CTAs use `rounded-sm` (extra minimal).
+| Personality | Radius level | Tailwind |
+|-------------|-------------|---------|
+| Ultra-minimal / luxury | Near-zero | `rounded` (0.125rem) or `rounded-sm` |
+| Modern / neutral | Moderate | `rounded-md` / `rounded-lg` |
+| Friendly / consumer | High | `rounded-xl` / `rounded-2xl` |
+| Brutal | Zero | `rounded-none` |
+
+Chips, badges, and avatars always use `rounded-full` regardless of mode.
 
 ---
 
 ## Buttons
 
-### Primary CTA
+### Primary CTA (adapt colors to project)
 ```jsx
-<Link className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white
-  font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-xs
-  rounded-sm hover:bg-primary/90 transition-all duration-300 shadow-md shadow-primary/20">
+<button className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-on-primary
+  font-(family-name:--font-body) font-bold uppercase tracking-widest text-xs
+  rounded-sm hover:bg-primary/90 transition-all duration-300">
   Label →
-</Link>
+</button>
 ```
 
 ### Secondary / Outline
 ```jsx
-<Link className="inline-flex items-center gap-3 px-8 py-4
+<button className="inline-flex items-center gap-3 px-8 py-4
   border border-outline/30 text-on-surface
-  font-(family-name:--font-manrope) font-bold uppercase tracking-widest text-xs
-  rounded-sm hover:bg-surface transition-all duration-300">
+  font-(family-name:--font-body) font-bold uppercase tracking-widest text-xs
+  rounded-sm hover:bg-surface-container-low transition-all duration-300">
   Label →
-</Link>
+</button>
+```
+
+---
+
+## Animation
+
+- Library: `motion/react` (Framer Motion v11+) — import from `"motion/react"`
+- Icons: `lucide-react` only
+- Smooth scroll: Lenis (`npm install lenis`) — never the Framer fixed-container trick
+
+### Standard whileInView pattern
+
+Use the `<Reveal>` wrapper (see COMPONENTS.md). Never add `initial` / `whileInView` / `viewport` props to individual elements — it creates inconsistency and verbosity.
+
+### Scroll-driven rules
+
+```tsx
+// ✅ Use global scrollY + container offset — works after dynamic import
+const { scrollY } = useScroll();
+const topRef = useRef(0);
+useEffect(() => {
+  topRef.current = el.getBoundingClientRect().top + window.scrollY;
+}, []);
+
+// ❌ Never use useScroll({ target: ref }) for ssr:false components
+// — the component mounts after scroll position, so progress starts mid-range
+```
+
+### Timing constants
+
+```
+Standard reveal: duration 0.6s, ease [0.22, 1, 0.36, 1]
+Hover transitions: duration 0.3s (color) / 0.5s (transform)
+Stagger children: 0.08–0.12s between items
+```
+
+### Reduced-motion
+
+Always add to `globals.css`:
+```css
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 ```
 
 ---
@@ -123,48 +208,33 @@ Buttons and primary CTAs use `rounded-sm` (extra minimal).
 ## Cards
 
 ```jsx
-<div className="bg-surface-container-low rounded-xl shadow-sm hover:shadow-lg
-  transition-shadow duration-500 overflow-hidden">
+<div className="bg-surface-container-low rounded-xl overflow-hidden
+  transition-shadow duration-500 hover:shadow-lg">
   {/* content */}
 </div>
 ```
 
 ---
 
-## Gradients (Hero sections)
+## Hero Gradients
 
 ```jsx
-{/* Full-bleed image section */}
+{/* Over a full-bleed image */}
 <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent" />
 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 ```
 
 ---
 
-## Animation
+## Responsive Breakpoints
 
-- Library: `motion` (import from `"motion/react"`)
-- Scroll animations: `useScroll` + `useTransform`
-- **Rule**: Never call hooks inside JSX. Declare all `useTransform` calls at the top of the component.
-- Hover scale: `transition-transform duration-700 group-hover:scale-105`
-- Hover color: `transition-colors duration-300`
-- CTA lift: `hover:-translate-y-1 transition-transform duration-300`
+| Prefix | Min-width | Design target |
+|--------|-----------|---------------|
+| *(none)* | 0px | Mobile first |
+| `sm` | 640px | Large phone |
+| `md` | 768px | Tablet |
+| `lg` | 1024px | Laptop |
+| `xl` | 1280px | Desktop |
+| `2xl` | 1536px | Wide desktop |
 
----
-
-## Iconography
-
-SVG inline, `stroke="currentColor"`, `strokeWidth="2"`, `strokeLinecap="round"`.
-Standard icon size: `24×24`. Small: `16×16` or `10×10`.
-
----
-
-## Responsive Breakpoints (Tailwind defaults)
-
-| Breakpoint | Min-width |
-|------------|-----------|
-| `sm`       | 640px     |
-| `md`       | 768px     |
-| `lg`       | 1024px    |
-| `xl`       | 1280px    |
-| `2xl`      | 1536px    |
+Mobile-first always. Never write desktop styles without a mobile fallback.

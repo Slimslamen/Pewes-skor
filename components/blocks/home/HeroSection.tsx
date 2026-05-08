@@ -26,8 +26,6 @@ export default function HeroSection({ data, brands }: Props) {
   const subtext  = data?.subtext  ?? "Skoaffär med hjärtat\ni Anderstorp — sedan generationer.";
   const address  = data?.address  ?? "Premium skor för hela familjen.\nStorgatan 11, Anderstorp.";
   const hours    = data?.hours    ?? "MÅN–FRE 10–18 · LÖR 10–13";
-  const ctaLabel = data?.ctaLabel ?? "Se sortiment";
-  const ctaHref  = data?.ctaHref  ?? "#collection";
 
   const brandList = brands?.length ? brands.map((b) => b.name) : FALLBACK_BRANDS;
   const marqueeItems = [...brandList, ...brandList];
@@ -67,12 +65,6 @@ export default function HeroSection({ data, brands }: Props) {
             ))}
           </p>
           <div className="flex flex-wrap gap-3 mt-5">
-            <Link
-              href={ctaHref}
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-white font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:opacity-85 transition-opacity focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              {ctaLabel}
-            </Link>
             <Link
               href="#hitta"
               className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline/30 text-on-surface font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:bg-surface-container transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"

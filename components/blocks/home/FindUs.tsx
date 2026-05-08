@@ -29,7 +29,7 @@ const INFO_BLOCKS = (d: Required<FindUsData>) => [
   { label: "Adress",  lines: [d.address] },
   { label: "Kontakt", lines: [d.phone, d.email] },
   { label: "Måndag – Fredag", lines: [d.hoursRows![0]?.hours ?? "10:00 – 18:00"] },
-  { label: "Lördag",          lines: [d.hoursRows![1]?.hours ?? "10:00 – 14:00", "Söndag: Stängt"] },
+  { label: "Lördag",          lines: [d.hoursRows![1]?.hours ?? "10:00 – 13:00", "Söndag: Stängt"] },
 ];
 
 export default function FindUs({ data }: Props) {
@@ -92,12 +92,6 @@ export default function FindUs({ data }: Props) {
           </div>
 
           <div className="flex gap-3 mt-2">
-            <Link
-              href="/skor"
-              className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-white font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:opacity-85 transition-opacity"
-            >
-              Se alla skor
-            </Link>
             <a
               href={`mailto:${d.email}`}
               className="inline-flex items-center gap-2.5 px-7 py-3.5 border border-outline/30 text-on-surface font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:bg-surface-container transition-colors"

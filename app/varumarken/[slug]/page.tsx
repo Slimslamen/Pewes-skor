@@ -5,7 +5,7 @@ import { client } from "@/sanity/lib/client";
 import { brandPageQuery, brandPageSlugsQuery } from "@/sanity/lib/queries";
 import HeaderServer from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import BrandProductGrid from "@/components/blocks/BrandProductGrid";
+import BrandProductGrid from "@/components/blocks/brands/BrandProductGrid";
 import Reveal from "@/components/blocks/Reveal";
 
 interface PageProps {

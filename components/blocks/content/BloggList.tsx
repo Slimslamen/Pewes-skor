@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import PostModal, { type PostModalData } from "./PostModal";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
 
 export interface BlogPost {
   slug:     string;

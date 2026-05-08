@@ -8,8 +8,6 @@ export const homePageQuery = defineQuery(`
       subtext,
       address,
       hours,
-      ctaLabel,
-      ctaHref,
       image { "url": coalesce(asset->url, url), alt }
     },
     brands[] { name },

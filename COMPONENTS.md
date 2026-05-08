@@ -1,205 +1,258 @@
-# Components — Pewes Skor
+# Components — Forma Web Agency
 
-Component inventory, props contracts, and usage patterns.
+Component architecture, patterns, and rules. Read this before building anything.
 
 ---
 
-## Directory Structure
+## Folder Structure Pattern
+
+Every project uses the same top-level shape. Adapt the subfolders inside `blocks/` to match the project type.
 
 ```
 components/
-├── layout/
-│   ├── Header.tsx          # Fixed nav with dropdown support
-│   └── Footer.tsx          # 4-col footer with newsletter
-├── blocks/                 # Full-width page sections
-│   ├── HomeHero.tsx
-│   ├── BrandsBar.tsx
-│   ├── FeaturedBanner.tsx
-│   ├── AboutSection.tsx
-│   ├── CollectionPreview.tsx
-│   ├── FindUs.tsx
-│   ├── ProductGrid.tsx
-│   ├── EccoHero.tsx
-│   ├── EccoHeritage.tsx
-│   └── ShoeAnatomy.tsx     # 500vh scroll-driven
+├── layout/             # Page chrome — nav, footer, providers
+│   ├── Header.tsx      # Client nav (state: mobile menu, dropdowns)
+│   ├── HeaderServer.tsx # Server wrapper — fetches CMS data for nav
+│   ├── Footer.tsx
+│   └── LenisProvider.tsx  # Smooth scroll (add once to app/layout.tsx)
+│
+├── blocks/             # Full-width page sections
+│   ├── Reveal.tsx      # Shared whileInView wrapper — stays at blocks root
+│   │
+│   ├── home/           # Sections used only on the landing/home page
+│   ├── [domain]/       # Feature-area sections (e.g. brands/, products/, services/)
+│   └── content/        # Blog, news, editorial, modals
+│
 └── seo/
-    └── JsonLd.tsx          # JSON-LD structured data
+    └── JsonLd.tsx      # JSON-LD schema components
 ```
+
+### How to classify a component
+
+| Question | Yes → put it in |
+|----------|-----------------|
+| Is it page chrome (nav/footer)? | `layout/` |
+| Is it only on the home/landing page? | `blocks/home/` |
+| Is it tied to a content domain (brands, products, services)? | `blocks/[domain]/` |
+| Is it blog, news, modals, editorial? | `blocks/content/` |
+| Is it a JSON-LD script tag? | `seo/` |
 
 ---
 
-## Layout
+## Layout Components
 
-### `Header`
+### `Header` + `HeaderServer`
+
+Always use `HeaderServer` in page files — it fetches CMS nav data server-side and passes it to the client `Header` for interactivity.
+
 ```tsx
-import Header from "@/components/layout/Header"
-
-<Header />                  // uses defaultLinks
-<Header links={customLinks} cartCount={3} />
+import Header from "@/components/layout/HeaderServer"
+<Header />
 ```
 
-**`NavLink` interface:**
-```ts
-interface NavLink {
-  label:    string
-  href:     string
-  active?:  boolean
-  dropdown?: { label: string; href: string }[]
-}
-```
-
-Default links (defined in Header.tsx):
-- **Sortiment** → `/skor` with dropdown: Herr, Dam, Barn
-- **Varumärken** → `/varumarken` with dropdown: ECCO, Gabor, Dolomite, Rieker, Skechers
-- **Blogg** → `/blogg`
-- **Journal** → `/journal`
+`Header` (client) handles: mobile menu toggle, dropdown hover state, active link highlighting.
 
 ### `Footer`
+
 ```tsx
 import Footer from "@/components/layout/Footer"
 <Footer />
 ```
-No required props. Uses hardcoded store details.
+
+No props. Hardcoded for the project — edit directly for address/link changes.
+
+### `LenisProvider`
+
+Renders nothing. Hooks Lenis into the RAF loop for site-wide smooth scroll. Add once in `app/layout.tsx`, never again.
+
+```tsx
+// app/layout.tsx
+import LenisProvider from "@/components/layout/LenisProvider"
+// ...
+<LenisProvider />
+```
 
 ---
 
-## Blocks
+## `Reveal` — The Shared Animation Wrapper
 
-### `HomeHero`
+Every whileInView animation goes through `Reveal`. Never add `initial`/`whileInView`/`viewport`/`transition` props directly to individual motion elements.
+
 ```tsx
-import HomeHero from "@/components/blocks/HomeHero"
-<HomeHero data={page?.hero} />
+import Reveal from "@/components/blocks/Reveal"
+
+<Reveal from="up" delay={0.1}>
+  <p>Content that fades in from below on scroll</p>
+</Reveal>
 ```
 
-| Prop | Type | Notes |
-|------|------|-------|
-| `data.heading` | `string` | Newlines rendered as `<br>` |
-| `data.address` | `string` | Glass badge text |
-| `data.hours`   | `string` | Glass badge sub-text |
-| `data.ctaLabel`| `string` | Button label |
-| `data.ctaHref` | `string` | Button href |
-| `data.image`   | `{ url, alt }` | Background image |
+| Prop | Type | Default | Notes |
+|------|------|---------|-------|
+| `from` | `"up" \| "down" \| "left" \| "right" \| "none"` | `"up"` | Direction of entrance |
+| `delay` | `number` | `0` | Seconds before animation starts |
+| `duration` | `number` | `0.6` | Animation duration in seconds |
+| `distance` | `number` | `32` | Travel distance in pixels |
+| `amount` | `number` | `0.2` | Intersection threshold (0–1) |
+| `as` | `"div" \| "section"` | `"div"` | Rendered element |
 
-All props optional — fallback content always shown.
+**Import rules:**
+- From a page file: `"@/components/blocks/Reveal"`
+- From inside a blocks subfolder: `"../Reveal"`
 
-### `BrandsBar`
+---
+
+## Block Component Patterns
+
+### Server vs Client
+
 ```tsx
-<BrandsBar data={page?.brands} />
-```
-`data` is `Array<{ name: string }>`. Displays brand names as styled text. Fallback: ECCO, Rieker, Gabor, Skechers, DOLOMITE.
+// Default — server component. Fetches Sanity data, no interactivity.
+export default async function MySection({ data }) { ... }
 
-### `FeaturedBanner`
-```tsx
-import FeaturedBanner from "@/components/blocks/FeaturedBanner"
-<FeaturedBanner />
-```
-No props — static editorial section linking to `/skor/dam` and `/skor/herr`. Edit directly for seasonal updates.
-
-### `AboutSection`
-```tsx
-<AboutSection data={page?.about} />
-```
-Two-column: image left, editorial text right. All props optional with fallbacks.
-
-### `CollectionPreview`
-```tsx
-<CollectionPreview data={page?.collection} />
-```
-Three-column category grid (Dam, Herr, Barn). Middle column offset by `translate-y-12`.
-
-### `FindUs`
-```tsx
-<FindUs data={page?.findUs} />
-```
-Two-column: contact info + map placeholder. Hardcoded address fallback.
-
-### `ProductGrid`
-```tsx
-import ProductGrid from "@/components/blocks/ProductGrid"
-<ProductGrid products={products} />
+// Client component — only when needed for hooks or events
+"use client"
+export default function MySection() { ... }
 ```
 
-**`Product` interface:**
-```ts
-interface Product {
-  brand?:       string
-  name?:        string
-  price?:       string
-  description?: string   // shown as small text below name
-  image?:       { url?: string; alt?: string }
+### Fallback data — use sparingly
+
+**Do not** provide fallback strings for editorial content (headings, body copy, CTAs). A stale fallback silently shows wrong text and hides the fact that CMS data is missing.
+
+**Do** provide fallbacks for structural/layout defaults (booleans, layout variants, image dimensions) that are never customer-facing copy.
+
+For missing editorial content, make it visible in development and render nothing in production:
+
+```tsx
+export default function MySection({ data }) {
+  if (!data?.heading) {
+    if (process.env.NODE_ENV === "development") {
+      return <div className="border-2 border-red-500 p-4 text-red-500">⚠ Missing: heading from Sanity</div>
+    }
+    return null
+  }
+  return <section>...</section>
 }
 ```
-`description` is optional — safe to omit for existing dam page.
 
-### `EccoHero` / `EccoHeritage`
-Used only on `/varumarken/ecco`. Accept `data` from `eccoPageQuery`.
+This forces real content to be entered in the CMS before launch, and makes gaps immediately obvious during development.
 
-### `ShoeAnatomy`
+### The `ssr: false` wrapper pattern
+
+Any component that uses R3F Canvas, WebGL, or reads `window` at module level needs a client wrapper with `dynamic({ ssr: false })`.
+
 ```tsx
-<ShoeAnatomy zones={anatomyZones} sectionTitle="Anatomy of Innovation" />
-```
-500vh scroll-driven animation. Requires layer images in `/public/ecco/`:
-- `layer-outsole.png`
-- `layer-midsole.png`
-- `layer-insole.png`
-- `layer-upper.png`
+// MyComponent.Client.tsx — thin wrapper, this is what page files import
+"use client"
+import dynamic from "next/dynamic"
 
-**Rules (see `tasks/lessons.md`):**
-- Never call `useTransform` inside JSX — declare at top level
-- Use `scaleX: -1` instead of `transform: "scaleX(-1)"`
+const MyComponent = dynamic(() => import("./MyComponent"), {
+  ssr:     false,
+  loading: () => <div className="h-[500vh]" />,  // same height as real component
+})
+
+export default function MyComponentClient() {
+  return <MyComponent />
+}
+```
 
 ---
 
-## SEO
+## Home Sections
+
+Sections only used on the landing/home page go in `blocks/home/`. They are imported only in `app/page.tsx`.
+
+Common home sections for any project:
+
+| Section | Purpose |
+|---------|---------|
+| `HeroSection` | Above-the-fold opener |
+| `StoryReveal` | Scroll-driven brand narrative |
+| `FeaturedBanner` | Seasonal or promotional highlight |
+| `CollectionPreview` | Category / product family grid |
+| `AboutSection` | Two-col heritage / team section |
+| `FindUs` | Contact + map |
+| `BrandsBar` | Logo or name marquee |
+
+---
+
+## Domain Sections
+
+Create subfolders for each content domain the project has. Examples:
+
+| Project type | Subfolder | Contains |
+|-------------|-----------|---------|
+| Retail / shoe store | `brands/` | Per-brand heroes, heritage sections, product grids |
+| SaaS | `features/` | Feature highlights, pricing, testimonials |
+| Portfolio | `work/` | Case study cards, project detail sections |
+| Restaurant | `menu/` | Menu categories, specials, reservation |
+| Blog / media | `posts/` | Article cards, author bios, category filters |
+
+Each domain subfolder follows the same rules — server component by default, `FALLBACK` data, `Reveal` for animations.
+
+---
+
+## Content / Editorial
+
+Blog posts, news, modals, and long-form content go in `blocks/content/`.
+
+**Pattern — card list + modal:**
+```tsx
+// List component — renders cards, manages open/close state
+"use client"
+export default function PostList({ posts }) {
+  const [active, setActive] = useState(null)
+  return (
+    <>
+      {posts.map(p => <PostCard key={p.id} post={p} onOpen={() => setActive(p)} />)}
+      {active && <PostModal post={active} onClose={() => setActive(null)} />}
+    </>
+  )
+}
+```
+
+Keep `PostModal` internal to the list — pages never import the modal directly.
+
+---
+
+## SEO Components
 
 ### `LocalBusinessJsonLd`
 ```tsx
+// Rendered once in app/layout.tsx — never on individual pages
 import { LocalBusinessJsonLd } from "@/components/seo/JsonLd"
-// Rendered in app/layout.tsx — do NOT add to individual pages
 <LocalBusinessJsonLd />
 ```
 
 ### `BreadcrumbJsonLd`
 ```tsx
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd"
+
+// Add to every non-home page, as first child of the root fragment
 <BreadcrumbJsonLd crumbs={[
-  { name: "Hem",      path: "/" },
-  { name: "Nyheter",  path: "/nyheter" },
-  { name: post.title, path: `/nyheter/${slug}` },
+  { name: "Home",     path: "/" },
+  { name: "Category", path: "/category" },
+  { name: "Page",     path: "/category/page" },
 ]} />
 ```
-Add to every inner page (non-home).
+
+Every inner page needs this. See lessons.md for why.
 
 ### `JsonLd` (generic)
 ```tsx
 import { JsonLd } from "@/components/seo/JsonLd"
 <JsonLd data={mySchemaObject} />
 ```
-Use for article, product, or any other schema type not covered above.
+
+Escapes `<`, `>`, `&` automatically to prevent CMS content from breaking out of the script tag.
 
 ---
 
-## Creating a New Component
+## Creating a New Component — Checklist
 
-1. **Block component** (full-width page section): `/components/blocks/MySection.tsx`
-2. **Layout component** (chrome): `/components/layout/MyWidget.tsx`
-3. **SEO component**: `/components/seo/MySchema.tsx`
-
-Template:
-```tsx
-interface MyData { title?: string }
-interface Props  { data?: MyData | null }
-
-const FALLBACK: MyData = { title: "Default" }
-
-export default function MySection({ data }: Props) {
-  const d = { title: data?.title ?? FALLBACK.title }
-  return <section className="py-24 bg-surface">…</section>
-}
-```
-
-Rules:
-- Always provide `FALLBACK` data so the page works without Sanity
-- Use `optional chaining (?.)` and nullish coalescing `(??)` everywhere
-- Server components by default; add `"use client"` only for hooks/interactivity
-- No `styled-components` — Tailwind only
+1. Decide the subfolder (see classification table above)
+2. Default to server component — add `"use client"` only if needed
+3. Define a `FALLBACK` constant for all Sanity-sourced props
+4. Use `<Reveal>` for scroll-in animations — don't add motion props manually
+5. If it uses `window` / Canvas / WebGL: create a `.Client.tsx` wrapper with `ssr: false`
+6. Add the component to `COMPONENTS.md` under the right section
+7. Run `npm run build` — confirm it compiles before marking done

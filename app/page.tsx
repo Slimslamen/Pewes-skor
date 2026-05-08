@@ -3,11 +3,11 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { homePageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/blocks/HeroSection";
-import StoryReveal from "@/components/blocks/StoryReveal";
-import ShoeRiseClient from "@/components/blocks/ShoeRiseClient";
-import CategoriesSection from "@/components/blocks/CategoriesSection";
-import FindUs from "@/components/blocks/FindUs";
+import HeroSection from "@/components/blocks/home/HeroSection";
+import StoryReveal from "@/components/blocks/home/StoryReveal";
+import ShoeRiseClient from "@/components/blocks/products/ShoeRiseClient";
+import CategoriesSection from "@/components/blocks/home/CategoriesSection";
+import FindUs from "@/components/blocks/home/FindUs";
 import { generatePageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = generatePageMetadata({

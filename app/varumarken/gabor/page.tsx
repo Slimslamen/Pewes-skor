@@ -3,10 +3,10 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { brandPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import GaborHero from "@/components/blocks/GaborHero";
-import GaborFeatures from "@/components/blocks/GaborFeatures";
+import GaborHero from "@/components/blocks/brands/GaborHero";
+import GaborFeatures from "@/components/blocks/brands/GaborFeatures";
 import Reveal from "@/components/blocks/Reveal";
-import BrandProductGrid from "@/components/blocks/BrandProductGrid";
+import BrandProductGrid from "@/components/blocks/brands/BrandProductGrid";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";
 

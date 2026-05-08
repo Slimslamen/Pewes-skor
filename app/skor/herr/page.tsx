@@ -3,7 +3,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { herrPageQuery } from "@/sanity/lib/queries";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import ProductGrid from "@/components/blocks/ProductGrid";
+import ProductGrid from "@/components/blocks/products/ProductGrid";
 import Link from "next/link";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { generatePageMetadata } from "@/lib/seo";

@@ -14,8 +14,6 @@ export const homePage = defineType({
         defineField({ name: "subtext",  title: "Undertext under logotyp",                               type: "text",   rows: 2 }),
         defineField({ name: "address",  title: "Högertext / adressrad",                                 type: "text",   rows: 2 }),
         defineField({ name: "hours",    title: "Öppettider (kort, t.ex. MÅN–FRE 10–18 · LÖR 10–13)",  type: "string" }),
-        defineField({ name: "ctaLabel", title: "CTA-text",  type: "string" }),
-        defineField({ name: "ctaHref",  title: "CTA-länk",  type: "string" }),
         defineField({
           name: "image",
           title: "Bakgrundsbild",

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import ProductGrid from "@/components/blocks/ProductGrid";
+import ProductGrid from "@/components/blocks/products/ProductGrid";
 import { BreadcrumbJsonLd, JsonLd } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";

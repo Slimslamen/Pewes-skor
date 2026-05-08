@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import Reveal from "./Reveal";
+import Reveal from "../Reveal";
 
 interface Product {
   brand?: string;

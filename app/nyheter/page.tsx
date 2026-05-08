@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
-import NyheterList, { type NyhetCard } from "@/components/blocks/NyheterList";
+import NyheterList, { type NyhetCard } from "@/components/blocks/content/NyheterList";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/live";
 import { nyheterIndexQuery } from "@/sanity/lib/queries";
