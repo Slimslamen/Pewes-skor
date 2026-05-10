@@ -14,16 +14,6 @@ export const homePage = defineType({
         defineField({ name: "subtext",  title: "Undertext under logotyp",                               type: "text",   rows: 2 }),
         defineField({ name: "address",  title: "Högertext / adressrad",                                 type: "text",   rows: 2 }),
         defineField({ name: "hours",    title: "Öppettider (kort, t.ex. MÅN–FRE 10–18 · LÖR 10–13)",  type: "string" }),
-        defineField({
-          name: "image",
-          title: "Bakgrundsbild",
-          type: "image",
-          options: { hotspot: true },
-          fields: [
-            defineField({ name: "alt", title: "Alt-text",        type: "string" }),
-            defineField({ name: "url", title: "Extern bild-URL", type: "url" }),
-          ],
-        }),
       ],
     }),
 

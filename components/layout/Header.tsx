@@ -196,8 +196,8 @@ export default function Header({ links = defaultLinks, bestSelling, otherBrands 
                           <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-4 font-(family-name:--font-inter)">
                             Fler märken
                           </h4>
-                          <div className="grid grid-cols-1 gap-x-4 space-y-1 h-60 overflow-y-auto pr-2">
-                            {otherBrandsList.map((sub) => (
+                          <div className="space-y-1">
+                            {otherBrandsList.filter((sub) => sub.label).map((sub) => (
                               <Link
                                 key={sub.href}
                                 href={sub.href}

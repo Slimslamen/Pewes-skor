@@ -8,7 +8,6 @@ export const homePageQuery = defineQuery(`
       subtext,
       address,
       hours,
-      image { "url": coalesce(asset->url, url), alt }
     },
     brands[] { name },
     storyReveal {
