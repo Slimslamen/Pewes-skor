@@ -23,7 +23,7 @@ export default async function EccoPage() {
 
   const anatomyZones = page?.anatomy?.zones ?? undefined;
   const anatomyTitle = page?.anatomy?.sectionTitle ?? "Anatomy of Innovation";
-  const shoes = (page?.products ?? []).map((p) => ({
+  const shoes = (page?.products ?? []).map((p: { name?: string | null; price?: string | null; sizes?: string | null; image?: string | null; categories?: string[] | null }) => ({
     name: p.name ?? "",
     price: p.price ?? "",
     sizes: p.sizes ?? "",
