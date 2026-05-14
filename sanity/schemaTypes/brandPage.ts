@@ -1,4 +1,9 @@
 import { defineType, defineField } from "sanity";
+import {
+  QUIZ_STYLE_OPTIONS,
+  QUIZ_SEASON_OPTIONS,
+  QUIZ_PRIORITY_OPTIONS,
+} from "../../lib/quizTags";
 
 export const brandPage = defineType({
   name: "brandPage",
@@ -80,6 +85,33 @@ export const brandPage = defineType({
                 defineField({ name: "imageAlt", title: "Alt-text",        type: "string" }),
                 defineField({ name: "url",      title: "Extern bild-URL", type: "url" }),
               ],
+            }),
+            defineField({
+              name: "quizStyle",
+              title: "Skoguide: stil",
+              description: "Används endast av Skoguide-frågesporten på startsidan. Visas inte för kunder.",
+              type: "array",
+              of: [{ type: "string" }],
+              options: { list: QUIZ_STYLE_OPTIONS },
+              validation: (Rule) => Rule.unique(),
+            }),
+            defineField({
+              name: "quizSeason",
+              title: "Skoguide: säsong",
+              description: "Används endast av Skoguide-frågesporten. Välj alla säsonger som passar.",
+              type: "array",
+              of: [{ type: "string" }],
+              options: { list: QUIZ_SEASON_OPTIONS },
+              validation: (Rule) => Rule.unique(),
+            }),
+            defineField({
+              name: "quizPriority",
+              title: "Skoguide: prioritet",
+              description: "Används endast av Skoguide-frågesporten. Välj allt som stämmer.",
+              type: "array",
+              of: [{ type: "string" }],
+              options: { list: QUIZ_PRIORITY_OPTIONS },
+              validation: (Rule) => Rule.unique(),
             }),
           ],
           preview: {

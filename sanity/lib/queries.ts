@@ -40,6 +40,38 @@ export const homePageQuery = defineQuery(`
   }
 `);
 
+/* ── Skoguide quiz: every product across all brand pages, with tags ── */
+export const quizProductsQuery = defineQuery(`
+  {
+    "ecco": *[_type == "eccoBrandPage"][0].products[] {
+      name,
+      price,
+      categories,
+      quizStyle,
+      quizSeason,
+      quizPriority,
+      "image":    coalesce(image.asset->url, image.url),
+      "imageAlt": coalesce(image.imageAlt, ""),
+      "brand":    "ECCO",
+      "brandHref": "/varumarken/ecco"
+    },
+    "brands": *[_type == "brandPage" && defined(slug.current)] {
+      "brand": name,
+      "brandHref": "/varumarken/" + slug.current,
+      products[] {
+        name,
+        price,
+        categories,
+        quizStyle,
+        quizSeason,
+        quizPriority,
+        "image":    coalesce(image.asset->url, image.url),
+        "imageAlt": coalesce(image.imageAlt, "")
+      }
+    }
+  }
+`);
+
 /* ── ECCO brand page ── */
 export const eccoPageQuery = defineQuery(`
   *[_type == "eccoBrandPage"][0] {

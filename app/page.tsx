@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
-import { homePageQuery } from "@/sanity/lib/queries";
+import { homePageQuery, quizProductsQuery } from "@/sanity/lib/queries";
+import type { QuizProduct } from "@/components/blocks/home/ShoeQuiz";
 import Header from "@/components/layout/HeaderServer";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/blocks/home/HeroSection";
@@ -17,8 +18,47 @@ export const metadata: Metadata = generatePageMetadata({
     "Skoaffär i Anderstorp sedan generationer. Noggrant utvalda skor från ECCO, Rieker, Gabor, Skechers, dolomite med mera. Välkommen till Storgatan 11.",
 });
 
+type RawQuizProduct = {
+  name?:         string | null;
+  price?:        string | null;
+  categories?:   string[] | null;
+  quizStyle?:    string[] | null;
+  quizSeason?:   string[] | null;
+  quizPriority?: string[] | null;
+  image?:        string | null;
+  imageAlt?:     string | null;
+  brand?:        string | null;
+  brandHref?:    string | null;
+};
+
 export default async function HomePage() {
-  const { data: page } = await sanityFetch({ query: homePageQuery });
+  const [{ data: page }, { data: quiz }] = await Promise.all([
+    sanityFetch({ query: homePageQuery }),
+    sanityFetch({ query: quizProductsQuery }),
+  ]);
+
+  const quizProducts: QuizProduct[] = [
+    ...((quiz?.ecco ?? []) as RawQuizProduct[]),
+    ...((quiz?.brands ?? []) as { brand?: string | null; brandHref?: string | null; products?: RawQuizProduct[] | null }[])
+      .flatMap((b) =>
+        (b.products ?? []).map((p) => ({ ...p, brand: b.brand, brandHref: b.brandHref })),
+      ),
+  ]
+    .filter((p): p is RawQuizProduct & { name: string; image: string; brand: string; brandHref: string } =>
+      Boolean(p.name && p.image && p.brand && p.brandHref),
+    )
+    .map((p) => ({
+      name:         p.name,
+      price:        p.price        ?? "",
+      image:        p.image,
+      imageAlt:     p.imageAlt     ?? p.name,
+      brand:        p.brand,
+      brandHref:    p.brandHref,
+      categories:   p.categories   ?? [],
+      quizStyle:    p.quizStyle    ?? [],
+      quizSeason:   p.quizSeason   ?? [],
+      quizPriority: p.quizPriority ?? [],
+    }));
 
   const storyLines = page?.storyReveal?.items?.length
     ? page.storyReveal.items.map((item: { label?: string | null; text?: string | null; sub?: string | null; imageUrl?: string | null }) => ({
@@ -50,7 +90,7 @@ export default async function HomePage() {
         <HeroSection data={page?.hero} brands={page?.brands} />
         <StoryReveal lines={storyLines} />
         <ShoeRiseClient />
-        <ShoeQuiz />
+        <ShoeQuiz products={quizProducts} />
         <CategoriesSection data={collectionData} />
         <FindUs data={page?.findUs} />
       </main>

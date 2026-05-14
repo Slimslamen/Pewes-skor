@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
@@ -25,6 +26,23 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Reveal from "../Reveal";
+
+export interface QuizProduct {
+  name:         string;
+  price:        string;
+  image:        string;
+  imageAlt:     string;
+  brand:        string;
+  brandHref:    string;
+  categories:   string[];
+  quizStyle:    string[];
+  quizSeason:   string[];
+  quizPriority: string[];
+}
+
+interface Props {
+  products?: QuizProduct[];
+}
 
 type WhoValue = "herr" | "dam" | "barn" | "family";
 
@@ -102,7 +120,42 @@ const PRIORITY_PHRASE: Record<string, string> = { komfort: "med komfort i fokus"
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-export default function ShoeQuiz() {
+function rankProducts(
+  products: QuizProduct[],
+  answers:  Partial<Record<Question["id"], string>>,
+  limit  = 3,
+): QuizProduct[] {
+  const who      = answers.who;
+  const style    = answers.style;
+  const season   = answers.season;
+  const priority = answers.priority;
+
+  const pool = who && who !== "family"
+    ? products.filter((p) => p.categories.includes(who))
+    : products;
+
+  const scored = pool.map((p) => {
+    let score = 0;
+    if (style    && p.quizStyle.includes(style))       score += 3;
+    if (season   && p.quizSeason.includes(season))     score += 2;
+    if (priority && p.quizPriority.includes(priority)) score += 2;
+    return { p, score };
+  });
+
+  const ranked = scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => s.p);
+
+  // Fallback: no tag matches yet (catalog not tagged) — show up to `limit`
+  // products from the requested category so the result still feels useful.
+  if (ranked.length === 0) return pool.slice(0, limit);
+
+  return ranked;
+}
+
+export default function ShoeQuiz({ products = [] }: Props) {
   const reduce = useReducedMotion();
   const [step, setStep]       = useState(0);
   const [answers, setAnswers] = useState<Partial<Record<Question["id"], string>>>({});
@@ -156,6 +209,11 @@ export default function ShoeQuiz() {
   const filledRatio  = isResult ? 1 : step / totalSteps;
   const slideX       = reduce ? 0 : 24;
 
+  const matches = useMemo(
+    () => (isResult ? rankProducts(products, answers, 3) : []),
+    [isResult, products, answers],
+  );
+
   return (
     <section id="skoguide" className="py-24 md:py-32 bg-surface">
       <div className="max-w-7xl mx-auto px-6 md:px-16">
@@ -176,8 +234,8 @@ export default function ShoeQuiz() {
           </div>
         </Reveal>
 
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-surface-container-low rounded-sm border border-outline-variant/60 p-7 md:p-12">
+        <div className={isResult ? "max-w-5xl mx-auto" : "max-w-3xl mx-auto"}>
+          <div className="bg-surface-container-low rounded-sm border border-outline-variant/60 p-7 md:p-12 transition-[max-width]">
             {/* Progress */}
             <div className="mb-8 md:mb-10">
               <div className="flex items-center justify-between mb-3">
@@ -231,6 +289,7 @@ export default function ShoeQuiz() {
                 <ResultPanel
                   key="result"
                   answers={answers as Record<Question["id"], string>}
+                  matches={matches}
                   onReset={reset}
                   slideX={slideX}
                 />
@@ -310,11 +369,12 @@ export default function ShoeQuiz() {
 
 interface ResultProps {
   answers: Record<Question["id"], string>;
+  matches: QuizProduct[];
   onReset: () => void;
   slideX:  number;
 }
 
-function ResultPanel({ answers, onReset, slideX }: ResultProps) {
+function ResultPanel({ answers, matches, onReset, slideX }: ResultProps) {
   const who      = (answers.who as WhoValue) ?? "family";
   const target   = CATEGORY_MAP[who];
   const adj      = STYLE_ADJ[answers.style ?? ""]      ?? "Utvalda";
@@ -322,6 +382,7 @@ function ResultPanel({ answers, onReset, slideX }: ResultProps) {
   const priority = PRIORITY_PHRASE[answers.priority ?? ""] ?? "med kvalitet i fokus";
 
   const sentence = `${adj} ${target.noun} ${season}, ${priority}.`;
+  const hasMatches = matches.length > 0;
 
   return (
     <motion.div
@@ -337,18 +398,61 @@ function ResultPanel({ answers, onReset, slideX }: ResultProps) {
         className="font-(family-name:--font-manrope) font-extrabold text-on-surface tracking-[-0.03em]"
         style={{ fontSize: "clamp(24px, 3vw, 36px)" }}
       >
-        {target.label} väntar.
+        {hasMatches
+          ? `${matches.length} skor som matchar dig`
+          : `${target.label} väntar.`}
       </h3>
       <p className="font-(family-name:--font-inter) font-light text-base md:text-lg text-on-surface-variant leading-[1.65] mt-4 max-w-prose">
         {sentence}
       </p>
+
+      {hasMatches && (
+        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {matches.map((p, i) => (
+            <motion.li
+              key={`${p.brand}-${p.name}`}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 + i * 0.08, ease: EASE }}
+            >
+              <Link
+                href={p.brandHref}
+                className="group block bg-surface rounded-sm border border-outline-variant overflow-hidden hover:border-primary/40 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                <div className="relative aspect-square bg-surface-container overflow-hidden">
+                  <Image
+                    src={p.image}
+                    alt={p.imageAlt || p.name}
+                    fill
+                    sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="p-4">
+                  <div className="font-(family-name:--font-inter) text-[10px] uppercase tracking-[0.22em] text-primary font-bold">
+                    {p.brand}
+                  </div>
+                  <div className="font-(family-name:--font-manrope) font-bold text-[15px] text-on-surface tracking-[-0.01em] mt-1.5 leading-tight">
+                    {p.name}
+                  </div>
+                  {p.price && (
+                    <div className="font-(family-name:--font-inter) text-[13px] text-on-surface-variant mt-2">
+                      {p.price}
+                    </div>
+                  )}
+                </div>
+              </Link>
+            </motion.li>
+          ))}
+        </ul>
+      )}
 
       <div className="flex flex-wrap items-center gap-5 mt-8">
         <Link
           href={target.href}
           className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-primary text-on-primary font-(family-name:--font-manrope) font-bold text-[11px] uppercase tracking-[0.16em] rounded-sm hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
         >
-          Utforska kollektionen
+          {hasMatches ? "Se hela kollektionen" : "Utforska kollektionen"}
           <ArrowRight className="w-4 h-4" aria-hidden />
         </Link>
         <button
