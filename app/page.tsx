@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/blocks/home/HeroSection";
 import StoryReveal from "@/components/blocks/home/StoryReveal";
 import ShoeRiseClient from "@/components/blocks/products/ShoeRiseClient";
+import ShoeQuiz from "@/components/blocks/home/ShoeQuiz";
 import CategoriesSection from "@/components/blocks/home/CategoriesSection";
 import FindUs from "@/components/blocks/home/FindUs";
 import { generatePageMetadata } from "@/lib/seo";
@@ -49,6 +50,7 @@ export default async function HomePage() {
         <HeroSection data={page?.hero} brands={page?.brands} />
         <StoryReveal lines={storyLines} />
         <ShoeRiseClient />
+        <ShoeQuiz />
         <CategoriesSection data={collectionData} />
         <FindUs data={page?.findUs} />
       </main>
