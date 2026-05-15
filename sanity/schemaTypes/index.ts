@@ -5,7 +5,8 @@ import { shoesPage }     from "./shoesPage";
 import { shoeCarePage }  from "./shoeCarePage";
 import { nyhetPost }     from "./nyhetPost";
 import { brandPage }     from "./brandPage";
+import { siteSettings }  from "./siteSettings";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homePage, eccoBrandPage, shoesPage, shoeCarePage, nyhetPost, brandPage],
+  types: [homePage, eccoBrandPage, shoesPage, shoeCarePage, nyhetPost, brandPage, siteSettings],
 };

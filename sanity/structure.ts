@@ -4,6 +4,14 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title('Innehåll')
     .items([
+      // ── Webbplatsinställningar (singleton) ─────────────────────────
+      S.listItem()
+        .title('Webbplatsinställningar')
+        .id('siteSettings')
+        .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+
+      S.divider(),
+
       // ── Startsida (singleton) ──────────────────────────────────────
       S.listItem()
         .title('Startsida')
