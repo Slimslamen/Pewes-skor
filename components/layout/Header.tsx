@@ -34,8 +34,8 @@ const DEFAULT_OTHER_BRANDS: BrandLink[] = [
   { label: "Vagabond",   href: "/varumarken/vagabond" },
   { label: "Ten Points", href: "/varumarken/ten-points" },
   { label: "Dockers",    href: "/varumarken/dockers" },
-  { label: "Lloyd",      href: "/varumarken/lloyd" },
   { label: "Ara",        href: "/varumarken/ara" },
+  { label: "Lloyd",      href: "/varumarken/lloyd" },
 ];
 
 interface HeaderProps {
