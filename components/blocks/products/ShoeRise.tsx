@@ -170,7 +170,7 @@ export default function ShoeRise() {
           style={{ y: damY, opacity: damOp, scale: damScale }}
         >
           <div style={{ width: shoeSize, height: shoeSize, transform: "scaleX(-1)" }}>
-            <ShoeModel path="/Dam.glb" />
+            <ShoeModel path="/dam.glb" />
           </div>
         </motion.div>
 
