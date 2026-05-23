@@ -37,6 +37,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  if (process.env.NODE_ENV === "development") return NextResponse.next();
+
   const maintenance = await getMaintenanceMode();
   if (!maintenance) return NextResponse.next();
 

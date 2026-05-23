@@ -1,5 +1,6 @@
 "use client";
 
+import {  useRef } from "react";
 import Link from "next/link";
 
 interface HeroData {
@@ -22,6 +23,9 @@ const FALLBACK_BRANDS = [
 ];
 
 export default function HeroSection({ data, brands }: Props) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+
   const heading  = data?.heading  ?? "Pewes\nSkor";
   const subtext  = data?.subtext  ?? "Skoaffär med hjärtat\ni Anderstorp — sedan generationer.";
   const address  = data?.address  ?? "Premium skor för hela familjen.\nStorgatan 11, Anderstorp.";
@@ -34,11 +38,11 @@ export default function HeroSection({ data, brands }: Props) {
     <section className="relative h-screen flex flex-col overflow-hidden" aria-label="Välkommen till Pewes Skor">
       {/* Decorative background video — hidden from assistive tech */}
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover z-0 opacity-20"
-        src="/gabor/video.mp4"
+        src="/HeroVid.mp4"
         autoPlay
         muted
-        loop
         playsInline
         aria-hidden="true"
         tabIndex={-1}
