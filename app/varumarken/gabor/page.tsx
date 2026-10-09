@@ -92,10 +92,9 @@ export default async function GaborPage() {
   const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "gabor" } });
 
   const shoes = brandData?.products;
-  const heritage = brandData?.heritage;
 
   // Split body into two paragraphs for the two-column layout
-  const bodyParts = (heritage?.body ?? FALLBACK_HERITAGE.body).split("\n\n");
+  const bodyParts = (FALLBACK_HERITAGE.body).split("\n\n");
   const body1 = bodyParts[0] ?? "";
   const body2 = bodyParts[1] ?? "";
 
@@ -133,11 +132,11 @@ export default async function GaborPage() {
               {/* Left: pull-quote */}
               <Reveal from="left">
                 <blockquote className="font-(family-name:--font-manrope) text-3xl md:text-4xl font-light text-stone-900 leading-relaxed italic">
-                  &ldquo;{heritage?.heading ?? FALLBACK_HERITAGE.pullQuote}&rdquo;
+                  &ldquo;{FALLBACK_HERITAGE.pullQuote}&rdquo;
                 </blockquote>
                 <div className="mt-10 h-px w-20 bg-primary" />
                 <p className="mt-4 font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary">
-                  {heritage?.eyebrow ?? FALLBACK_HERITAGE.attribution}
+                  {FALLBACK_HERITAGE.attribution}
                 </p>
               </Reveal>
 

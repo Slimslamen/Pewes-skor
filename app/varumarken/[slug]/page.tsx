@@ -14,8 +14,8 @@ interface PageProps {
 
 export async function generateStaticParams() {
   try {
-    const slugs: Array<{ slug: string }> = await client.fetch(brandPageSlugsQuery);
-    return slugs.map((s) => ({ slug: s.slug }));
+    const slugs = await client.fetch(brandPageSlugsQuery);
+    return slugs.flatMap((s) => s.slug ? [{ slug: s.slug }] : []);
   } catch {
     return [];
   }

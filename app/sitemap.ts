@@ -23,8 +23,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let dynamicEntries: MetadataRoute.Sitemap = [];
 
   try {
-    const slugs: Array<{ slug: string }> = await client.fetch(nyheterSlugsQuery);
-    dynamicEntries = slugs.map((s) => ({
+    const slugs = await client.fetch(nyheterSlugsQuery);
+    dynamicEntries = slugs.filter((s) => s.slug).map((s) => ({
       url:             `${BASE}/nyheter/${s.slug}`,
       changeFrequency: "monthly" as const,
       priority:        0.6,

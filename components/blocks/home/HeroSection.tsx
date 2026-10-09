@@ -14,7 +14,7 @@ interface HeroData {
 
 interface Props {
   data?:   HeroData | null;
-  brands?: Array<{ name: string }> | null;
+  brands?: Array<{ name: string | null }> | null;
 }
 
 const FALLBACK_BRANDS = [

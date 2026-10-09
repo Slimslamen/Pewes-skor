@@ -21,7 +21,11 @@ export const metadata: Metadata = generatePageMetadata({
 export default async function EccoPage() {
   const { data: page } = await sanityFetch({ query: eccoPageQuery });
 
-  const anatomyZones = page?.anatomy?.zones ?? undefined;
+  const anatomyZones = page?.anatomy?.zones?.map((zone) => ({
+    label: zone.label ?? "",
+    title: zone.title ?? "",
+    body: zone.body ?? "",
+  }));
   const anatomyTitle = page?.anatomy?.sectionTitle ?? "Anatomy of Innovation";
   const shoes = (page?.products ?? []).map((p: { name?: string | null; price?: string | null; sizes?: string | null; image?: string | null; categories?: string[] | null }) => ({
     name: p.name ?? "",

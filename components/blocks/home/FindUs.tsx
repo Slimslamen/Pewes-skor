@@ -3,13 +3,13 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 
-interface HoursRow { days: string; hours: string; }
+interface HoursRow { days: string | null; hours: string | null; }
 interface FindUsData {
-  heading?: string;
-  address?: string;
-  hoursRows?: HoursRow[];
-  phone?: string;
-  email?: string;
+  heading?: string | null;
+  address?: string | null;
+  hoursRows?: HoursRow[] | null;
+  phone?: string | null;
+  email?: string | null;
 }
 interface Props { data?: FindUsData | null; }
 

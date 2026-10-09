@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useSyncExternalStore } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
 export interface StoryLine {
@@ -208,17 +208,29 @@ function StoryRevealMobile({ lines }: { lines: StoryLine[] }) {
   );
 }
 
+const mobileQuery = "(max-width: 767px)";
+
+function subscribeToViewport(onChange: () => void) {
+  const mq = window.matchMedia(mobileQuery);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function getMobileSnapshot() {
+  return window.matchMedia(mobileQuery).matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
 export default function StoryReveal({ lines }: Props) {
   const data = lines?.length ? lines : FALLBACK_LINES;
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  const isMobile = useSyncExternalStore(
+    subscribeToViewport,
+    getMobileSnapshot,
+    getServerSnapshot,
+  );
 
   if (isMobile) return <StoryRevealMobile lines={data} />;
   return <StoryRevealDesktop lines={data} />;

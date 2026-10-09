@@ -13,8 +13,12 @@ const ECCO_LINK = { label: "ECCO", href: "/varumarken/ecco" };
 export default async function HeaderServer() {
   const { data } = await sanityFetch({ query: headerBrandsQuery });
 
-  const bestSelling = [ECCO_LINK, ...(data?.bestSellingBrands ?? [])];
-  const otherBrands = data?.otherBrands ?? [];
+  const bestSelling = [ECCO_LINK, ...(data?.bestSellingBrands ?? []).flatMap((brand) =>
+    brand.label && brand.href ? [{ label: brand.label, href: brand.href }] : [],
+  )];
+  const otherBrands = (data?.otherBrands ?? []).flatMap((brand) =>
+    brand.label && brand.href ? [{ label: brand.label, href: brand.href }] : [],
+  );
 
   return <Header bestSelling={bestSelling} otherBrands={otherBrands} />;
 }

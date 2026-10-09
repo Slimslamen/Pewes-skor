@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { formatPrice } from "@/lib/formatPrice";
 import { useMemo, useState } from "react";
 import Reveal from "../Reveal";
 
 interface Product {
-  brand?: string;
-  name?: string;
-  price?: string;
-  description?: string;
-  sizes?: string;
-  image?: { url?: string; alt?: string };
+  brand?: string | null;
+  name?: string | null;
+  price?: string | null;
+  description?: string | null;
+  sizes?: string | null;
+  image?: { url?: string | null; alt?: string | null } | null;
 }
 
 interface Props {
@@ -149,13 +150,13 @@ export default function ProductGrid({ products }: Props) {
               amount={0.15}
               className=" flex flex-col"
             >
-              <div className="aspect-3/4 overflow-hidden bg-surface-container-low mb-6 rounded-xl relative">
+              <div className="aspect-4/3 overflow-hidden bg-surface-container-low mb-6 rounded-xl relative">
                 {product.image?.url ? (
                   <Image
                     src={product.image.url}
                     alt={product.image.alt ?? product.name ?? ""}
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-95"
+                    className="object-contain transition-transform duration-700 group-hover:scale-95"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 ) : (
@@ -176,7 +177,7 @@ export default function ProductGrid({ products }: Props) {
                     </p>
                   )}
                   <p className="text-stone-500 font-light text-sm tracking-tight">
-                    {product.price}
+                    {formatPrice(product.price)}
                   </p>
                 </div>
 

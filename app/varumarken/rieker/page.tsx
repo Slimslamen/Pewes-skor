@@ -68,7 +68,6 @@ export default async function RiekerPage() {
   const { data: brandData } = await sanityFetch({ query: brandPageQuery, params: { slug: "rieker" } });
 
   const shoes = brandData?.products ?? MOCK_SHOES;
-  const heritage = brandData?.heritage;
 
   return (
     <>
@@ -122,13 +121,13 @@ export default async function RiekerPage() {
             <Reveal from="left" className="px-6 py-24 lg:py-40 lg:pr-20 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))]">
               <div className="max-w-xl">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-widest text-primary block mb-10">
-                  {heritage?.eyebrow ?? FALLBACK_HERITAGE.eyebrow}
+                  {FALLBACK_HERITAGE.eyebrow}
                 </span>
                 <h2 className="font-(family-name:--font-manrope) text-4xl md:text-5xl font-light text-stone-900 leading-tight mb-12">
-                  {heritage?.heading ?? FALLBACK_HERITAGE.heading}
+                  {FALLBACK_HERITAGE.heading}
                 </h2>
                 <p className="font-(family-name:--font-inter) text-lg text-secondary leading-relaxed">
-                  {heritage?.body ?? FALLBACK_HERITAGE.body}
+                  {FALLBACK_HERITAGE.body}
                 </p>
               </div>
             </Reveal>

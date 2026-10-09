@@ -14,8 +14,8 @@ import { generatePageMetadata, buildArticleSchema, siteConfig } from "@/lib/seo"
 // ── Static params for pre-rendering known slugs ──────────────────────────────
 export async function generateStaticParams() {
   try {
-    const slugs: Array<{ slug: string }> = await client.fetch(nyheterSlugsQuery);
-    return slugs.map((s) => ({ slug: s.slug }));
+    const slugs = await client.fetch(nyheterSlugsQuery);
+    return slugs.flatMap((s) => s.slug ? [{ slug: s.slug }] : []);
   } catch {
     return [];
   }
@@ -33,7 +33,7 @@ export async function generateMetadata({
     params: { slug },
   });
 
-  if (!post) {
+  if (!post?.title) {
     return generatePageMetadata({ title: "Nyhet hittades inte", path: `/nyheter/${slug}` });
   }
 
@@ -150,13 +150,13 @@ export default async function NyhetPostPage({
 
   // If not in Sanity and not the seeded fallback slug, 404
   const post = cmsPost ?? (slug === SUMMER_FALLBACK.slug ? SUMMER_FALLBACK : null);
-  if (!post) notFound();
+  if (!post?.title) notFound();
 
   const articleSchema = buildArticleSchema({
     title:       post.title,
     description: post.excerpt ?? "",
     url:         `${siteConfig.url}/nyheter/${slug}`,
-    publishedAt: post.publishedAt,
+    publishedAt: post.publishedAt ?? undefined,
     imageUrl:    post.coverImage?.url ?? undefined,
   });
 
@@ -240,7 +240,7 @@ export default async function NyhetPostPage({
           )}
 
           {/* ── Products ───────────────────────────────────────── */}
-          {post.products?.length > 0 && (
+          {(post.products?.length ?? 0) > 0 && (
             <section>
               <div className="mb-12">
                 <span className="font-(family-name:--font-inter) text-xs uppercase tracking-[0.2em] text-primary font-bold">

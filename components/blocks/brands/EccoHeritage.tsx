@@ -3,15 +3,15 @@
 import Reveal from "../Reveal";
 
 interface HeritageImage {
-  url?: string;
-  alt?: string;
+  url?: string | null;
+  alt?: string | null;
 }
 
 interface HeritageData {
-  eyebrow?: string;
-  heading?: string;
-  body?: string;
-  images?: HeritageImage[];
+  eyebrow?: string | null;
+  heading?: string | null;
+  body?: string | null;
+  images?: HeritageImage[] | null;
 }
 
 interface Props {

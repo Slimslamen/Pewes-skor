@@ -3,8 +3,8 @@
 import { motion } from "motion/react";
 
 interface EccoHeroData {
-  headline?:    string;
-  subheadline?: string;
+  headline?:    string | null;
+  subheadline?: string | null;
 }
 
 interface Props {
